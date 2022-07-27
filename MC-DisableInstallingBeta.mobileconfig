@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>PayloadContent</key>
+	<array>
+		<dict>
+			<key>AllowPreReleaseInstallation</key>
+			<false/>
+			<key>PayloadDisplayName</key>
+			<string>Software Update</string>
+			<key>PayloadIdentifier</key>
+			<string>com.apple.mdm.macserver-imac.local.9d182b40-6407-0135-d353-2c87a33a6849.alacarte.softwareupdate.d6fc1cc0-6407-0135-d354-2c87a33a6849</string>
+			<key>PayloadType</key>
+			<string>com.apple.SoftwareUpdate</string>
+			<key>PayloadUUID</key>
+			<string>d6fc1cc0-6407-0135-d354-2c87a33a6849</string>
+			<key>PayloadVersion</key>
+			<integer>1</integer>
+		</dict>
+	</array>
+	<key>PayloadDescription</key>
+	<string>Prevent users from installing macOS betas</string>
+	<key>PayloadDisplayName</key>
+	<string>Block macOS betas</string>
+	<key>PayloadIdentifier</key>
+	<string>com.n-able.macosbeta</string>
+	<key>PayloadOrganization</key>
+	<string>N-able</string>
+	<key>PayloadRemovalDisallowed</key>
+	<true/>
+	<key>PayloadScope</key>
+	<string>System</string>
+	<key>PayloadType</key>
+	<string>Configuration</string>
+	<key>PayloadUUID</key>
+	<string>9A2BE3BB-0CDF-43DA-B068-47F274A808E7</string>
+	<key>PayloadVersion</key>
+	<integer>1</integer>
+</dict>
+</plist>

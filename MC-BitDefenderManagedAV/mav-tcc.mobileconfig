@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>PayloadContent</key>
+	<array>
+		<dict>
+			<key>PayloadDescription</key>
+			<string>Allows full disk access for Managed Antivirus scans</string>
+			<key>PayloadDisplayName</key>
+			<string>Managed Antivirus PPPC</string>
+			<key>PayloadIdentifier</key>
+			<string>com.nable.mav.pppc</string>
+			<key>PayloadOrganization</key>
+			<string>N-able</string>
+			<key>PayloadType</key>
+			<string>com.apple.TCC.configuration-profile-policy</string>
+			<key>PayloadUUID</key>
+			<string>AF58B0CF-5A1F-11E9-B311-ACDE48001122</string>
+			<key>PayloadVersion</key>
+			<integer>3</integer>
+			<key>Services</key>
+			<dict>
+				<key>AppleEvents</key>
+				<array>
+					<dict>
+						<key>AEReceiverCodeRequirement</key>
+						<string>identifier "com.apple.systemevents" and anchor apple</string>
+						<key>AEReceiverIdentifier</key>
+						<string>com.apple.systemevents</string>
+						<key>AEReceiverIdentifierType</key>
+						<string>bundleID</string>
+						<key>Allowed</key>
+						<true/>
+						<key>CodeRequirement</key>
+						<string>identifier BDLDaemon and anchor apple generic and certificate 1[field.1.2.840.113635.100.6.2.6] /* exists */ and certificate leaf[field.1.2.840.113635.100.6.1.13] /* exists */ and certificate leaf[subject.OU] = GUNFMW623Y</string>
+						<key>Comment</key>
+						<string>Allow BDLDaemon to send AppleEvents control to System Events</string>
+						<key>Identifier</key>
+						<string>/Library/ManagedAntivirus/AVP/BDLDaemon</string>
+						<key>IdentifierType</key>
+						<string>path</string>
+					</dict>
+				</array>
+				<key>SystemPolicyAllFiles</key>
+				<array>
+					<dict>
+						<key>Allowed</key>
+						<true/>
+						<key>CodeRequirement</key>
+						<string>identifier "com.bitdefender.EndpointSecurityforMac" and anchor apple generic and certificate 1[field.1.2.840.113635.100.6.2.6] /* exists */ and certificate leaf[field.1.2.840.113635.100.6.1.13] /* exists */ and certificate leaf[subject.OU] = GUNFMW623Y</string>
+						<key>Comment</key>
+						<string>Allow SystemPolicyAllFiles control for EndpointSecurityforMac</string>
+						<key>Identifier</key>
+						<string>com.bitdefender.EndpointSecurityforMac</string>
+						<key>IdentifierType</key>
+						<string>bundleID</string>
+					</dict>
+					<dict>
+						<key>Allowed</key>
+						<true/>
+						<key>CodeRequirement</key>
+						<string>identifier BDLDaemon and anchor apple generic and certificate 1[field.1.2.840.113635.100.6.2.6] /* exists */ and certificate leaf[field.1.2.840.113635.100.6.1.13] /* exists */ and certificate leaf[subject.OU] = GUNFMW623Y</string>
+						<key>Comment</key>
+						<string>Allow SystemPolicyAllFiles control for BDLDaemon</string>
+						<key>Identifier</key>
+						<string>/Library/ManagedAntivirus/AVP/BDLDaemon</string>
+						<key>IdentifierType</key>
+						<string>path</string>
+					</dict>
+					<dict>
+						<key>Authorization</key>
+						<string>Allow</string>
+						<key>CodeRequirement</key>
+						<string>anchor apple generic and identifier "com.bitdefender.epsecurity.BDLDaemonApp" and (certificate leaf[field.1.2.840.113635.100.6.1.9] /* exists */ or certificate 1[field.1.2.840.113635.100.6.2.6] /* exists */ and certificate leaf[field.1.2.840.113635.100.6.1.13] /* exists */ and certificate leaf[subject.OU] = GUNFMW623Y)</string>
+						<key>Comment</key>
+						<string>Allow SystemPolicyAllFiles control for BDLDaemon.app version 4.14</string>
+						<key>Identifier</key>
+						<string>com.bitdefender.epsecurity.BDLDaemonApp</string>
+						<key>IdentifierType</key>
+						<string>bundleID</string>
+					</dict>
+				</array>
+			</dict>
+		</dict>
+	</array>
+	<key>PayloadDescription</key>
+	<string>Allows full disk access for Managed Antivirus scans</string>
+	<key>PayloadDisplayName</key>
+	<string>Managed Antivirus PPPC</string>
+	<key>PayloadIdentifier</key>
+	<string>com.nable.mav.pppc</string>
+	<key>PayloadOrganization</key>
+	<string>N-able</string>
+	<key>PayloadRemovalDisallowed</key>
+	<false/>
+	<key>PayloadScope</key>
+	<string>system</string>
+	<key>PayloadType</key>
+	<string>Configuration</string>
+	<key>PayloadUUID</key>
+	<string>AF5B3E8C-5A1F-11E9-B53F-ACDE48001122</string>
+	<key>PayloadVersion</key>
+	<integer>3</integer>
+</dict>
+</plist>

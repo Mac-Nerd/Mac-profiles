@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>PayloadContent</key>
+	<array>
+		<dict>
+			<key>PayloadDisplayName</key>
+			<string>Restrictions</string>
+			<key>PayloadIdentifier</key>
+			<string>com.apple.mdm.macserver-imac.local.de520870-1b1a-0136-d453-2c87a33a6849.alacarte.macosxrestrictions.a5a54cb0-1b1b-0136-d454-2c87a33a6849.applicationaccess</string>
+			<key>PayloadType</key>
+			<string>com.apple.applicationaccess</string>
+			<key>PayloadUUID</key>
+			<string>A3907A9A-B0B1-40B6-9104-1B1AFD801300</string>
+			<key>PayloadVersion</key>
+			<integer>1</integer>
+			<key>enforcedSoftwareUpdateDelay</key>
+			<integer>14</integer>
+			<key>forceDelayedSoftwareUpdates</key>
+			<true/>
+		</dict>
+		<dict>
+			<key>ManagedDeferredInstallDelay</key>
+			<integer>14</integer>
+			<key>PayloadDisplayName</key>
+			<string>Software Update</string>
+			<key>PayloadIdentifier</key>
+			<string>com.apple.SoftwareUpdate.86DEE6FA-769D-40D1-82A8-9FDD4BBC8892</string>
+			<key>PayloadType</key>
+			<string>com.apple.SoftwareUpdate</string>
+			<key>PayloadUUID</key>
+			<string>86DEE6FA-769D-40D1-82A8-9FDD4BBC8892</string>
+			<key>PayloadVersion</key>
+			<integer>1</integer>
+			<key>forceDelayedSoftwareUpdates</key>
+			<true/>
+		</dict>
+	</array>
+	<key>PayloadDescription</key>
+	<string>Defers Apple software updates for 14 days. This restriction does not apply to security or other critical patches.</string>
+	<key>PayloadDisplayName</key>
+	<string>Delay Software Updates</string>
+	<key>PayloadIdentifier</key>
+	<string>com.n-able.delayupdates</string>
+	<key>PayloadOrganization</key>
+	<string>N-able</string>
+	<key>PayloadRemovalDisallowed</key>
+	<false/>
+	<key>PayloadScope</key>
+	<string>System</string>
+	<key>PayloadType</key>
+	<string>Configuration</string>
+	<key>PayloadUUID</key>
+	<string>32EB8510-EADA-4BD7-A4AF-7BF8FF1BA05D</string>
+	<key>PayloadVersion</key>
+	<integer>1</integer>
+</dict>
+</plist>

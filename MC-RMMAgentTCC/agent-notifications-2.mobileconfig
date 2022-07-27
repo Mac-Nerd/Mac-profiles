@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>PayloadContent</key>
+	<array>
+		<dict>
+			<key>NotificationSettings</key>
+			<array>
+				<dict>
+					<key>AlertType</key>
+					<integer>2</integer>
+					<key>BadgesEnabled</key>
+					<false/>
+					<key>BundleIdentifier</key>
+					<string>AdvancedMonitoringAgent</string>
+					<key>CriticalAlertEnabled</key>
+					<false/>
+					<key>NotificationsEnabled</key>
+					<true/>
+					<key>ShowInCarPlay</key>
+					<false/>
+					<key>ShowInLockScreen</key>
+					<true/>
+					<key>ShowInNotificationCenter</key>
+					<true/>
+					<key>SoundsEnabled</key>
+					<true/>
+				</dict>
+				<dict>
+					<key>AlertType</key>
+					<integer>2</integer>
+					<key>BadgesEnabled</key>
+					<false/>
+					<key>BundleIdentifier</key>
+					<string>RMM Notification Service</string>
+					<key>CriticalAlertEnabled</key>
+					<false/>
+					<key>NotificationsEnabled</key>
+					<true/>
+					<key>ShowInCarPlay</key>
+					<false/>
+					<key>ShowInLockScreen</key>
+					<true/>
+					<key>ShowInNotificationCenter</key>
+					<true/>
+					<key>SoundsEnabled</key>
+					<true/>
+				</dict>
+			</array>
+			<key>PayloadDescription</key>
+			<string>Enables notifications for Advanced Monitoring Agent</string>
+			<key>PayloadDisplayName</key>
+			<string>Advanced Monitoring Agent Notifications</string>
+			<key>PayloadEnabled</key>
+			<true/>
+			<key>PayloadIdentifier</key>
+			<string>com.solarwindsmsp.agent.notifications</string>
+			<key>PayloadOrganization</key>
+			<string>SolarWinds MSP</string>
+			<key>PayloadType</key>
+			<string>com.apple.notificationsettings</string>
+			<key>PayloadUUID</key>
+			<string>F4902F96-FEE4-4DB5-A750-9139F3FA4CBA</string>
+			<key>PayloadVersion</key>
+			<integer>3</integer>
+		</dict>
+	</array>
+	<key>PayloadDescription</key>
+	<string>Enables notifications for Advanced Monitoring Agent</string>
+	<key>PayloadDisplayName</key>
+	<string>Advanced Monitoring Agent Notifications</string>
+    <key>PayloadEnabled</key>
+    <true/>
+	<key>PayloadIdentifier</key>
+	<string>com.solarwindsmsp.agent.notifications</string>
+	<key>PayloadOrganization</key>
+	<string>SolarWinds MSP</string>
+	<key>PayloadRemovalDisallowed</key>
+	<false/>
+	<key>PayloadScope</key>
+	<string>System</string>
+	<key>PayloadType</key>
+	<string>Configuration</string>
+	<key>PayloadUUID</key>
+	<string>4AECC103-CA7D-4E29-8CE6-0EA42E56BD96</string>
+	<key>PayloadVersion</key>
+	<integer>3</integer>
+</dict>
+</plist>

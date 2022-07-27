@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>PayloadContent</key>
+	<array>
+		<dict>
+			<key>PayloadDescription</key>
+			<string>Allows Take Control to remote control the GUI session and access the full disk for file transfer</string>
+			<key>PayloadDisplayName</key>
+			<string>Take Control PPPC</string>
+			<key>PayloadIdentifier</key>
+			<string>com.nable.takecontrol.pppc</string>
+			<key>PayloadOrganization</key>
+			<string>N-able</string>
+			<key>PayloadType</key>
+			<string>com.apple.TCC.configuration-profile-policy</string>
+			<key>PayloadUUID</key>
+			<string>E5507307-4CC1-11E9-8F47-00E1000007F7</string>
+			<key>PayloadVersion</key>
+			<integer>3</integer>
+			<key>Services</key>
+			<dict>
+				<key>Accessibility</key>
+				<array>
+					<dict>
+						<key>Allowed</key>
+						<true/>
+						<key>CodeRequirement</key>
+						<string>anchor apple generic and identifier "com.mspanywhere.agent" and (certificate leaf[field.1.2.840.113635.100.6.1.9] /* exists */ or certificate 1[field.1.2.840.113635.100.6.2.6] /* exists */ and certificate leaf[field.1.2.840.113635.100.6.1.13] /* exists */ and certificate leaf[subject.OU] = YT3GCGK3Z7)</string>
+						<key>Comment</key>
+						<string>Allow Accessibility control for MSP Anywhere Agent TakeControl</string>
+						<key>Identifier</key>
+						<string>com.mspanywhere.agent</string>
+						<key>IdentifierType</key>
+						<string>bundleID</string>
+					</dict>
+				</array>
+				<key>SystemPolicyAllFiles</key>
+				<array>
+					<dict>
+						<key>Allowed</key>
+						<true/>
+						<key>CodeRequirement</key>
+						<string>anchor apple generic and identifier "com.mspanywhere.agent" and (certificate leaf[field.1.2.840.113635.100.6.1.9] /* exists */ or certificate 1[field.1.2.840.113635.100.6.2.6] /* exists */ and certificate leaf[field.1.2.840.113635.100.6.1.13] /* exists */ and certificate leaf[subject.OU] = YT3GCGK3Z7)</string>
+						<key>Comment</key>
+						<string>Allow SystemPolicyAllFiles control for MSP Anywhere Agent TakeControl</string>
+						<key>Identifier</key>
+						<string>com.mspanywhere.agent</string>
+						<key>IdentifierType</key>
+						<string>bundleID</string>
+					</dict>
+				</array>
+			</dict>
+		</dict>
+	</array>
+	<key>PayloadDescription</key>
+	<string>Allows Take Control to remote control the GUI session and access the full disk for file transfer</string>
+	<key>PayloadDisplayName</key>
+	<string>Take Control PPPC</string>
+	<key>PayloadIdentifier</key>
+	<string>com.nable.takecontrol.pppc</string>
+	<key>PayloadOrganization</key>
+	<string>N-able</string>
+	<key>PayloadRemovalDisallowed</key>
+	<false/>
+	<key>PayloadScope</key>
+	<string>system</string>
+	<key>PayloadType</key>
+	<string>Configuration</string>
+	<key>PayloadUUID</key>
+	<string>E553F1DE-4CC1-11E9-8CF6-00E1000007F7</string>
+	<key>PayloadVersion</key>
+	<integer>3</integer>
+</dict>
+</plist>

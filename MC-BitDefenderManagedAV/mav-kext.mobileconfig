@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1">
+	<dict>
+		<key>PayloadUUID</key>
+		<string>6819F314-C631-4041-825F-9F287F0EF565</string>
+		<key>PayloadType</key>
+		<string>Configuration</string>
+		<key>PayloadOrganization</key>
+		<string>N-able</string>
+		<key>PayloadIdentifier</key>
+		<string>com.nable.mav.kext</string>
+		<key>PayloadDisplayName</key>
+		<string>Managed Antivirus Kernel Extension</string>
+		<key>PayloadDescription</key>
+		<string>Approve kernel extension installed by Managed Antivirus</string>
+		<key>PayloadVersion</key>
+		<integer>2</integer>
+		<key>PayloadEnabled</key>
+		<true/>
+		<key>PayloadRemovalDisallowed</key>
+		<true/>
+		<key>PayloadScope</key>
+		<string>System</string>
+		<key>PayloadContent</key>
+		<array>
+			<dict>
+				<key>PayloadUUID</key>
+				<string>3BBE1D31-6DC3-4A7D-BA47-02FE6F870E35</string>
+				<key>PayloadType</key>
+				<string>com.apple.syspolicy.kernel-extension-policy</string>
+				<key>PayloadOrganization</key>
+				<string>N-able</string>
+				<key>PayloadIdentifier</key>
+				<string>com.nable.mav.kext</string>
+				<key>PayloadDisplayName</key>
+				<string>Managed Antivirus Kernel Extension</string>
+				<key>PayloadDescription</key>
+				<string>Approve kernel extension installed by Managed Antivirus</string>
+				<key>PayloadVersion</key>
+				<integer>2</integer>
+				<key>PayloadEnabled</key>
+				<true/>
+				<key>AllowUserOverrides</key>
+				<true/>
+				<key>AllowedTeamIdentifiers</key>
+				<array>
+					<string>GUNFMW623Y</string>
+				</array>
+			</dict>
+		</array>
+	</dict>
+</plist>

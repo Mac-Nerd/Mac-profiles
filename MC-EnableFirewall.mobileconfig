@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>PayloadContent</key>
+	<array>
+		<dict>
+			<key>BlockAllIncoming</key>
+			<false/>
+			<key>EnableFirewall</key>
+			<true/>
+			<key>EnableLogging</key>
+			<true/>
+			<key>EnableStealthMode</key>
+			<false/>
+			<key>LoggingOption</key>
+			<string>brief</string>
+			<key>PayloadDisplayName</key>
+			<string>Security &amp; Privacy</string>
+			<key>PayloadIdentifier</key>
+			<string>com.apple.mdm.macserver-imac.local.5fe81090-c898-0134-d318-2c87a33a6849.alacarte.privacy.8e463ca0-c898-0134-d319-2c87a33a6849.firewall</string>
+			<key>PayloadType</key>
+			<string>com.apple.security.firewall</string>
+			<key>PayloadUUID</key>
+			<string>2C40C988-DDA2-44F3-A1E8-11BB89D631D6</string>
+			<key>PayloadVersion</key>
+			<integer>1</integer>
+		</dict>
+	</array>
+	<key>PayloadDescription</key>
+	<string>Enables firewall</string>
+	<key>PayloadDisplayName</key>
+	<string>Enable Firewall</string>
+	<key>PayloadIdentifier</key>
+	<string>com.n-able.firewall</string>
+	<key>PayloadOrganization</key>
+	<string>N-able</string>
+	<key>PayloadRemovalDisallowed</key>
+	<false/>
+	<key>PayloadScope</key>
+	<string>System</string>
+	<key>PayloadType</key>
+	<string>Configuration</string>
+	<key>PayloadUUID</key>
+	<string>BB3A831E-C788-47F6-81E0-449D7D6374A7</string>
+	<key>PayloadVersion</key>
+	<integer>1</integer>
+</dict>
+</plist>

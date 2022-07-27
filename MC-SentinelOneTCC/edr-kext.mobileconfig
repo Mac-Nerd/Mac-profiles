@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1">
+	<dict>
+		<key>PayloadUUID</key>
+		<string>96B8936E-9783-4072-8156-FBCD93116AE7</string>
+		<key>PayloadType</key>
+		<string>Configuration</string>
+		<key>PayloadOrganization</key>
+		<string>SolarWinds MSP</string>
+		<key>PayloadIdentifier</key>
+		<string>96B8936E-9783-4072-8156-FBCD93116AE7</string>
+		<key>PayloadDisplayName</key>
+		<string>EDR Kernel Extension</string>
+		<key>PayloadDescription</key>
+		<string>Approve kernel extension installed by Endpoint Detection Response</string>
+		<key>PayloadVersion</key>
+		<integer>1</integer>
+		<key>PayloadEnabled</key>
+		<true/>
+		<key>PayloadRemovalDisallowed</key>
+		<true/>
+		<key>PayloadScope</key>
+		<string>System</string>
+		<key>PayloadContent</key>
+		<array>
+			<dict>
+				<key>PayloadUUID</key>
+				<string>E02F64B2-D041-484F-AE02-FA624B25E33B</string>
+				<key>PayloadType</key>
+				<string>com.apple.syspolicy.kernel-extension-policy</string>
+				<key>PayloadOrganization</key>
+				<string>SolarWinds MSP</string>
+				<key>PayloadIdentifier</key>
+				<string>E02F64B2-D041-484F-AE02-FA624B25E33B</string>
+				<key>PayloadDisplayName</key>
+				<string>EDR Kernel Extension</string>
+				<key>PayloadDescription</key>
+				<string>Approve kernel extension installed by Endpoint Detection Response</string>
+				<key>PayloadVersion</key>
+				<integer>1</integer>
+				<key>PayloadEnabled</key>
+				<true/>
+				<key>AllowUserOverrides</key>
+				<true/>
+				<key>AllowedTeamIdentifiers</key>
+				<array>
+					<string>4AYE5J54KN</string>
+				</array>
+			</dict>
+		</array>
+	</dict>
+</plist>

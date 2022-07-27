@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>PayloadContent</key>
+	<array>
+		<dict>
+			<key>PayloadDescription</key>
+			<string>Allows full disk access for Backup Manager</string>
+			<key>PayloadDisplayName</key>
+			<string>Backup Manager PPPC</string>
+			<key>PayloadIdentifier</key>
+			<string>com.solarwindsmsp.backupmanager.tcc</string>
+			<key>PayloadOrganization</key>
+			<string>SolarWinds MSP</string>
+			<key>PayloadType</key>
+			<string>com.apple.TCC.configuration-profile-policy</string>
+			<key>PayloadUUID</key>
+			<string>69EEC273-EA9A-11E9-BF54-741BB2DA0C39</string>
+			<key>PayloadVersion</key>
+			<integer>2</integer>
+			<key>Services</key>
+			<dict>
+				<key>SystemPolicyAllFiles</key>
+				<array>
+					<dict>
+						<key>Allowed</key>
+						<true/>
+						<key>CodeRequirement</key>
+						<string>identifier "com.cloudbackup.mxb" and anchor apple generic and certificate 1[field.1.2.840.113635.100.6.2.6] /* exists */ and certificate leaf[field.1.2.840.113635.100.6.1.13] /* exists */ and certificate leaf[subject.OU] = V8ZV6KCSH4</string>
+						<key>Comment</key>
+						<string>Allow SystemPolicyAllFiles control for Backup Manager</string>
+						<key>Identifier</key>
+						<string>com.cloudbackup.mxb</string>
+						<key>IdentifierType</key>
+						<string>bundleID</string>
+					</dict>
+					<dict>
+						<key>Allowed</key>
+						<true/>
+						<key>CodeRequirement</key>
+						<string>identifier "com.cloudbackup" and anchor apple generic and certificate 1[field.1.2.840.113635.100.6.2.6] /* exists */ and certificate leaf[field.1.2.840.113635.100.6.1.13] /* exists */ and certificate leaf[subject.OU] = V8ZV6KCSH4</string>
+						<key>Comment</key>
+						<string>Allow SystemPolicyAllFiles control for Managed Online Backup</string>
+						<key>Identifier</key>
+						<string>com.cloudbackup</string>
+						<key>IdentifierType</key>
+						<string>bundleID</string>
+					</dict>
+				</array>
+			</dict>
+		</dict>
+	</array>
+	<key>PayloadDescription</key>
+	<string>Allows full disk access for Backup Manager</string>
+	<key>PayloadDisplayName</key>
+	<string>Backup Manager PPPC</string>
+	<key>PayloadIdentifier</key>
+	<string>com.solarwindsmsp.backupmanager.tcc</string>
+	<key>PayloadOrganization</key>
+	<string>SolarWinds MSP</string>
+	<key>PayloadRemovalDisallowed</key>
+	<false/>
+	<key>PayloadScope</key>
+	<string>system</string>
+	<key>PayloadType</key>
+	<string>Configuration</string>
+	<key>PayloadUUID</key>
+	<string>69F055E3-EA9A-11E9-AAAC-741BB2DA0C39</string>
+	<key>PayloadVersion</key>
+	<integer>2</integer>
+</dict>
+</plist>

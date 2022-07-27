@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>PayloadContent</key>
+	<array>
+		<dict>
+			<key>PayloadDescription</key>
+			<string>Allows the N-central Agent to have full disk access</string>
+			<key>PayloadDisplayName</key>
+			<string>N-central Agent PPPC</string>
+			<key>PayloadIdentifier</key>
+			<string>com.nable.n-central-agent.pppc</string>
+			<key>PayloadOrganization</key>
+			<string>N-able</string>
+			<key>PayloadType</key>
+			<string>com.apple.TCC.configuration-profile-policy</string>
+			<key>PayloadUUID</key>
+			<string>922EE837-D995-4F90-A527-CF990F302D29</string>
+			<key>PayloadVersion</key>
+			<integer>1</integer>
+			<key>Services</key>
+			<dict>
+				<key>SystemPolicyAllFiles</key>
+				<array>
+					<dict>
+						<key>Allowed</key>
+						<true/>
+						<key>CodeRequirement</key>
+						<string>identifier "com.solarwinds.msp.Mac_Agent" and anchor apple generic and certificate 1[field.1.2.840.113635.100.6.2.6] /* exists */ and certificate leaf[field.1.2.840.113635.100.6.1.13] /* exists */ and certificate leaf[subject.OU] = DX6NAB4WGS</string>
+						<key>Comment</key>
+						<string></string>
+						<key>Identifier</key>
+						<string>com.solarwinds.msp.Mac_Agent</string>
+						<key>IdentifierType</key>
+						<string>bundleID</string>
+					</dict>
+				</array>
+			</dict>
+		</dict>
+	</array>
+	<key>PayloadDescription</key>
+	<string>Allows the N-central Agent to have full disk access</string>
+	<key>PayloadDisplayName</key>
+	<string>N-central Agent PPPC</string>
+	<key>PayloadIdentifier</key>
+	<string>com.nable.n-central-agent.pppc</string>
+	<key>PayloadOrganization</key>
+	<string>N-able</string>
+	<key>PayloadScope</key>
+	<string>System</string>
+	<key>PayloadType</key>
+	<string>Configuration</string>
+	<key>PayloadUUID</key>
+	<string>922EE837-D995-4F90-A527-CF990F302D29</string>
+	<key>PayloadVersion</key>
+	<integer>1</integer>
+</dict>
+</plist>

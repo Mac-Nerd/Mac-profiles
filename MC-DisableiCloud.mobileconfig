@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>PayloadContent</key>
+	<array>
+		<dict>
+			<key>DisableFMMiCloudSetting</key>
+			<true/>
+			<key>PayloadDisplayName</key>
+			<string>iCloud Find My</string>
+			<key>PayloadIdentifier</key>
+			<string>com.apple.icloud.managed.1D641291-0D18-4321-8C38-4E905CBB901G</string>
+			<key>PayloadType</key>
+			<string>com.apple.icloud.managed</string>
+			<key>PayloadUUID</key>
+			<string>522369B9-8EB5-41E6-A0FD-E650D656B02H</string>
+			<key>PayloadVersion</key>
+			<integer>1</integer>
+		</dict>
+		<dict>
+			<key>NSDocumentSaveNewDocumentsToCloud</key>
+			<false/>
+			<key>PayloadDisplayName</key>
+			<string>Global Preferences</string>
+			<key>PayloadIdentifier</key>
+			<string>.GlobalPreferences.7C6FCBCA-141C-4AC1-BEF8-D20CBD77BF8G</string>
+			<key>PayloadType</key>
+			<string>.GlobalPreferences</string>
+			<key>PayloadUUID</key>
+			<string>92C8A44C-7D6D-41E8-ACCE-9C42227030G6</string>
+			<key>PayloadVersion</key>
+			<integer>1</integer>
+		</dict>
+		<dict>
+			<key>PayloadDisplayName</key>
+			<string>Restrictions</string>
+			<key>PayloadIdentifier</key>
+			<string>com.apple.applicationaccess.7E50F6AA-A4B3-4F0A-B457-0F3C144968GB</string>
+			<key>PayloadType</key>
+			<string>com.apple.applicationaccess</string>
+			<key>PayloadUUID</key>
+			<string>907D23B3-300D-4A60-967C-1C9FB3C935D3</string>
+			<key>PayloadVersion</key>
+			<integer>1</integer>
+			<key>allowCloudBackup</key>
+			<false/>
+			<key>allowCloudDocumentSync</key>
+			<false/>
+			<key>allowCloudKeychainSync</key>
+			<false/>
+			<key>allowCloudPhotoLibrary</key>
+			<false/>
+			<key>allowCloudPrivateRelay</key>
+			<false/>
+			<key>allowEnterpriseBookBackup</key>
+			<true/>
+			<key>allowFindMyDevice</key>
+			<false/>
+			<key>allowFindMyFriends</key>
+			<false/>
+			<key>allowManagedAppsCloudSync</key>
+			<false/>
+			<key>allowPhotoStream</key>
+			<false/>
+			<key>allowSharedStream</key>
+			<false/>
+		</dict>
+		<dict>
+			<key>AllowPersonalCaching</key>
+			<false/>
+			<key>AllowSharedCaching</key>
+			<false/>
+			<key>DenyTetheredCaching</key>
+			<false/>
+			<key>PayloadDisplayName</key>
+			<string>Content Caching</string>
+			<key>PayloadIdentifier</key>
+			<string>com.apple.AssetCache.managed.B4A404F5-0EB1-47A2-B0D4-032AC9D0D285</string>
+			<key>PayloadType</key>
+			<string>com.apple.AssetCache.managed</string>
+			<key>PayloadUUID</key>
+			<string>B4A404F5-0EB1-47A2-B0D4-032AC9D0D285</string>
+			<key>PayloadVersion</key>
+			<integer>1</integer>
+		</dict>
+		<dict>
+			<key>PayloadDisplayName</key>
+			<string>Setup Assistant #1</string>
+			<key>PayloadIdentifier</key>
+			<string>com.apple.SetupAssistant.managed.ADF6F9AF-3250-4BB4-AE83-65394B314147</string>
+			<key>PayloadType</key>
+			<string>com.apple.SetupAssistant.managed</string>
+			<key>PayloadUUID</key>
+			<string>ADF6F9AF-3250-4BB4-AE83-65394B314147</string>
+			<key>PayloadVersion</key>
+			<integer>1</integer>
+			<key>SkipCloudSetup</key>
+			<true/>
+			<key>SkipiCloudStorageSetup</key>
+			<true/>
+		</dict>
+	</array>
+	<key>PayloadDescription</key>
+	<string>Disables the following iCloud services: Drive, Desktop and Documents Sync, Photos, Keychain, Bookmarks, Private Relay, Mail, Find My</string>
+	<key>PayloadDisplayName</key>
+	<string>Disable iCloud Services</string>
+	<key>PayloadIdentifier</key>
+	<string>com.n-able.disableicloud</string>
+	<key>PayloadOrganization</key>
+	<string>n-able</string>
+	<key>PayloadType</key>
+	<string>Configuration</string>
+	<key>PayloadUUID</key>
+	<string>3B232F2F-4DB3-48B8-BF0A-87CE84515FB5</string>
+	<key>PayloadVersion</key>
+	<integer>1</integer>
+</dict>
+</plist>

@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>PayloadContent</key>
+	<array>
+		<dict>
+			<key>NotificationSettings</key>
+			<array>
+				<dict>
+					<key>AlertType</key>
+					<integer>1</integer>
+					<key>BadgesEnabled</key>
+					<true/>
+					<key>BundleIdentifier</key>
+					<string>com.bitdefender.EndpointSecurityforMac</string>
+					<key>CriticalAlertEnabled</key>
+					<false/>
+					<key>NotificationsEnabled</key>
+					<true/>
+					<key>ShowInLockScreen</key>
+					<true/>
+					<key>ShowInNotificationCenter</key>
+					<true/>
+					<key>SoundsEnabled</key>
+					<true/>
+				</dict>
+			</array>
+			<key>PayloadDescription</key>
+			<string>Enables notifications for Managed Antivirus</string>
+			<key>PayloadDisplayName</key>
+			<string>Managed Antivirus Notifications</string>
+			<key>PayloadEnabled</key>
+			<true/>
+			<key>PayloadIdentifier</key>
+			<string>com.nable.mav.notifications</string>
+			<key>PayloadOrganization</key>
+			<string>N-able</string>
+			<key>PayloadType</key>
+			<string>com.apple.notificationsettings</string>
+			<key>PayloadUUID</key>
+			<string>B738C125-863D-44B1-B455-11E94361B813</string>
+			<key>PayloadVersion</key>
+			<integer>2</integer>
+		</dict>
+	</array>
+	<key>PayloadDescription</key>
+	<string>Enables notifications for Managed Antivirus</string>
+	<key>PayloadDisplayName</key>
+	<string>Managed Antivirus Notifications</string>
+    <key>PayloadEnabled</key>
+    <true/>
+	<key>PayloadIdentifier</key>
+	<string>com.nable.mav.notifications</string>
+	<key>PayloadOrganization</key>
+	<string>N-able</string>
+	<key>PayloadRemovalDisallowed</key>
+	<false/>
+	<key>PayloadScope</key>
+	<string>System</string>
+	<key>PayloadType</key>
+	<string>Configuration</string>
+	<key>PayloadUUID</key>
+	<string>AE4A880B-504C-4449-B636-2F28DC1B0731</string>
+	<key>PayloadVersion</key>
+	<integer>2</integer>
+</dict>
+</plist>

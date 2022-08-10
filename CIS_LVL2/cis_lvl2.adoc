@@ -1,0 +1,10489 @@
+:doctype: book
+:stylesdir: ../../templates/
+:stylesheet: asciidoctor.css
+:experimental:
+:reproducible:
+:icons: font
+:chapter-label:
+:listing-caption: Listing
+:sectnums:
+:toc: preamble
+:toclevels: 4
+:xrefstyle: full
+:source-highlighter: rouge
+:nofooter:
+:show_171!:
+:show_STIG!:
+:show_cis:
+ifdef::backend-pdf[]
+= macOS 12.0: Security Configuration - CIS Benchmarks
+Monterey Guidance, Revision 2 (2022-03-16)
+:pdf-themesdir: ../../templates
+:title-logo-image: image:../../templates/images/mscp_banner.png[align=center]
+:nofooter!:
+endif::[]
+:data-uri:
+:allow-uri-read:
+ifdef::backend-html5[]
+:notitle:
+:title: macOS 12.0: Security Configuration - CIS Benchmarks
+:document-title: macOS 12.0
+:document-subtitle:  Security Configuration - CIS Benchmarks
+:version: Monterey Guidance, Revision 2 (2022-03-16)
+:os: 12.0
+:show_tags!:
+
+[cols="55s"]
+|======
+|image:../../templates/images/mscp_banner.png[]
+|======
+
+[cols="^.^1s",width="100%"]
+|======
+|+++ <span id="os" name="+++{os}+++"></span><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+<div class="doctitle">+++{document-title}+++</div><div class="docsub">+++{document-subtitle}+++</div><div class="docver">+++{version}+++</div><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+<br><br><br><br><br><br><br><br><br><br><br><br>+++
+|======
+endif::[]
+== Foreword
+
+The macOS Security Compliance Project is an open source effort to provide a programmatic approach to generating security guidance. The configuration settings in this document were derived from National Institute of Standards and Technology (NIST) Special Publication (SP) 800-53, _Security and Privacy Controls for Information Systems and Organizations_, Revision 5.
+
+This project can be used as a resource to easily create customized security baselines of technical security controls by leveraging a library of atomic actions which are mapped to the compliance requirements defined in NIST SP 800-53 (Rev. 5). It can also be used to develop customized guidance to meet the particular cybersecurity needs of any organization.  
+
+The objective of this effort was to simplify and radically accelerate the process of producing up-to-date macOS security guidance that is also accessible to any organization and tailorable to meet each organization’s specific security needs.
+
+Any and all risk based decisions to tailor the content produced by this project in order to meet the needs of a specific organization shall be approved by the responsible Information System Owner (ISO) and Authorizing Official (AO) and formally documented in their System Security Plan (SSP). While the project attempts to provide settings to meet compliance requirements, it is recommended that each rule be reviewed by your organization's Information System Security Officer (ISSO) prior to implementation.
+
+== Scope
+
+This guide describes the actions to take when securing a macOS system against the CIS Apple macOS 12.0 Monterey v1.0.0 Benchmark (Level 1 and 2)
+
+== Authors
+[width="100%",cols="1,3"]
+
+The CIS Benchmarks are referenced with the permission and support of the Center for Internet Security® (CIS®)
+|===
+|Edward Byrd|Center for Internet Security
+|Ron Colvin|Center for Internet Security
+|Allen Golbig|Jamf  
+|===
+
+
+////
+|===
+|Bob Gendler|National Institute of Standards and Technology
+|Allen Golbig|National Aeronautics and Space Administration
+|Dan Brodjieski|Defense Information Systems Agency
+|Jason Blake|National Institute of Standards and Technology
+|Blair Heiserman|National Institute of Standards and Technology
+|Joshua Glemza|National Aeronautics and Space Administration
+|Elyse Anderson|National Aeronautics and Space Administration
+|Gary Gapinski|National Aeronautics and Space Administration
+|===
+////
+== Acronyms and Definitions
+.Acronyms and Abbreviations
+[width="100%",cols="1,3"]
+|====
+|AES|Advanced Encryption Standard
+|ABM|Apple Business Manager
+|AFP|Apple Filing Protocol
+|ALF|Application Layer Firewall 
+|AO|Authorizing Official
+|API|Application Programming Interface
+|ARD|Apple Remote Desktop
+|CA|Certificate Authority
+|CIS|Center for Internet Security
+|CRL|Certificate Revocation List
+|DISA|Defense Information Systems Agency
+|DMA|Direct Memory Access
+|FISMA|Federal Information Security Modernization Act
+|FPKI|Federal Public Key Infrastructure
+|IR|Infrared
+|ISO|Information System Owner
+|ISSO|Information System Security Officer
+|MDM|Mobile Device Management
+|NASA|National Aeronautics and Space Administration
+|NFS|Network File System
+|NIST|National Institute of Standards and Technology
+|NSA|National Security Agency
+|OCSP|Online Certificate Status Protocol
+|OS|Operating System
+|PF|Packet Filter
+|PIV|Personal Identity Verification
+|PIV-M|Personal Identity Verification Mandatory
+|PKI|Public Key Infrastructure
+|SIP|System Integrity Protection
+|SMB|Server Message Block
+|SSH|Secure Shell
+|SSP|System Security Plan
+|STIG|Security Technical Implementation Guide
+|UAMDM|User Approved MDM
+|UUCP|Unix-to-Unix Copy Protocol
+|====
+== Applicable Documents
+=== Government Documents
+////
+ASSOCIATED DOCUMENTS
+  Add Government and Non-Government documents related to this handbook in this section.
+  Add to the tables between the |==== tags, below the header line
+  Example:
+    [%header, cols=2*a]                            <-- table format block
+    |====                                          <-- table opening tag
+    |Document Number or Descriptor|Document Title                <-- header line
+                                                   <-- empty line for readability (optional)
+
+                                                   <-- empty line for readability (optional)
+    |====                                          <-- table closing tag
+////
+[%header, cols=2*a]
+.National Institute of Standards and Technology (NIST)
+|===
+|Document Number or Descriptor
+|Document Title
+|link:https://nvd.nist.gov/800-53[NIST Special Publication 800-53 Rev 5]|_NIST Special Publication 800-53 Rev 5_
+|link:https://www.nist.gov/itl/tig/projects/special-publication-800-63[NIST Special Publication 800-63]|_NIST Special Publication 800-63_
+|link:https://csrc.nist.gov/publications/detail/sp/800-171/rev-2/final[NIST Special Publication 800-171]|_NIST Special Publication 800-171 Rev 2_
+|===
+
+[%header, cols=2*a]
+.Defense Information Systems Agency (DISA)
+|===
+|Document Number or Descriptor
+|Document Title
+|link:https://dl.dod.cyber.mil/wp-content/uploads/stigs/zip/U_Apple_macOS_12_V1R1_STIG.zip[STIG Ver 1, Rel 1]|_Apple macOS 12 (Monterey) STIG_
+|===
+
+[%header, cols=2*a]
+.Committee on National Security Systems (CNSS)
+|===
+|Document Number or Descriptor
+|Document Title 
+|link:https://www.cnss.gov/CNSS/issuances/Instructions.cfm[CNSSI No. 1253]|_Security Categorization and Control Selection for National Security Systems_
+|===
+
+=== Non-Government Documents
+[%header, cols=2*a]
+.Apple
+|===
+|Document Number or Descriptor
+|Document Title
+|link:https://support.apple.com/guide/security/welcome/web[Apple Platform Security Guide]|_Apple Platform Security_
+|link:https://support.apple.com/guide/deployment-reference-macos/welcome/web[Deployment Reference for Mac]|_Deployment Reference_
+|link:https://support.apple.com/guide/mdm/welcome/web[Mobile Device Management Settings]|_Mobile Device Management Settings_
+|link:https://developer.apple.com/documentation/devicemanagement/profile-specific_payload_keys[Profile-Specific Payload Keys]|_Profile-Specific Payload Keys_
+|link:https://support.apple.com/guide/sccc/welcome/web[Security Certifications and Compliance Center]|_Security Certifications and Compliance Center_
+|===
+
+[%header, cols=2*a]
+.Center for Internet Security
+|===
+|Document Number or Descriptor
+|Document Title
+|link:https://www.cisecurity.org/benchmark/apple_os/[Apple macOS 12.0]|_CIS Apple macOS 12.0 Benchmark version 1.0_
+|===
+== Auditing
+
+This section contains the configuration and enforcement of the OpenBSM settings.
+
+NOTE: The BSM Audit subsystem has been marked as deprecated by Apple.
+
+NOTE: The check/fix commands outlined in this section _MUST_ be run with elevated privileges. 
+
+=== Configure Audit Log Files to Not Contain Access Control Lists
+
+The audit log files _MUST_ not contain access control lists (ACLs).
+
+This rule ensures that audit information and audit files are configured to be readable and writable only by system administrators, thereby preventing unauthorized access, modification, and deletion of files.
+
+
+To check the state of the system, run the following command(s):
+[source,bash,options="nowrap"]
+----
+/bin/ls -le $(/usr/bin/grep '^dir' /etc/security/audit_control | /usr/bin/awk -F: '{print $2}') | /usr/bin/awk '{print $1}' | /usr/bin/grep -c ":"
+
+----
+
+If the result is not *0*, this is a finding.
+
+====
+**Remediation Description**
+
+Perform the following to configure the system to meet the requirements:
+
+[source,bash]
+----
+/bin/chmod -RN $(/usr/bin/awk -F: '/^dir/{print $2}' /etc/security/audit_control)
+----
+
+====
+
+[cols="15%h, 85%a"]
+|===
+
+|ID
+|audit_acls_files_configure
+
+|References
+|
+
+[cols="20%h,80%a"]
+[frame="none"]
+[grid="cols"]
+!===
+
+!800-53r5
+!
+ * AU-9
+
+ifdef::show_171[]
+!800-171r2
+!
+* 3.3.8
+
+endif::[]
+
+ifdef::show_STIG[]
+!DISA STIG(s)
+!
+* APPL-12-000030
+
+endif::[]
+
+ifdef::show_CIS[]
+
+!CIS Benchmark
+!
+* 3.5 (level 1)
+!CIS Controls V8
+!
+* 3.3
+
+endif::[]
+
+!CCE
+!
+* CCE-90851-7
+
+
+ifdef::show_tags[]
+!TAGS
+!
+* 800-53r5_low
+* 800-53r4_low
+* 800-53r4_moderate
+* 800-53r4_high
+* 800-53r5_moderate
+* 800-53r5_high
+* 800-171
+* cnssi-1253
+* cis_lvl1
+* cis_lvl2
+* cisv8
+* stig
+
+endif::[]
+
+!===
+
+|
+|===
+=== Configure Audit Log Folder to Not Contain Access Control Lists
+
+The audit log folder _MUST_ not contain access control lists (ACLs).
+
+Audit logs contain sensitive data about the system and users. This rule ensures that the audit service is configured to create log folders that are readable and writable only by system administrators in order to prevent normal users from reading audit logs.
+
+
+To check the state of the system, run the following command(s):
+[source,bash,options="nowrap"]
+----
+/bin/ls -lde $(/usr/bin/grep '^dir' /etc/security/audit_control | /usr/bin/awk -F: '{print $2}') | /usr/bin/awk '{print $1}' | /usr/bin/grep -c ":"
+
+----
+
+If the result is not *0*, this is a finding.
+
+====
+**Remediation Description**
+
+Perform the following to configure the system to meet the requirements:
+
+[source,bash]
+----
+/bin/chmod -N $(/usr/bin/grep '^dir' /etc/security/audit_control | /usr/bin/awk -F: '{print $2}')
+----
+
+====
+
+[cols="15%h, 85%a"]
+|===
+
+|ID
+|audit_acls_folders_configure
+
+|References
+|
+
+[cols="20%h,80%a"]
+[frame="none"]
+[grid="cols"]
+!===
+
+!800-53r5
+!
+ * AU-9
+
+ifdef::show_171[]
+!800-171r2
+!
+* 3.3.8
+
+endif::[]
+
+ifdef::show_STIG[]
+!DISA STIG(s)
+!
+* APPL-12-000031
+
+endif::[]
+
+ifdef::show_CIS[]
+
+!CIS Benchmark
+!
+* 3.5 (level 1)
+!CIS Controls V8
+!
+* 3.3
+
+endif::[]
+
+!CCE
+!
+* CCE-90852-5
+
+
+ifdef::show_tags[]
+!TAGS
+!
+* 800-53r5_low
+* 800-53r5_moderate
+* 800-53r5_high
+* 800-53r4_low
+* 800-53r4_moderate
+* 800-53r4_high
+* 800-171
+* cnssi-1253
+* cis_lvl1
+* cis_lvl2
+* cisv8
+* stig
+
+endif::[]
+
+!===
+
+|
+|===
+=== Enable Security Auditing
+
+The information system _MUST_ be configured to generate audit records. 
+
+Audit records establish what types of events have occurred, when they occurred, and which users were involved. These records aid an organization in their efforts to establish, correlate, and investigate the events leading up to an outage or attack.
+
+The content required to be captured in an audit record varies based on the impact level of an organization's system. Content that may be necessary to satisfy this requirement includes, for example, time stamps, source addresses, destination addresses, user identifiers, event descriptions, success/fail indications, filenames involved, and access or flow control rules invoked.
+
+The information system initiates session audits at system start-up.
+
+NOTE: Security auditing is enabled by default on macOS.
+
+
+To check the state of the system, run the following command(s):
+[source,bash,options="nowrap"]
+----
+/bin/launchctl list | /usr/bin/grep -c com.apple.auditd
+
+----
+
+If the result is not *1*, this is a finding.
+
+====
+**Remediation Description**
+
+Perform the following to configure the system to meet the requirements:
+
+[source,bash]
+----
+/bin/launchctl load -w /System/Library/LaunchDaemons/com.apple.auditd.plist
+----
+
+====
+
+[cols="15%h, 85%a"]
+|===
+
+|ID
+|audit_auditd_enabled
+
+|References
+|
+
+[cols="20%h,80%a"]
+[frame="none"]
+[grid="cols"]
+!===
+
+!800-53r5
+!
+ * AU-12, AU-12(1), AU-12(3)
+ * AU-14(1)
+ * AU-3, AU-3(1)
+ * AU-8
+ * CM-5(1)
+ * MA-4(1)
+
+ifdef::show_171[]
+!800-171r2
+!
+* 3.3.1
+* 3.3.2
+* 3.3.7
+
+endif::[]
+
+ifdef::show_STIG[]
+!DISA STIG(s)
+!
+* APPL-12-001003
+
+endif::[]
+
+ifdef::show_CIS[]
+
+!CIS Benchmark
+!
+* 3.1 (level 1)
+!CIS Controls V8
+!
+* 8.2, 8.5
+
+endif::[]
+
+!CCE
+!
+* CCE-90854-1
+
+
+ifdef::show_tags[]
+!TAGS
+!
+* 800-53r5_low
+* 800-53r5_moderate
+* 800-53r5_high
+* 800-53r4_low
+* 800-53r4_moderate
+* 800-53r4_high
+* 800-171
+* cnssi-1253
+* cis_lvl1
+* cis_lvl2
+* cisv8
+* stig
+
+endif::[]
+
+!===
+
+|
+|===
+=== Configure Audit_Control to Not Contain Access Control Lists
+
+/etc/security/audit_control _MUST_ not contain Access Control Lists (ACLs).
+
+
+To check the state of the system, run the following command(s):
+[source,bash,options="nowrap"]
+----
+/bin/ls -le /etc/security/audit_control | /usr/bin/awk '{print $1}' | /usr/bin/grep -c ":"
+
+----
+
+If the result is not *0*, this is a finding.
+
+====
+**Remediation Description**
+
+Perform the following to configure the system to meet the requirements:
+
+[source,bash]
+----
+/bin/chmod -N /etc/security/audit_control
+----
+
+====
+
+[cols="15%h, 85%a"]
+|===
+
+|ID
+|audit_control_acls_configure
+
+|References
+|
+
+[cols="20%h,80%a"]
+[frame="none"]
+[grid="cols"]
+!===
+
+!800-53r5
+!
+ * AU-9
+
+ifdef::show_171[]
+!800-171r2
+!
+* N/A
+
+endif::[]
+
+ifdef::show_STIG[]
+!DISA STIG(s)
+!
+* N/A
+
+endif::[]
+
+ifdef::show_CIS[]
+
+!CIS Benchmark
+!
+* 3.5 (level 1)
+!CIS Controls V8
+!
+* 3.3
+
+endif::[]
+
+!CCE
+!
+* CCE-91088-5
+
+
+ifdef::show_tags[]
+!TAGS
+!
+* cis_lvl1
+* cis_lvl2
+* cisv8
+
+endif::[]
+
+!===
+
+|
+|===
+=== Configure Audit_Control Group to Wheel
+
+/etc/security/audit_control _MUST_ have the group set to wheel.
+
+
+To check the state of the system, run the following command(s):
+[source,bash,options="nowrap"]
+----
+/bin/ls -dn /etc/security/audit_control | /usr/bin/awk '{print $4}'
+
+----
+
+If the result is not *0*, this is a finding.
+
+====
+**Remediation Description**
+
+Perform the following to configure the system to meet the requirements:
+
+[source,bash]
+----
+/usr/bin/chgrp wheel /etc/security/audit_control
+----
+
+====
+
+[cols="15%h, 85%a"]
+|===
+
+|ID
+|audit_control_group_configure
+
+|References
+|
+
+[cols="20%h,80%a"]
+[frame="none"]
+[grid="cols"]
+!===
+
+!800-53r5
+!
+ * AU-9
+
+ifdef::show_171[]
+!800-171r2
+!
+* N/A
+
+endif::[]
+
+ifdef::show_STIG[]
+!DISA STIG(s)
+!
+* N/A
+
+endif::[]
+
+ifdef::show_CIS[]
+
+!CIS Benchmark
+!
+* 3.5 (level 1)
+!CIS Controls V8
+!
+* 3.3
+
+endif::[]
+
+!CCE
+!
+* CCE-91089-3
+
+
+ifdef::show_tags[]
+!TAGS
+!
+* cis_lvl1
+* cis_lvl2
+* cisv8
+
+endif::[]
+
+!===
+
+|
+|===
+=== Configure Audit_Control Owner to Mode 440 or Less Permissive
+
+/etc/security/audit_control _MUST_ be configured so that it is readable only by the root user and group wheel.
+
+
+To check the state of the system, run the following command(s):
+[source,bash,options="nowrap"]
+----
+/bin/ls -l /etc/security/audit_control | awk '!/-r--r-----|current|total/{print $1}' | /usr/bin/wc -l | /usr/bin/xargs
+
+----
+
+If the result is not *0*, this is a finding.
+
+====
+**Remediation Description**
+
+Perform the following to configure the system to meet the requirements:
+
+[source,bash]
+----
+/bin/chmod 440 /etc/security/audit_control
+----
+
+====
+
+[cols="15%h, 85%a"]
+|===
+
+|ID
+|audit_control_mode_configure
+
+|References
+|
+
+[cols="20%h,80%a"]
+[frame="none"]
+[grid="cols"]
+!===
+
+!800-53r5
+!
+ * AU-9
+
+ifdef::show_171[]
+!800-171r2
+!
+* N/A
+
+endif::[]
+
+ifdef::show_STIG[]
+!DISA STIG(s)
+!
+* N/A
+
+endif::[]
+
+ifdef::show_CIS[]
+
+!CIS Benchmark
+!
+* 3.5 (level 1)
+!CIS Controls V8
+!
+* 3.3
+
+endif::[]
+
+!CCE
+!
+* CCE-91090-1
+
+
+ifdef::show_tags[]
+!TAGS
+!
+* cis_lvl1
+* cis_lvl2
+* cisv8
+
+endif::[]
+
+!===
+
+|
+|===
+=== Configure Audit_Control Owner to Root
+
+/etc/security/audit_control _MUST_ have the owner set to root.
+
+
+To check the state of the system, run the following command(s):
+[source,bash,options="nowrap"]
+----
+/bin/ls -dn /etc/security/audit_control | /usr/bin/awk '{print $3}'
+
+----
+
+If the result is not *0*, this is a finding.
+
+====
+**Remediation Description**
+
+Perform the following to configure the system to meet the requirements:
+
+[source,bash]
+----
+/usr/sbin/chown root /etc/security/audit_control
+----
+
+====
+
+[cols="15%h, 85%a"]
+|===
+
+|ID
+|audit_control_owner_configure
+
+|References
+|
+
+[cols="20%h,80%a"]
+[frame="none"]
+[grid="cols"]
+!===
+
+!800-53r5
+!
+ * AU-9
+
+ifdef::show_171[]
+!800-171r2
+!
+* N/A
+
+endif::[]
+
+ifdef::show_STIG[]
+!DISA STIG(s)
+!
+* N/A
+
+endif::[]
+
+ifdef::show_CIS[]
+
+!CIS Benchmark
+!
+* 3.5 (level 1)
+!CIS Controls V8
+!
+* 3.3
+
+endif::[]
+
+!CCE
+!
+* CCE-91091-9
+
+
+ifdef::show_tags[]
+!TAGS
+!
+* cis_lvl1
+* cis_lvl2
+* cisv8
+
+endif::[]
+
+!===
+
+|
+|===
+=== Configure Audit Log Files Group to Wheel
+
+Audit log files _MUST_ have the group set to wheel.
+
+The audit service _MUST_ be configured to create log files with the correct group ownership to prevent normal users from reading audit logs. 
+
+Audit logs contain sensitive data about the system and users. If log files are set to be readable and writable only by system administrators, the risk is mitigated.
+
+
+To check the state of the system, run the following command(s):
+[source,bash,options="nowrap"]
+----
+/bin/ls -n $(/usr/bin/grep '^dir' /etc/security/audit_control | /usr/bin/awk -F: '{print $2}') | /usr/bin/awk '{s+=$4} END {print s}'
+
+----
+
+If the result is not *0*, this is a finding.
+
+====
+**Remediation Description**
+
+Perform the following to configure the system to meet the requirements:
+
+[source,bash]
+----
+/usr/bin/chgrp -R wheel $(/usr/bin/grep '^dir' /etc/security/audit_control | /usr/bin/awk -F: '{print $2}')/*
+----
+
+====
+
+[cols="15%h, 85%a"]
+|===
+
+|ID
+|audit_files_group_configure
+
+|References
+|
+
+[cols="20%h,80%a"]
+[frame="none"]
+[grid="cols"]
+!===
+
+!800-53r5
+!
+ * AU-9
+
+ifdef::show_171[]
+!800-171r2
+!
+* 3.3.8
+
+endif::[]
+
+ifdef::show_STIG[]
+!DISA STIG(s)
+!
+* APPL-12-001014
+
+endif::[]
+
+ifdef::show_CIS[]
+
+!CIS Benchmark
+!
+* 3.5 (level 1)
+!CIS Controls V8
+!
+* 3.3
+
+endif::[]
+
+!CCE
+!
+* CCE-90858-2
+
+
+ifdef::show_tags[]
+!TAGS
+!
+* 800-53r5_low
+* 800-53r5_moderate
+* 800-53r5_high
+* 800-53r4_low
+* 800-53r4_moderate
+* 800-53r4_high
+* 800-171
+* cnssi-1253
+* cis_lvl1
+* cis_lvl2
+* cisv8
+* stig
+
+endif::[]
+
+!===
+
+|
+|===
+=== Configure Audit Log Files to Mode 440 or Less Permissive
+
+The audit service _MUST_ be configured to create log files that are readable only by the root user and group wheel. To achieve this, audit log files _MUST_ be configured to mode 440 or less permissive; thereby preventing normal users from reading, modifying or deleting audit logs. 
+
+
+To check the state of the system, run the following command(s):
+[source,bash,options="nowrap"]
+----
+/bin/ls -l $(/usr/bin/grep '^dir' /etc/security/audit_control | /usr/bin/awk -F: '{print $2}') | /usr/bin/awk '!/-r--r-----|current|total/{print $1}' | /usr/bin/wc -l | /usr/bin/tr -d ' '
+
+----
+
+If the result is not *0*, this is a finding.
+
+====
+**Remediation Description**
+
+Perform the following to configure the system to meet the requirements:
+
+[source,bash]
+----
+/bin/chmod 440 $(/usr/bin/grep '^dir' /etc/security/audit_control | /usr/bin/awk -F: '{print $2}')/*
+----
+
+====
+
+[cols="15%h, 85%a"]
+|===
+
+|ID
+|audit_files_mode_configure
+
+|References
+|
+
+[cols="20%h,80%a"]
+[frame="none"]
+[grid="cols"]
+!===
+
+!800-53r5
+!
+ * AU-9
+
+ifdef::show_171[]
+!800-171r2
+!
+* 3.3.8
+
+endif::[]
+
+ifdef::show_STIG[]
+!DISA STIG(s)
+!
+* APPL-12-001016
+
+endif::[]
+
+ifdef::show_CIS[]
+
+!CIS Benchmark
+!
+* 3.5 (level 1)
+!CIS Controls V8
+!
+* 3.3
+
+endif::[]
+
+!CCE
+!
+* CCE-90859-0
+
+
+ifdef::show_tags[]
+!TAGS
+!
+* 800-53r5_low
+* 800-53r5_moderate
+* 800-53r5_high
+* 800-53r4_low
+* 800-53r4_moderate
+* 800-53r4_high
+* 800-171
+* cnssi-1253
+* cis_lvl1
+* cis_lvl2
+* cisv8
+* stig
+
+endif::[]
+
+!===
+
+|
+|===
+=== Configure Audit Log Files to be Owned by Root
+
+Audit log files _MUST_ be owned by root.
+
+The audit service _MUST_ be configured to create log files with the correct ownership to prevent normal users from reading audit logs.
+
+Audit logs contain sensitive data about the system and users. If log files are set to only be readable and writable by system administrators, the risk is mitigated.
+
+
+To check the state of the system, run the following command(s):
+[source,bash,options="nowrap"]
+----
+/bin/ls -n $(/usr/bin/grep '^dir' /etc/security/audit_control | /usr/bin/awk -F: '{print $2}') | /usr/bin/awk '{s+=$3} END {print s}'  
+
+----
+
+If the result is not *0*, this is a finding.
+
+====
+**Remediation Description**
+
+Perform the following to configure the system to meet the requirements:
+
+[source,bash]
+----
+/usr/sbin/chown -R root $(/usr/bin/grep '^dir' /etc/security/audit_control | /usr/bin/awk -F: '{print $2}')/*
+----
+
+====
+
+[cols="15%h, 85%a"]
+|===
+
+|ID
+|audit_files_owner_configure
+
+|References
+|
+
+[cols="20%h,80%a"]
+[frame="none"]
+[grid="cols"]
+!===
+
+!800-53r5
+!
+ * AU-9
+
+ifdef::show_171[]
+!800-171r2
+!
+* 3.3.8
+
+endif::[]
+
+ifdef::show_STIG[]
+!DISA STIG(s)
+!
+* APPL-12-001012
+
+endif::[]
+
+ifdef::show_CIS[]
+
+!CIS Benchmark
+!
+* 3.5 (level 1)
+!CIS Controls V8
+!
+* 3.3
+
+endif::[]
+
+!CCE
+!
+* CCE-90860-8
+
+
+ifdef::show_tags[]
+!TAGS
+!
+* 800-53r5_low
+* 800-53r5_moderate
+* 800-53r5_high
+* 800-53r4_low
+* 800-53r4_moderate
+* 800-53r4_high
+* 800-171
+* cnssi-1253
+* cis_lvl1
+* cis_lvl2
+* cisv8
+* stig
+
+endif::[]
+
+!===
+
+|
+|===
+=== Configure Audit Flags
+
+The auditing system _MUST_ be configured with at least the minimal flags of fm, ad, -ex, aa, -fr, lo, and -fw.
+
+
+To check the state of the system, run the following command(s):
+[source,bash,options="nowrap"]
+----
+/usr/bin/sed -n 's/^flags://p' /etc/security/audit_control | /usr/bin/grep -ce 'fm,ad,\-ex,aa,\-fr,lo,\-fw'
+
+----
+
+If the result is not *1*, this is a finding.
+
+====
+**Remediation Description**
+
+Perform the following to configure the system to meet the requirements:
+
+[source,bash]
+----
+/usr/bin/sed -i '' 's/^flags:.*/flags:fm,ad,\-ex,aa,\-fr,lo,\-fw/' /etc/security/audit_control; /usr/sbin/audit -s
+----
+
+NOTE: NOTE: This fix will replace the contents of the flags: line in `/etc/security/audit_control`, if you have customized the flags, your changes may be overwritten.
+
+====
+
+[cols="15%h, 85%a"]
+|===
+
+|ID
+|audit_flags_configure
+
+|References
+|
+
+[cols="20%h,80%a"]
+[frame="none"]
+[grid="cols"]
+!===
+
+!800-53r5
+!
+ * AC-2(12)
+ * AU-12
+ * AU-2
+ * CM-5(1)
+ * MA-4(1)
+
+ifdef::show_171[]
+!800-171r2
+!
+* N/A
+
+endif::[]
+
+ifdef::show_STIG[]
+!DISA STIG(s)
+!
+* N/A
+
+endif::[]
+
+ifdef::show_CIS[]
+
+!CIS Benchmark
+!
+* 3.2 (level 2)
+!CIS Controls V8
+!
+* 3.14, 8.2, 8.5
+
+endif::[]
+
+!CCE
+!
+* CCE-91092-7
+
+
+ifdef::show_tags[]
+!TAGS
+!
+* cis_lvl2
+* cisv8
+
+endif::[]
+
+!===
+
+|
+|===
+=== Configure Audit Log Folders Group to Wheel
+
+Audit log files _MUST_ have the group set to wheel.
+
+The audit service _MUST_ be configured to create log files with the correct group ownership to prevent normal users from reading audit logs. 
+
+Audit logs contain sensitive data about the system and users. If log files are set to be readable and writable only by system administrators, the risk is mitigated.
+
+
+To check the state of the system, run the following command(s):
+[source,bash,options="nowrap"]
+----
+/bin/ls -dn $(/usr/bin/grep '^dir' /etc/security/audit_control | /usr/bin/awk -F: '{print $2}') | /usr/bin/awk '{print $4}'
+
+----
+
+If the result is not *0*, this is a finding.
+
+====
+**Remediation Description**
+
+Perform the following to configure the system to meet the requirements:
+
+[source,bash]
+----
+/usr/bin/chgrp wheel $(/usr/bin/awk -F : '/^dir/{print $2}' /etc/security/audit_control)
+----
+
+====
+
+[cols="15%h, 85%a"]
+|===
+
+|ID
+|audit_folder_group_configure
+
+|References
+|
+
+[cols="20%h,80%a"]
+[frame="none"]
+[grid="cols"]
+!===
+
+!800-53r5
+!
+ * AU-9
+
+ifdef::show_171[]
+!800-171r2
+!
+* 3.3.8
+
+endif::[]
+
+ifdef::show_STIG[]
+!DISA STIG(s)
+!
+* APPL-12-001015
+
+endif::[]
+
+ifdef::show_CIS[]
+
+!CIS Benchmark
+!
+* 3.5 (level 1)
+!CIS Controls V8
+!
+* 3.3
+
+endif::[]
+
+!CCE
+!
+* CCE-90869-9
+
+
+ifdef::show_tags[]
+!TAGS
+!
+* 800-53r5_low
+* 800-53r5_moderate
+* 800-53r5_high
+* 800-53r4_low
+* 800-53r4_moderate
+* 800-53r4_high
+* 800-171
+* cnssi-1253
+* cis_lvl1
+* cis_lvl2
+* cisv8
+* stig
+
+endif::[]
+
+!===
+
+|
+|===
+=== Configure Audit Log Folders to be Owned by Root
+
+Audit log files _MUST_ be owned by root.
+
+The audit service _MUST_ be configured to create log files with the correct ownership to prevent normal users from reading audit logs.
+
+Audit logs contain sensitive data about the system and users. If log files are set to only be readable and writable by system administrators, the risk is mitigated.
+
+
+To check the state of the system, run the following command(s):
+[source,bash,options="nowrap"]
+----
+/bin/ls -dn $(/usr/bin/grep '^dir' /etc/security/audit_control | /usr/bin/awk -F: '{print $2}') | /usr/bin/awk '{print $3}'
+
+----
+
+If the result is not *0*, this is a finding.
+
+====
+**Remediation Description**
+
+Perform the following to configure the system to meet the requirements:
+
+[source,bash]
+----
+/usr/sbin/chown root $(/usr/bin/awk -F : '/^dir/{print $2}' /etc/security/audit_control)
+----
+
+====
+
+[cols="15%h, 85%a"]
+|===
+
+|ID
+|audit_folder_owner_configure
+
+|References
+|
+
+[cols="20%h,80%a"]
+[frame="none"]
+[grid="cols"]
+!===
+
+!800-53r5
+!
+ * AU-9
+
+ifdef::show_171[]
+!800-171r2
+!
+* 3.3.8
+
+endif::[]
+
+ifdef::show_STIG[]
+!DISA STIG(s)
+!
+* APPL-12-001013
+
+endif::[]
+
+ifdef::show_CIS[]
+
+!CIS Benchmark
+!
+* 3.5 (level 1)
+!CIS Controls V8
+!
+* 3.3
+
+endif::[]
+
+!CCE
+!
+* CCE-90870-7
+
+
+ifdef::show_tags[]
+!TAGS
+!
+* 800-53r5_low
+* 800-53r5_moderate
+* 800-53r5_high
+* 800-53r4_low
+* 800-53r4_moderate
+* 800-53r4_high
+* 800-171
+* cnssi-1253
+* cis_lvl1
+* cis_lvl2
+* cisv8
+* stig
+
+endif::[]
+
+!===
+
+|
+|===
+=== Configure Audit Log Folders to Mode 700 or Less Permissive
+
+The audit log folder _MUST_ be configured to mode 700 or less permissive so that only the root user is able to read, write, and execute changes to folders. 
+
+Because audit logs contain sensitive data about the system and users, the audit service _MUST_ be configured to mode 700 or less permissive; thereby preventing normal users from reading, modifying or deleting audit logs. 
+
+
+To check the state of the system, run the following command(s):
+[source,bash,options="nowrap"]
+----
+/usr/bin/stat -f %A $(/usr/bin/grep '^dir' /etc/security/audit_control | /usr/bin/awk -F: '{print $2}')
+
+----
+
+If the result is not *700*, this is a finding.
+
+====
+**Remediation Description**
+
+Perform the following to configure the system to meet the requirements:
+
+[source,bash]
+----
+/bin/chmod 700 $(/usr/bin/grep '^dir' /etc/security/audit_control | /usr/bin/awk -F: '{print $2}')
+----
+
+====
+
+[cols="15%h, 85%a"]
+|===
+
+|ID
+|audit_folders_mode_configure
+
+|References
+|
+
+[cols="20%h,80%a"]
+[frame="none"]
+[grid="cols"]
+!===
+
+!800-53r5
+!
+ * AU-9
+
+ifdef::show_171[]
+!800-171r2
+!
+* 3.3.8
+
+endif::[]
+
+ifdef::show_STIG[]
+!DISA STIG(s)
+!
+* APPL-12-001017
+
+endif::[]
+
+ifdef::show_CIS[]
+
+!CIS Benchmark
+!
+* 3.5 (level 1)
+!CIS Controls V8
+!
+* 3.3
+
+endif::[]
+
+!CCE
+!
+* CCE-90871-5
+
+
+ifdef::show_tags[]
+!TAGS
+!
+* 800-53r5_low
+* 800-53r5_moderate
+* 800-53r5_high
+* 800-53r4_low
+* 800-53r4_moderate
+* 800-53r4_high
+* 800-171
+* cnssi-1253
+* cis_lvl1
+* cis_lvl2
+* cisv8
+* stig
+
+endif::[]
+
+!===
+
+|
+|===
+=== Configure Audit Retention to a Minimum of Sixty Days or One Gigabyte
+
+The audit service _MUST_ be configured to require records be kept for sixty days or longer before deletion, unless the system uses a central audit record storage facility. 
+
+When "expire-after" is set to "60d", the audit service will not delete audit logs until the log data is at least sixty days old.
+
+
+To check the state of the system, run the following command(s):
+[source,bash,options="nowrap"]
+----
+/usr/bin/awk -F: '/expire-after/{print $2}' /etc/security/audit_control
+
+----
+
+If the result is not *60d or 1G*, this is a finding.
+
+====
+**Remediation Description**
+
+Perform the following to configure the system to meet the requirements:
+
+[source,bash]
+----
+/usr/bin/sed -i.bak 's/^expire-after.*/expire-after:60d or 1G/' /etc/security/audit_control; /usr/sbin/audit -s
+----
+
+====
+
+[cols="15%h, 85%a"]
+|===
+
+|ID
+|audit_retention_configure_sixty_days
+
+|References
+|
+
+[cols="20%h,80%a"]
+[frame="none"]
+[grid="cols"]
+!===
+
+!800-53r5
+!
+ * AU-11
+ * AU-4
+
+ifdef::show_171[]
+!800-171r2
+!- N/A
+endif::[]
+
+ifdef::show_STIG[]
+!DISA STIG(s)
+!
+* N/A
+
+endif::[]
+
+ifdef::show_CIS[]
+
+!CIS Benchmark
+!
+* 3.4 (level 1)
+!CIS Controls V8
+!
+* 8.3, 8.1
+
+endif::[]
+
+!CCE
+!
+* CCE-91093-5
+
+
+ifdef::show_tags[]
+!TAGS
+!
+* cis_lvl1
+* cis_lvl2
+* cisv8
+
+endif::[]
+
+!===
+
+|
+|===
+== macOS
+
+This section contains the configuration and enforcement of operating system settings.
+
+NOTE: The check/fix commands outlined in this section _MUST_ be run by a user with elevated privileges. 
+
+=== Disable AirDrop
+
+AirDrop _MUST_ be disabled to prevent file transfers to or from unauthorized devices.
+AirDrop allows users to share and receive files from other nearby Apple devices.
+
+To check the state of the system, run the following command(s):
+[source,bash,options="nowrap"]
+----
+/usr/bin/osascript -l JavaScript << EOS
+$.NSUserDefaults.alloc.initWithSuiteName('com.apple.applicationaccess')\
+.objectForKey('allowAirDrop').js
+EOS
+
+----
+
+If the result is not *false*, this is a finding.
+
+====
+**Remediation Description**
+
+Perform the following to configure the system to meet the requirements:
+
+Create a configuration profile containing the following keys in the (com.apple.applicationaccess) payload type:
+
+[source,xml]
+----
+<key>allowAirDrop</key>
+<false/>
+----
+
+
+====
+
+[cols="15%h, 85%a"]
+|===
+
+|ID
+|os_airdrop_disable
+
+|References
+|
+
+[cols="20%h,80%a"]
+[frame="none"]
+[grid="cols"]
+!===
+
+!800-53r5
+!
+ * AC-20
+ * AC-3
+ * CM-7, CM-7(1)
+
+ifdef::show_171[]
+!800-171r2
+!
+* 3.1.1
+* 3.1.2
+* 3.1.16
+* 3.1.20
+* 3.4.6
+
+endif::[]
+
+ifdef::show_STIG[]
+!DISA STIG(s)
+!
+* APPL-12-002009
+
+endif::[]
+
+ifdef::show_CIS[]
+
+!CIS Benchmark
+!
+* 2.4.11 (level 1)
+!CIS Controls V8
+!
+* 4.1, 4.8, 6.7
+
+endif::[]
+
+!CCE
+!
+* CCE-90898-8
+
+
+ifdef::show_tags[]
+!TAGS
+!
+* 800-53r5_low
+* 800-53r5_moderate
+* 800-53r5_high
+* 800-53r4_low
+* 800-53r4_moderate
+* 800-53r4_high
+* 800-171
+* cnssi-1253
+* cis_lvl1
+* cis_lvl2
+* cisv8
+* stig
+
+endif::[]
+
+!===
+
+|
+|===
+=== Enable Authenticated Root
+
+Authenticated Root _MUST_ be enabled. 
+
+When Authenticated Root is enabled the macOS is booted from a signed volume that is cryptographically protected to prevent tampering with the system volume.
+
+NOTE: Authenticated Root is enabled by default on macOS systems.
+
+
+To check the state of the system, run the following command(s):
+[source,bash,options="nowrap"]
+----
+/usr/bin/csrutil authenticated-root | /usr/bin/grep -c 'enabled'
+
+----
+
+If the result is not *1*, this is a finding.
+
+====
+**Remediation Description**
+
+Perform the following to configure the system to meet the requirements:
+
+[source,bash]
+----
+/usr/bin/csrutil authenticated-root enable
+----
+NOTE: To re-enable "Authenticated Root", boot the affected system into "Recovery" mode, launch "Terminal" from the "Utilities" menu, and run the command.
+
+====
+
+[cols="15%h, 85%a"]
+|===
+
+|ID
+|os_authenticated_root_enable
+
+|References
+|
+
+[cols="20%h,80%a"]
+[frame="none"]
+[grid="cols"]
+!===
+
+!800-53r5
+!
+ * AC-3
+ * CM-5
+ * MA-4(1)
+ * SC-34
+ * SI-7, SI-7(6)
+
+ifdef::show_171[]
+!800-171r2
+!
+* 3.1.1
+* 3.1.2
+* 3.4.5
+
+endif::[]
+
+ifdef::show_STIG[]
+!DISA STIG(s)
+!
+* N/A
+
+endif::[]
+
+ifdef::show_CIS[]
+
+!CIS Benchmark
+!
+* 5.1.5 (level 1)
+!CIS Controls V8
+!
+* 3.3
+
+endif::[]
+
+!CCE
+!
+* CCE-90907-7
+
+
+ifdef::show_tags[]
+!TAGS
+!
+* 800-53r5_low
+* 800-53r5_moderate
+* 800-53r5_high
+* 800-53r4_low
+* 800-53r4_moderate
+* 800-53r4_high
+* 800-171
+* cnssi-1253
+* cis_lvl1
+* cis_lvl2
+* cisv8
+
+endif::[]
+
+!===
+
+|
+|===
+=== Disable Bonjour Multicast
+
+Bonjour multicast advertising _MUST_ be disabled to prevent the system from broadcasting its presence and available services over network interfaces.
+
+
+To check the state of the system, run the following command(s):
+[source,bash,options="nowrap"]
+----
+/usr/bin/osascript -l JavaScript << EOS
+$.NSUserDefaults.alloc.initWithSuiteName('com.apple.mDNSResponder')\
+.objectForKey('NoMulticastAdvertisements').js
+EOS
+
+----
+
+If the result is not *true*, this is a finding.
+
+====
+**Remediation Description**
+
+Perform the following to configure the system to meet the requirements:
+
+Create a configuration profile containing the following keys in the (com.apple.mDNSResponder) payload type:
+
+[source,xml]
+----
+<key>NoMulticastAdvertisements</key>
+<true/>
+----
+
+
+====
+
+[cols="15%h, 85%a"]
+|===
+
+|ID
+|os_bonjour_disable
+
+|References
+|
+
+[cols="20%h,80%a"]
+[frame="none"]
+[grid="cols"]
+!===
+
+!800-53r5
+!
+ * CM-7, CM-7(1)
+
+ifdef::show_171[]
+!800-171r2
+!
+* 3.4.6
+
+endif::[]
+
+ifdef::show_STIG[]
+!DISA STIG(s)
+!
+* APPL-12-002005
+
+endif::[]
+
+ifdef::show_CIS[]
+
+!CIS Benchmark
+!
+* 4.1 (level 2)
+!CIS Controls V8
+!
+* 4.1, 4.8
+
+endif::[]
+
+!CCE
+!
+* CCE-90908-5
+
+
+ifdef::show_tags[]
+!TAGS
+!
+* 800-53r5_low
+* 800-53r5_moderate
+* 800-53r5_high
+* 800-53r4_low
+* 800-53r4_moderate
+* 800-53r4_high
+* 800-171
+* cnssi-1253
+* cis_lvl2
+* cisv8
+* stig
+
+endif::[]
+
+!===
+
+|
+|===
+=== Enforce Installation of XProtect, MRT, and Gatekeeper Updates Automatically
+
+Software Update _MUST_ be configured to update XProtect, MRT, and Gatekeepr automatically.
+
+This setting enforces definition updates for XProtect, MRT, and Gatekeeper; with this setting in place, new malware and adware that Apple has added to the list of malware or untrusted software will not execute. These updates do not require the computer to be restarted.
+
+link:https://support.apple.com/en-us/HT207005[]
+
+NOTE: Software update will automatically update XProtect, MRT, and Gatekeeper by default in the macOS.
+
+
+To check the state of the system, run the following command(s):
+[source,bash,options="nowrap"]
+----
+/usr/bin/osascript -l JavaScript << EOS
+$.NSUserDefaults.alloc.initWithSuiteName('com.apple.SoftwareUpdate')\
+.objectForKey('ConfigDataInstall').js
+EOS
+
+----
+
+If the result is not *true*, this is a finding.
+
+====
+**Remediation Description**
+
+Perform the following to configure the system to meet the requirements:
+
+Create a configuration profile containing the following keys in the (com.apple.SoftwareUpdate) payload type:
+
+[source,xml]
+----
+<key>ConfigDataInstall</key>
+<true/>
+----
+
+
+====
+
+[cols="15%h, 85%a"]
+|===
+
+|ID
+|os_config_data_install_enforce
+
+|References
+|
+
+[cols="20%h,80%a"]
+[frame="none"]
+[grid="cols"]
+!===
+
+!800-53r5
+!
+ * SI-2(5)
+ * SI-3
+
+ifdef::show_171[]
+!800-171r2
+!
+* N/A
+
+endif::[]
+
+ifdef::show_STIG[]
+!DISA STIG(s)
+!
+* APPL-12-002070
+
+endif::[]
+
+ifdef::show_CIS[]
+
+!CIS Benchmark
+!
+* 1.5 (level 1)
+!CIS Controls V8
+!
+* 10.1, 10.2, 10.4
+
+endif::[]
+
+!CCE
+!
+* CCE-90913-5
+
+
+ifdef::show_tags[]
+!TAGS
+!
+* 800-53r5_low
+* 800-53r5_moderate
+* 800-53r5_high
+* cis_lvl1
+* cis_lvl2
+* cisv8
+* stig
+
+endif::[]
+
+!===
+
+|
+|===
+=== Ensure Extensible Firmware Interface Version is Valid
+
+The macOS Extensible Firmware Interface (EFI) _MUST_ be checked to ensure it is a known good version from Apple.
+
+
+To check the state of the system, run the following command(s):
+[source,bash,options="nowrap"]
+----
+if /usr/sbin/ioreg -w 0 -c AppleSEPManager | /usr/bin/grep -q AppleSEPManager; then echo "1"; else /usr/libexec/firmwarecheckers/eficheck/eficheck --integrity-check | /usr/bin/grep -c "No changes detected"; fi
+
+----
+
+If the result is not *1*, this is a finding.
+
+====
+**Remediation Description**
+
+Perform the following to configure the system to meet the requirements:
+
+Install a known good version of macOS.
+
+====
+
+[cols="15%h, 85%a"]
+|===
+
+|ID
+|os_efi_integrity_validated
+
+|References
+|
+
+[cols="20%h,80%a"]
+[frame="none"]
+[grid="cols"]
+!===
+
+!800-53r5
+!
+ * N/A
+
+ifdef::show_171[]
+!800-171r2
+!
+* N/A
+
+endif::[]
+
+ifdef::show_STIG[]
+!DISA STIG(s)
+!- N/A
+endif::[]
+
+ifdef::show_CIS[]
+
+!CIS Benchmark
+!
+* 2.11 (level 1)
+!CIS Controls V8
+!
+* 2.2
+
+endif::[]
+
+!CCE
+!
+* CCE-91102-4
+
+
+ifdef::show_tags[]
+!TAGS
+!
+* cis_lvl1
+* cis_lvl2
+* cisv8
+* i386
+
+endif::[]
+
+!===
+
+|
+|===
+=== Enable Firewall Logging
+
+Firewall logging _MUST_ be enabled. 
+
+Firewall logging ensures that malicious network activity will be logged to the system. 
+
+NOTE: The firewall data is logged to Apple's Unified Logging with the subsystem `com.apple.alf` and the data is marked as private. In order to enable private data, review the `com.apple.alf.private_data.mobileconfig` file in the project's `includes` folder. 
+
+
+To check the state of the system, run the following command(s):
+[source,bash,options="nowrap"]
+----
+/usr/bin/osascript -l JavaScript << EOS
+function run() {
+  let pref1 = $.NSUserDefaults.alloc.initWithSuiteName('com.apple.security.firewall')\
+  .objectForKey('EnableLogging').js
+  let pref2 = $.NSUserDefaults.alloc.initWithSuiteName('com.apple.security.firewall')\
+  .objectForKey('LoggingOption').js
+  if ( pref1 == true && pref2 == "detail" ){
+    return("true")
+  } else {
+    return("false")
+  }
+}
+EOS
+
+----
+
+If the result is not *true*, this is a finding.
+
+====
+**Remediation Description**
+
+Perform the following to configure the system to meet the requirements:
+
+Create a configuration profile containing the following keys in the (com.apple.security.firewall) payload type:
+
+[source,xml]
+----
+<key>EnableLogging</key>
+<true/>
+<key>LoggingOption</key>
+<string>detail</string>
+----
+
+
+====
+
+[cols="15%h, 85%a"]
+|===
+
+|ID
+|os_firewall_log_enable
+
+|References
+|
+
+[cols="20%h,80%a"]
+[frame="none"]
+[grid="cols"]
+!===
+
+!800-53r5
+!
+ * AU-12
+ * SC-7
+
+ifdef::show_171[]
+!800-171r2
+!
+* 3.3.1
+* 3.3.2
+* 3.13.1
+* 3.13.2
+* 3.13.5
+
+endif::[]
+
+ifdef::show_STIG[]
+!DISA STIG(s)
+!
+* N/A
+
+endif::[]
+
+ifdef::show_CIS[]
+
+!CIS Benchmark
+!
+* 3.6 (level 1)
+!CIS Controls V8
+!
+* 4.5, 8.2, 8.5
+
+endif::[]
+
+!CCE
+!
+* CCE-90924-2
+
+
+ifdef::show_tags[]
+!TAGS
+!
+* 800-53r5_low
+* 800-53r5_moderate
+* 800-53r5_high
+* 800-53r4_low
+* 800-53r4_moderate
+* 800-53r4_high
+* 800-171
+* cnssi-1253
+* cis_lvl1
+* cis_lvl2
+* cisv8
+
+endif::[]
+
+!===
+
+|
+|===
+=== Enable Gatekeeper
+
+Gatekeeper _MUST_ be enabled. 
+
+Gatekeeper is a security feature that ensures that applications are digitally signed by an Apple-issued certificate before they are permitted to run. Digital signatures allow the macOS host to verify that the application has not been modified by a malicious third party.
+
+Administrator users will still have the option to override these settings on a case-by-case basis.
+
+
+To check the state of the system, run the following command(s):
+[source,bash,options="nowrap"]
+----
+/usr/sbin/spctl --status | /usr/bin/grep -c "assessments enabled"
+
+----
+
+If the result is not *1*, this is a finding.
+
+====
+**Remediation Description**
+
+Perform the following to configure the system to meet the requirements:
+
+Create a configuration profile containing the following keys in the (com.apple.systempolicy.control) payload type:
+
+[source,xml]
+----
+<key>EnableAssessment</key>
+<true/>
+----
+
+
+====
+
+[cols="15%h, 85%a"]
+|===
+
+|ID
+|os_gatekeeper_enable
+
+|References
+|
+
+[cols="20%h,80%a"]
+[frame="none"]
+[grid="cols"]
+!===
+
+!800-53r5
+!
+ * CM-14
+ * CM-5
+ * SI-3
+ * SI-7(1), SI-7(15)
+
+ifdef::show_171[]
+!800-171r2
+!
+* 3.4.5
+
+endif::[]
+
+ifdef::show_STIG[]
+!DISA STIG(s)
+!
+* APPL-12-002064
+
+endif::[]
+
+ifdef::show_CIS[]
+
+!CIS Benchmark
+!
+* 2.5.2.1 (level 1)
+!CIS Controls V8
+!
+* 10.1, 10.2, 10.5
+
+endif::[]
+
+!CCE
+!
+* CCE-90926-7
+
+
+ifdef::show_tags[]
+!TAGS
+!
+* 800-53r5_low
+* 800-53r5_moderate
+* 800-53r5_high
+* 800-53r4_moderate
+* 800-53r4_high
+* 800-171
+* cnssi-1253
+* cis_lvl1
+* cis_lvl2
+* cisv8
+* stig
+
+endif::[]
+
+!===
+
+|
+|===
+=== Remove Guest Folder if Present
+
+The guest folder _MUST_ be deleted if present.
+
+
+To check the state of the system, run the following command(s):
+[source,bash,options="nowrap"]
+----
+/bin/ls /Users/ | /usr/bin/grep -c "Guest"
+
+----
+
+If the result is not *0*, this is a finding.
+
+====
+**Remediation Description**
+
+Perform the following to configure the system to meet the requirements:
+
+[source,bash]
+----
+/bin/rm -Rf /Users/Guest
+----
+
+====
+
+[cols="15%h, 85%a"]
+|===
+
+|ID
+|os_guest_folder_removed
+
+|References
+|
+
+[cols="20%h,80%a"]
+[frame="none"]
+[grid="cols"]
+!===
+
+!800-53r5
+!
+ * N/A
+
+ifdef::show_171[]
+!800-171r2
+!
+* N/A
+
+endif::[]
+
+ifdef::show_STIG[]
+!DISA STIG(s)
+!
+* N/A
+
+endif::[]
+
+ifdef::show_CIS[]
+
+!CIS Benchmark
+!
+* 6.1.5 (level 1)
+!CIS Controls V8
+!
+* N/A
+
+endif::[]
+
+!CCE
+!
+* CCE-91104-0
+
+
+ifdef::show_tags[]
+!TAGS
+!
+* cis_lvl1
+* cis_lvl2
+
+endif::[]
+
+!===
+
+|
+|===
+=== Enable DestroyFVKeyOnStandby on Hibernate
+
+DestroyFVKeyOnStandby on hibernate _MUST_ be enabled. 
+
+
+To check the state of the system, run the following command(s):
+[source,bash,options="nowrap"]
+----
+/usr/bin/osascript -l JavaScript << EOS
+$.NSUserDefaults.alloc.initWithSuiteName('com.apple.MCX')\
+.objectForKey('DestroyFVKeyOnStandby').js
+EOS
+
+----
+
+If the result is not *true*, this is a finding.
+
+====
+**Remediation Description**
+
+Perform the following to configure the system to meet the requirements:
+
+Create a configuration profile containing the following keys in the (com.apple.MCX) payload type:
+
+[source,xml]
+----
+<key>DestroyFVKeyOnStandby</key>
+<true/>
+----
+
+
+====
+
+[cols="15%h, 85%a"]
+|===
+
+|ID
+|os_hibernate_mode_destroyfvkeyonstandby_enable
+
+|References
+|
+
+[cols="20%h,80%a"]
+[frame="none"]
+[grid="cols"]
+!===
+
+!800-53r5
+!
+ * N/A
+
+ifdef::show_171[]
+!800-171r2
+!
+* N/A
+
+endif::[]
+
+ifdef::show_STIG[]
+!DISA STIG(s)
+!
+* N/A
+
+endif::[]
+
+ifdef::show_CIS[]
+
+!CIS Benchmark
+!
+* 5.9 (level 2)
+!CIS Controls V8
+!
+* N/A
+
+endif::[]
+
+!CCE
+!
+* CCE-91105-7
+
+
+ifdef::show_tags[]
+!TAGS
+!
+* cis_lvl1
+* cis_lvl2
+
+endif::[]
+
+!===
+
+|
+|===
+=== Enable Hibernate Mode
+
+Hibernate mode _MUST_ be enabled. 
+
+NOTE: Hibernate mode is not fully supported on Apple Silicon devices. This rule is only applicable to Intel devices.
+
+
+To check the state of the system, run the following command(s):
+[source,bash,options="nowrap"]
+----
+error_count=0
+hibernateStandbyLowValue=$(/usr/bin/pmset -g | /usr/bin/grep standbydelaylow 2>&1 | /usr/bin/awk '{print $2}')
+hibernateStandbyHighValue=$(/usr/bin/pmset -g | /usr/bin/grep standbydelayhigh 2>&1 | /usr/bin/awk '{print $2}')
+hibernateStandbyThreshValue=$(/usr/bin/pmset -g | /usr/bin/grep highstandbythreshold 2>&1 | /usr/bin/awk '{print $2}')
+hibernateMode=$(/usr/bin/pmset -b -g | /usr/bin/grep hibernatemode 2>&1 | /usr/bin/awk '{print $2}')
+macType=$(/usr/sbin/system_profiler SPHardwareDataType 2>&1 | /usr/bin/grep -c MacBook)
+if [[ "$macType" -ge 0 ]]; then
+  if [[ "$hibernateStandbyLowValue" == "" ]] || [[ "$hibernateStandbyLowValue" -gt 600 ]]; then
+    ((error_count++))
+  fi
+  if [[ "$hibernateStandbyHighValue" == "" ]] || [[ "$hibernateStandbyHighValue" -gt 600 ]]; then
+    ((error_count++))
+  fi
+  if [[ "$hibernateStandbyThreshValue" == "" ]] || [[ "$hibernateStandbyThreshValue" -lt 90 ]]; then
+    ((error_count++))
+  fi
+fi
+echo "$error_count"
+
+----
+
+If the result is not *0*, this is a finding.
+
+====
+**Remediation Description**
+
+Perform the following to configure the system to meet the requirements:
+
+[source,bash]
+----
+/usr/bin/pmset -a standbydelayhigh 600
+/usr/bin/pmset -a standbydelaylow 600
+/usr/bin/pmset -a highstandbythreshold 90
+----
+
+====
+
+[cols="15%h, 85%a"]
+|===
+
+|ID
+|os_hibernate_mode_enable
+
+|References
+|
+
+[cols="20%h,80%a"]
+[frame="none"]
+[grid="cols"]
+!===
+
+!800-53r5
+!
+ * N/A
+
+ifdef::show_171[]
+!800-171r2
+!
+* N/A
+
+endif::[]
+
+ifdef::show_STIG[]
+!DISA STIG(s)
+!
+* N/A
+
+endif::[]
+
+ifdef::show_CIS[]
+
+!CIS Benchmark
+!
+* 5.9 (level 2)
+!CIS Controls V8
+!
+* N/A
+
+endif::[]
+
+!CCE
+!
+* CCE-91106-5
+
+
+ifdef::show_tags[]
+!TAGS
+!
+* cis_lvl1
+* cis_lvl2
+* i386
+
+endif::[]
+
+!===
+
+|
+|===
+=== Secure User's Home Folders
+
+The system _MUST_ be configured to prevent access to other user's home folders.
+
+The default behavior of macOS is to allow all valid users access to the the top level of every other user's home folder while restricting access only to the Apple default folders within. 
+
+
+To check the state of the system, run the following command(s):
+[source,bash,options="nowrap"]
+----
+/usr/bin/find /System/Volumes/Data/Users -mindepth 1 -maxdepth 1 -type d -perm -1 | /usr/bin/grep -v "Shared" | /usr/bin/grep -v "Guest" | /usr/bin/wc -l | /usr/bin/xargs
+
+----
+
+If the result is not *0*, this is a finding.
+
+====
+**Remediation Description**
+
+Perform the following to configure the system to meet the requirements:
+
+[source,bash]
+----
+IFS=$'\n'
+for userDirs in $( /usr/bin/find /System/Volumes/Data/Users -mindepth 1 -maxdepth 1 -type d -perm -1 | /usr/bin/grep -v "Shared" | /usr/bin/grep -v "Guest" ); do
+  /bin/chmod og-rwx "$userDirs"
+done
+unset IFS
+----
+
+====
+
+[cols="15%h, 85%a"]
+|===
+
+|ID
+|os_home_folders_secure
+
+|References
+|
+
+[cols="20%h,80%a"]
+[frame="none"]
+[grid="cols"]
+!===
+
+!800-53r5
+!
+ * AC-6
+
+ifdef::show_171[]
+!800-171r2
+!
+* 3.1.5
+
+endif::[]
+
+ifdef::show_STIG[]
+!DISA STIG(s)
+!
+* APPL-12-002068
+
+endif::[]
+
+ifdef::show_CIS[]
+
+!CIS Benchmark
+!
+* 5.1.1 (level 1)
+!CIS Controls V8
+!
+* N/A
+
+endif::[]
+
+!CCE
+!
+* CCE-90931-7
+
+
+ifdef::show_tags[]
+!TAGS
+!
+* 800-53r5_moderate
+* 800-53r5_high
+* 800-53r4_moderate
+* 800-53r4_high
+* 800-171
+* cnssi-1253
+* cis_lvl1
+* cis_lvl2
+* stig
+
+endif::[]
+
+!===
+
+|
+|===
+=== Disable the Built-in Web Server
+
+The built-in web server is a non-essential service built into macOS and _MUST_ be disabled.
+
+NOTE: The built in web server service is disabled at startup by default macOS.
+
+
+To check the state of the system, run the following command(s):
+[source,bash,options="nowrap"]
+----
+/bin/launchctl print-disabled system | /usr/bin/grep -c '"org.apache.httpd" => true'
+
+----
+
+If the result is not *1*, this is a finding.
+
+====
+**Remediation Description**
+
+Perform the following to configure the system to meet the requirements:
+
+[source,bash]
+----
+/bin/launchctl disable system/org.apache.httpd
+----
+
+====
+
+[cols="15%h, 85%a"]
+|===
+
+|ID
+|os_httpd_disable
+
+|References
+|
+
+[cols="20%h,80%a"]
+[frame="none"]
+[grid="cols"]
+!===
+
+!800-53r5
+!
+ * AC-17
+ * AC-3
+
+ifdef::show_171[]
+!800-171r2
+!
+* 3.1.1
+* 3.1.2
+
+endif::[]
+
+ifdef::show_STIG[]
+!DISA STIG(s)
+!
+* APPL-12-002008
+
+endif::[]
+
+ifdef::show_CIS[]
+
+!CIS Benchmark
+!
+* 4.4 (level 1)
+!CIS Controls V8
+!
+* 3.3, 6.7
+
+endif::[]
+
+!CCE
+!
+* CCE-90932-5
+
+
+ifdef::show_tags[]
+!TAGS
+!
+* 800-53r5_low
+* 800-53r5_moderate
+* 800-53r5_high
+* 800-53r4_low
+* 800-53r4_moderate
+* 800-53r4_high
+* 800-171
+* cnssi-1253
+* cis_lvl1
+* cis_lvl2
+* cisv8
+* stig
+
+endif::[]
+
+!===
+
+|
+|===
+=== Configure Install.log Retention to 365 Days or More
+
+The install.log _MUST_ be configured to require records be kept for 365 days or longer before deletion, unless the system uses a central audit record storage facility. 
+
+
+To check the state of the system, run the following command(s):
+[source,bash,options="nowrap"]
+----
+/usr/sbin/aslmanager -dd 2>&1 | /usr/bin/awk '/\/var\/log\/install.log/ {count++} /Processing module com.apple.install/,/Finished/ { for (i=1;i<=NR;i++) { if ($i == "TTL" && $(i+2) >= 365) { ttl="True" }; if ($i == "MAX") {max="True"}}} END{if (count > 1) { print "Multiple config files for /var/log/install, manually remove"} else if (ttl != "True") { print "TTL not configured" } else if (max == "True") { print "Max Size is configured, must be removed" } else { print "Yes" }}'
+
+----
+
+If the result is not *Yes*, this is a finding.
+
+====
+**Remediation Description**
+
+Perform the following to configure the system to meet the requirements:
+
+[source,bash]
+----
+/usr/bin/sed -i '' "s/\* file \/var\/log\/install.log.*/\* file \/var\/log\/install.log format='\$\(\(Time\)\(JZ\)\) \$Host \$\(Sender\)\[\$\(PID\\)\]: \$Message' rotate=utc compress file_max=50M size_only ttl=365/g" /etc/asl/com.apple.install
+----  
+
+NOTE: If there are multiple configuration files in /etc/asl that are set to process the file /var/log/install.log, these files will have to be manually removed.
+
+====
+
+[cols="15%h, 85%a"]
+|===
+
+|ID
+|os_install_log_retention_configure
+
+|References
+|
+
+[cols="20%h,80%a"]
+[frame="none"]
+[grid="cols"]
+!===
+
+!800-53r5
+!
+ * AU-11
+ * AU-4
+
+ifdef::show_171[]
+!800-171r2
+!
+* N/A
+
+endif::[]
+
+ifdef::show_STIG[]
+!DISA STIG(s)
+!
+* N/A
+
+endif::[]
+
+ifdef::show_CIS[]
+
+!CIS Benchmark
+!
+* 3.3 (level 1)
+!CIS Controls V8
+!
+* 8.1, 8.3
+
+endif::[]
+
+!CCE
+!
+* CCE-91107-3
+
+
+ifdef::show_tags[]
+!TAGS
+!
+* cis_lvl1
+* cis_lvl2
+* cisv8
+
+endif::[]
+
+!===
+
+|
+|===
+=== Enable Library Validation
+
+Library validation  _MUST_ be enabled.
+
+To check the state of the system, run the following command(s):
+[source,bash,options="nowrap"]
+----
+/usr/bin/osascript -l JavaScript << EOS
+$.NSUserDefaults.alloc.initWithSuiteName('com.apple.security.libraryvalidation')\
+.objectForKey('DisableLibraryValidation').js
+EOS
+
+----
+
+If the result is not *false*, this is a finding.
+
+====
+**Remediation Description**
+
+Perform the following to configure the system to meet the requirements:
+
+Create a configuration profile containing the following keys in the (com.apple.security.libraryvalidation) payload type:
+
+[source,xml]
+----
+<key>DisableLibraryValidation</key>
+<false/>
+----
+
+
+====
+
+[cols="15%h, 85%a"]
+|===
+
+|ID
+|os_library_validation_enabled
+
+|References
+|
+
+[cols="20%h,80%a"]
+[frame="none"]
+[grid="cols"]
+!===
+
+!800-53r5
+!
+ * N/A
+
+ifdef::show_171[]
+!800-171r2
+!
+* N/A
+
+endif::[]
+
+ifdef::show_STIG[]
+!DISA STIG(s)
+!
+* N/A
+
+endif::[]
+
+ifdef::show_CIS[]
+
+!CIS Benchmark
+!
+* 5.1.4 (level 1)
+!CIS Controls V8
+!
+* 2.3, 2.6
+
+endif::[]
+
+!CCE
+!
+* CCE-91108-1
+
+
+ifdef::show_tags[]
+!TAGS
+!
+* cis_lvl1
+* cis_lvl2
+* cisv8
+
+endif::[]
+
+!===
+
+|
+|===
+=== Enable Apple Mobile File Integrity
+
+Mobile file integrity _MUST_ be ebabled.
+
+To check the state of the system, run the following command(s):
+[source,bash,options="nowrap"]
+----
+/usr/sbin/nvram -p | /usr/bin/grep -c "amfi_get_out_of_my_way=1"
+
+----
+
+If the result is not *0*, this is a finding.
+
+====
+**Remediation Description**
+
+Perform the following to configure the system to meet the requirements:
+
+[source,bash]
+----
+/usr/sbin/nvram boot-args=""
+----
+
+====
+
+[cols="15%h, 85%a"]
+|===
+
+|ID
+|os_mobile_file_integrity_enable
+
+|References
+|
+
+[cols="20%h,80%a"]
+[frame="none"]
+[grid="cols"]
+!===
+
+!800-53r5
+!
+ * N/A
+
+ifdef::show_171[]
+!800-171r2
+!
+* N/A
+
+endif::[]
+
+ifdef::show_STIG[]
+!DISA STIG(s)
+!
+* N/A
+
+endif::[]
+
+ifdef::show_CIS[]
+
+!CIS Benchmark
+!
+* 5.1.3 (level 1)
+!CIS Controls V8
+!
+* 2.3, 2.6
+
+endif::[]
+
+!CCE
+!
+* CCE-91109-9
+
+
+ifdef::show_tags[]
+!TAGS
+!
+* cis_lvl1
+* cis_lvl2
+* cisv8
+
+endif::[]
+
+!===
+
+|
+|===
+=== Disable Network File System Service
+
+Support for Network File Systems (NFS) services is non-essential and, therefore, _MUST_ be disabled.
+
+
+To check the state of the system, run the following command(s):
+[source,bash,options="nowrap"]
+----
+/bin/launchctl print-disabled system | /usr/bin/grep -c '"com.apple.nfsd" => true'
+
+----
+
+If the result is not *1*, this is a finding.
+
+====
+**Remediation Description**
+
+Perform the following to configure the system to meet the requirements:
+
+[source,bash]
+----
+/bin/launchctl disable system/com.apple.nfsd
+----
+The system may need to be restarted for the update to take effect.
+
+====
+
+[cols="15%h, 85%a"]
+|===
+
+|ID
+|os_nfsd_disable
+
+|References
+|
+
+[cols="20%h,80%a"]
+[frame="none"]
+[grid="cols"]
+!===
+
+!800-53r5
+!
+ * AC-17
+ * AC-3
+
+ifdef::show_171[]
+!800-171r2
+!
+* 3.1.1
+* 3.1.2
+
+endif::[]
+
+ifdef::show_STIG[]
+!DISA STIG(s)
+!
+* APPL-12-002003
+
+endif::[]
+
+ifdef::show_CIS[]
+
+!CIS Benchmark
+!
+* 4.5 (level 1)
+!CIS Controls V8
+!
+* 3.3, 6.7
+
+endif::[]
+
+!CCE
+!
+* CCE-90956-4
+
+
+ifdef::show_tags[]
+!TAGS
+!
+* 800-53r5_low
+* 800-53r5_moderate
+* 800-53r5_high
+* 800-53r4_low
+* 800-53r4_moderate
+* 800-53r4_high
+* 800-171
+* cnssi-1253
+* cis_lvl1
+* cis_lvl2
+* cisv8
+* stig
+
+endif::[]
+
+!===
+
+|
+|===
+=== Remove Password Hint From User Accounts
+
+User accounts _MUST_ not contain password hints.
+
+
+To check the state of the system, run the following command(s):
+[source,bash,options="nowrap"]
+----
+/usr/bin/dscl . -list /Users hint | /usr/bin/awk '{print $2}' | /usr/bin/wc -l | /usr/bin/xargs
+
+----
+
+If the result is not *0*, this is a finding.
+
+====
+**Remediation Description**
+
+Perform the following to configure the system to meet the requirements:
+
+[source,bash]
+----
+for u in $(/usr/bin/dscl . -list /Users UniqueID | /usr/bin/awk '$2 > 500 {print $1}'); do 
+  /usr/bin/dscl . -delete /Users/$u hint
+done
+----
+
+====
+
+[cols="15%h, 85%a"]
+|===
+
+|ID
+|os_password_hint_remove
+
+|References
+|
+
+[cols="20%h,80%a"]
+[frame="none"]
+[grid="cols"]
+!===
+
+!800-53r5
+!
+ * IA-6
+
+ifdef::show_171[]
+!800-171r2
+!
+* 3.5.11
+
+endif::[]
+
+ifdef::show_STIG[]
+!DISA STIG(s)
+!- N/A
+endif::[]
+
+ifdef::show_CIS[]
+
+!CIS Benchmark
+!
+* 5.14 (level 1)
+!CIS Controls V8
+!
+* 5.2
+
+endif::[]
+
+!CCE
+!
+* CCE-91110-7
+
+
+ifdef::show_tags[]
+!TAGS
+!
+* cis_lvl1
+* cis_lvl2
+* cisv8
+
+endif::[]
+
+!===
+
+|
+|===
+=== Display Policy Banner at Login Window
+
+Displaying a standardized and approved use notification before granting access to the operating system ensures that users are provided with privacy and security notification verbiage that is consistent with applicable federal laws, Executive Orders, directives, policies, regulations, standards, and guidance.
+
+System use notifications are required only for access via login interfaces with human users and are not required when such human interfaces do not exist.
+
+The policy banner will show if a "PolicyBanner.rtf" or "PolicyBanner.rtfd" exists in the "/Library/Security" folder.
+NOTE: 
+  The banner text of the document _MUST_ read:
+
+  "You are accessing a U.S. Government information system, which includes: 1) this computer, 2) this computer network, 3) all Government-furnished computers connected to this network, and 4) all Government-furnished devices and storage media attached to this network or to a computer on this network. You understand and consent to the following: you may access this information system for authorized use only; unauthorized use of the system is prohibited and subject to criminal and civil penalties; you have no reasonable expectation of privacy regarding any communication or data transiting or stored on this information system at any time and for any lawful Government purpose, the Government may monitor, intercept, audit, and search and seize any communication or data transiting or stored on this information system; and any communications or data transiting or stored on this information system may be disclosed or used for any lawful Government purpose. This information system may contain Controlled Unclassified Information (CUI) that is subject to safeguarding or dissemination controls in accordance with law, regulation, or Government-wide policy. Accessing and using this system indicates your understanding of this warning."
+
+
+To check the state of the system, run the following command(s):
+[source,bash,options="nowrap"]
+----
+/bin/ls -ld /Library/Security/PolicyBanner.rtf* | /usr/bin/wc -l | /usr/bin/tr -d ' '
+
+----
+
+If the result is not *1*, this is a finding.
+
+====
+**Remediation Description**
+
+Perform the following to configure the system to meet the requirements:
+
+[source,bash]
+----
+bannerText="You are accessing a U.S. Government information system, which includes: 1) this computer, 2) this computer network, 3) all Government-furnished computers connected to this network, and 4) all Government-furnished devices and storage media attached to this network or to a computer on this network. You understand and consent to the following: you may access this information system for authorized use only; unauthorized use of the system is prohibited and subject to criminal and civil penalties; you have no reasonable expectation of privacy regarding any communication or data transiting or stored on this information system at any time and for any lawful Government purpose, the Government may monitor, intercept, audit, and search and seize any communication or data transiting or stored on this information system; and any communications or data transiting or stored on this information system may be disclosed or used for any lawful Government purpose. This information system may contain Controlled Unclassified Information (CUI) that is subject to safeguarding or dissemination controls in accordance with law, regulation, or Government-wide policy. Accessing and using this system indicates your understanding of this warning."
+/bin/mkdir /Library/Security/PolicyBanner.rtf
+/usr/bin/textutil -convert rtf -output /Library/Security/PolicyBanner.rtf/TXT.rtf -stdin <<EOF              
+$bannerText
+EOF
+----
+
+====
+
+[cols="15%h, 85%a"]
+|===
+
+|ID
+|os_policy_banner_loginwindow_enforce
+
+|References
+|
+
+[cols="20%h,80%a"]
+[frame="none"]
+[grid="cols"]
+!===
+
+!800-53r5
+!
+ * AC-8
+
+ifdef::show_171[]
+!800-171r2
+!
+* 3.1.9
+
+endif::[]
+
+ifdef::show_STIG[]
+!DISA STIG(s)
+!
+* APPL-12-000025
+
+endif::[]
+
+ifdef::show_CIS[]
+
+!CIS Benchmark
+!
+* 5.13 (level 2)
+!CIS Controls V8
+!
+* N/A
+
+endif::[]
+
+!CCE
+!
+* CCE-90973-9
+
+
+ifdef::show_tags[]
+!TAGS
+!
+* 800-53r5_low
+* 800-53r5_moderate
+* 800-53r5_high
+* 800-53r4_low
+* 800-53r4_moderate
+* 800-53r4_high
+* 800-171
+* cnssi-1253
+* cis_lvl2
+* stig
+
+endif::[]
+
+!===
+
+|
+|===
+=== Disable Root Login
+
+To assure individual accountability and prevent unauthorized access, logging in as root at the login window _MUST_ be disabled.
+
+The macOS system _MUST_ require individuals to be authenticated with an individual authenticator prior to using a group authenticator, and administrator users _MUST_ never log in directly as root. 
+
+
+To check the state of the system, run the following command(s):
+[source,bash,options="nowrap"]
+----
+/usr/bin/dscl . -read /Users/root UserShell 2>&1 | /usr/bin/grep -c "/usr/bin/false"
+
+----
+
+If the result is not *1*, this is a finding.
+
+====
+**Remediation Description**
+
+Perform the following to configure the system to meet the requirements:
+
+[source,bash]
+----
+/usr/bin/dscl . -create /Users/root UserShell /usr/bin/false
+----
+
+====
+
+[cols="15%h, 85%a"]
+|===
+
+|ID
+|os_root_disable
+
+|References
+|
+
+[cols="20%h,80%a"]
+[frame="none"]
+[grid="cols"]
+!===
+
+!800-53r5
+!
+ * IA-2, IA-2(5)
+
+ifdef::show_171[]
+!800-171r2
+!
+* 3.5.1
+* 3.5.2
+
+endif::[]
+
+ifdef::show_STIG[]
+!DISA STIG(s)
+!- N/A
+endif::[]
+
+ifdef::show_CIS[]
+
+!CIS Benchmark
+!
+* 5.6 (level 1)
+!CIS Controls V8
+!
+* 4.7
+
+endif::[]
+
+!CCE
+!
+* CCE-90994-5
+
+
+ifdef::show_tags[]
+!TAGS
+!
+* 800-53r5_low
+* 800-53r5_moderate
+* 800-53r5_high
+* 800-53r4_low
+* 800-53r4_moderate
+* 800-53r4_high
+* 800-171
+* cnssi-1253
+* cis_lvl1
+* cis_lvl2
+* cisv8
+
+endif::[]
+
+!===
+
+|
+|===
+=== Disable Automatic Opening of Safe Files in Safari
+
+Open "safe" files after downloading _MUST_ be disabled in Safari. 
+
+
+To check the state of the system, run the following command(s):
+[source,bash,options="nowrap"]
+----
+/usr/bin/profiles -P -o stdout | /usr/bin/grep -c 'AutoOpenSafeDownloads = 0' | /usr/bin/awk '{ if ($1 >= 1) {print "1"} else {print "0"}}'
+
+----
+
+If the result is not *1*, this is a finding.
+
+====
+**Remediation Description**
+
+Perform the following to configure the system to meet the requirements:
+
+Create a configuration profile containing the following keys in the (com.apple.Safari) payload type:
+
+[source,xml]
+----
+<key>AutoOpenSafeDownloads</key>
+<false/>
+----
+
+
+====
+
+[cols="15%h, 85%a"]
+|===
+
+|ID
+|os_safari_open_safe_downloads_disable
+
+|References
+|
+
+[cols="20%h,80%a"]
+[frame="none"]
+[grid="cols"]
+!===
+
+!800-53r5
+!
+ * N/A
+
+ifdef::show_171[]
+!800-171r2
+!- N/A
+endif::[]
+
+ifdef::show_STIG[]
+!DISA STIG(s)
+!
+* N/A
+
+endif::[]
+
+ifdef::show_CIS[]
+
+!CIS Benchmark
+!
+* 6.3 (level 1)
+!CIS Controls V8
+!
+* 9
+
+endif::[]
+
+!CCE
+!
+* CCE-91111-5
+
+
+ifdef::show_tags[]
+!TAGS
+!
+* cis_lvl1
+* cis_lvl2
+* cisv8
+
+endif::[]
+
+!===
+
+|
+|===
+=== Enable Show All Filename Extensions
+
+Show all filename extensions _MUST_ be enabled in the Finder.
+
+[NOTE] 
+====
+The check and fix are for the currently logged in user. To get the currently logged in user, run the following.
+[source,bash]
+----
+CURRENT_USER=$( scutil <<< "show State:/Users/ConsoleUser" \| awk '/Name :/ && ! /loginwindow/ { print $3 }' )
+----
+====
+
+
+To check the state of the system, run the following command(s):
+[source,bash,options="nowrap"]
+----
+/usr/bin/sudo -u "$CURRENT_USER" /usr/bin/defaults read .GlobalPreferences AppleShowAllExtensions 2>/dev/null
+
+----
+
+If the result is not *1*, this is a finding.
+
+====
+**Remediation Description**
+
+Perform the following to configure the system to meet the requirements:
+
+[source,bash]
+----
+/usr/bin/sudo -u "$CURRENT_USER" /usr/bin/defaults write /Users/"$CURRENT_USER"/Library/Preferences/.GlobalPreferences AppleShowAllExtensions -bool true
+----
+
+====
+
+[cols="15%h, 85%a"]
+|===
+
+|ID
+|os_show_filename_extensions_enable
+
+|References
+|
+
+[cols="20%h,80%a"]
+[frame="none"]
+[grid="cols"]
+!===
+
+!800-53r5
+!
+ * N/A
+
+ifdef::show_171[]
+!800-171r2
+!
+* N/A
+
+endif::[]
+
+ifdef::show_STIG[]
+!DISA STIG(s)
+!
+* N/A
+
+endif::[]
+
+ifdef::show_CIS[]
+
+!CIS Benchmark
+!
+* 6.2 (level 1)
+!CIS Controls V8
+!
+* 2.3
+
+endif::[]
+
+!CCE
+!
+* CCE-91112-3
+
+
+ifdef::show_tags[]
+!TAGS
+!
+* cis_lvl1
+* cis_lvl2
+* cisv8
+
+endif::[]
+
+!===
+
+|
+|===
+=== Ensure System Integrity Protection is Enabled
+
+System Integrity Protection (SIP) _MUST_ be enabled. 
+
+SIP is vital to protecting the integrity of the system as it prevents malicious users and software from making unauthorized and/or unintended modifications to protected files and folders; ensures the presence of an audit record generation capability for defined auditable events for all operating system components; protects audit tools from unauthorized access, modification, and deletion; restricts the root user account and limits the actions that the root user can perform on protected parts of the macOS; and prevents non-privileged users from granting other users direct access to the contents of their home directories and folders.
+
+NOTE: SIP is enabled by default in macOS.
+
+
+To check the state of the system, run the following command(s):
+[source,bash,options="nowrap"]
+----
+/usr/bin/csrutil status | /usr/bin/grep -c 'System Integrity Protection status: enabled.'
+
+----
+
+If the result is not *1*, this is a finding.
+
+====
+**Remediation Description**
+
+Perform the following to configure the system to meet the requirements:
+
+[source,bash]
+----
+/usr/bin/csrutil enable
+----
+NOTE: To reenable "System Integrity Protection", boot the affected system into "Recovery" mode, launch "Terminal" from the "Utilities" menu, and run the command.
+
+====
+
+[cols="15%h, 85%a"]
+|===
+
+|ID
+|os_sip_enable
+
+|References
+|
+
+[cols="20%h,80%a"]
+[frame="none"]
+[grid="cols"]
+!===
+
+!800-53r5
+!
+ * AC-3
+ * AU-9, AU-9(3)
+ * CM-5, CM-5(6)
+ * SC-4
+ * SI-2
+ * SI-7
+
+ifdef::show_171[]
+!800-171r2
+!
+* 3.1.1
+* 3.1.2
+* 3.3.6
+* 3.3.8
+* 3.4.5
+* 3.13.4
+
+endif::[]
+
+ifdef::show_STIG[]
+!DISA STIG(s)
+!
+* APPL-12-005001
+
+endif::[]
+
+ifdef::show_CIS[]
+
+!CIS Benchmark
+!
+* 5.18 (level 1)
+!CIS Controls V8
+!
+* 2.6, 3.3, 10.5
+
+endif::[]
+
+!CCE
+!
+* CCE-91000-0
+
+
+ifdef::show_tags[]
+!TAGS
+!
+* 800-53r5_low
+* 800-53r5_moderate
+* 800-53r5_high
+* 800-53r4_low
+* 800-53r4_moderate
+* 800-53r4_high
+* 800-171
+* cnssi-1253
+* cisv8
+* cis_lvl1
+* cis_lvl2
+* stig
+
+endif::[]
+
+!===
+
+|
+|===
+=== Configure Sudo Timeout Period to Zero
+
+The file /etc/sudoers _MUST_ include a timestamp_timout of zero.
+
+
+To check the state of the system, run the following command(s):
+[source,bash,options="nowrap"]
+----
+/usr/bin/find /etc/sudoers* -type f -exec /usr/bin/grep -E "^Defaults\s+timestamp_timeout=0" '{}' \; | /usr/bin/wc -l | /usr/bin/xargs
+
+----
+
+If the result is not *1*, this is a finding.
+
+====
+**Remediation Description**
+
+Perform the following to configure the system to meet the requirements:
+
+[source,bash]
+----
+/usr/bin/find /etc/sudoers* -type f -exec sed -i '' '/timestamp_timeout/d' '{}' \;
+/bin/echo "Defaults timestamp_timeout=0" >> /etc/sudoers.d/mscp
+----
+
+====
+
+[cols="15%h, 85%a"]
+|===
+
+|ID
+|os_sudo_timeout_configure
+
+|References
+|
+
+[cols="20%h,80%a"]
+[frame="none"]
+[grid="cols"]
+!===
+
+!800-53r5
+!
+ * N/A
+
+ifdef::show_171[]
+!800-171r2
+!- N/A
+endif::[]
+
+ifdef::show_STIG[]
+!DISA STIG(s)
+!
+* N/A
+
+endif::[]
+
+ifdef::show_CIS[]
+
+!CIS Benchmark
+!
+* 5.3 (level 1)
+!CIS Controls V8
+!
+* 4.3
+
+endif::[]
+
+!CCE
+!
+* CCE-91116-4
+
+
+ifdef::show_tags[]
+!TAGS
+!
+* 800-53r5_low
+* 800-53r5_moderate
+* 800-53r5_high
+* cnssi-1253
+* cis_lvl1
+* cis_lvl2
+* cisv8
+
+endif::[]
+
+!===
+
+|
+|===
+=== Configure Sudoers Timestamp Type
+
+The file /etc/sudoers _MUST_ be configured to not include a timestamp_type of global or ppid.
+
+This rule ensures that the "sudo" command will prompt for the administrator's password at least once in each newly opened terminal window. This prevents a malicious user from taking advantage of an unlocked computer or an abandoned logon session by bypassing the normal password prompt requirement.
+
+
+To check the state of the system, run the following command(s):
+[source,bash,options="nowrap"]
+----
+/usr/bin/find /etc/sudoers* -type f -exec /usr/bin/grep -E '(^Defaults\s+timestamp_type=global|^Defaults\s+timestamp_type=ppid)' '{}' \; | /usr/bin/wc -l | /usr/bin/xargs
+
+----
+
+If the result is not *0*, this is a finding.
+
+====
+**Remediation Description**
+
+Perform the following to configure the system to meet the requirements:
+
+[source,bash]
+----
+/usr/bin/find /etc/sudoers* -type f -exec sed -i '' '/timestamp_type/d' '{}' \;
+----
+
+====
+
+[cols="15%h, 85%a"]
+|===
+
+|ID
+|os_sudoers_timestamp_type_configure
+
+|References
+|
+
+[cols="20%h,80%a"]
+[frame="none"]
+[grid="cols"]
+!===
+
+!800-53r5
+!
+ * CM-5(1)
+ * IA-11
+
+ifdef::show_171[]
+!800-171r2
+!- N/A
+endif::[]
+
+ifdef::show_STIG[]
+!DISA STIG(s)
+!
+* N/A
+
+endif::[]
+
+ifdef::show_CIS[]
+
+!CIS Benchmark
+!
+* 5.4 (level 1)
+!CIS Controls V8
+!
+* 4.3
+
+endif::[]
+
+!CCE
+!
+* CCE-91015-8
+
+
+ifdef::show_tags[]
+!TAGS
+!
+* 800-53r5_low
+* 800-53r5_moderate
+* 800-53r5_high
+* cnssi-1253
+* cis_lvl1
+* cis_lvl2
+* cisv8
+
+endif::[]
+
+!===
+
+|
+|===
+=== Configure Sudoers to Authenticate Users on a Per -tty Basis
+
+The file /etc/sudoers _MUST_ be configured to include tty_tickets.
+
+This rule ensures that the "sudo" command will prompt for the administrator's password at least once in each newly opened terminal window. This prevents a malicious user from taking advantage of an unlocked computer or an abandoned logon session by bypassing the normal password prompt requirement. Without the "tty_tickets" option, all open local and remote logon sessions would be authenticated to use sudo without a password for the duration of the configured password timeout window.
+
+
+To check the state of the system, run the following command(s):
+[source,bash,options="nowrap"]
+----
+/usr/bin/find /etc/sudoers* -type f -exec /usr/bin/grep -E "^Defaults\s+\!tty_tickets" '{}' \; | /usr/bin/wc -l | /usr/bin/xargs
+
+----
+
+If the result is not *0*, this is a finding.
+
+====
+**Remediation Description**
+
+Perform the following to configure the system to meet the requirements:
+
+[source,bash]
+----
+/usr/bin/find /etc/sudoers* -type f -exec sed -i '' '/!tty_tickets/d' '{}' \;
+----
+
+====
+
+[cols="15%h, 85%a"]
+|===
+
+|ID
+|os_sudoers_tty_configure
+
+|References
+|
+
+[cols="20%h,80%a"]
+[frame="none"]
+[grid="cols"]
+!===
+
+!800-53r5
+!
+ * CM-5(1)
+ * IA-11
+
+ifdef::show_171[]
+!800-171r2
+!- N/A
+endif::[]
+
+ifdef::show_STIG[]
+!DISA STIG(s)
+!
+* APPL-12-004021
+
+endif::[]
+
+ifdef::show_CIS[]
+
+!CIS Benchmark
+!
+* 5.4 (level 1)
+!CIS Controls V8
+!
+* 4.3
+
+endif::[]
+
+!CCE
+!
+* CCE-91015-8
+
+
+ifdef::show_tags[]
+!TAGS
+!
+* 800-53r5_low
+* 800-53r5_moderate
+* 800-53r5_high
+* cnssi-1253
+* cis_lvl1
+* cis_lvl2
+* cisv8
+* stig
+
+endif::[]
+
+!===
+
+|
+|===
+=== Ensure Appropriate Permissions Are Enabled for System Wide Applications
+
+Applications in the System Applications Directory (/Applications) _MUST_ not be world-writable.
+
+
+To check the state of the system, run the following command(s):
+[source,bash,options="nowrap"]
+----
+/usr/bin/find /Applications -iname "*\.app" -type d -perm -2 -ls | /usr/bin/wc -l | /usr/bin/xargs
+
+----
+
+If the result is not *0*, this is a finding.
+
+====
+**Remediation Description**
+
+Perform the following to configure the system to meet the requirements:
+
+[source,bash]
+----
+IFS=$'\n'
+for apps in $( /usr/bin/find /Applications -iname "*\.app" -type d -perm -2 ); do
+  /bin/chmod -R o-w "$apps"
+done
+----
+
+====
+
+[cols="15%h, 85%a"]
+|===
+
+|ID
+|os_system_wide_applications_configure
+
+|References
+|
+
+[cols="20%h,80%a"]
+[frame="none"]
+[grid="cols"]
+!===
+
+!800-53r5
+!
+ * N/A
+
+ifdef::show_171[]
+!800-171r2
+!
+* N/A
+
+endif::[]
+
+ifdef::show_STIG[]
+!DISA STIG(s)
+!
+* N/A
+
+endif::[]
+
+ifdef::show_CIS[]
+
+!CIS Benchmark
+!
+* 5.1.6 (level 1)
+!CIS Controls V8
+!
+* 3.3
+
+endif::[]
+
+!CCE
+!
+* CCE-91117-2
+
+
+ifdef::show_tags[]
+!TAGS
+!
+* cis_lvl1
+* cis_lvl2
+* cisv8
+
+endif::[]
+
+!===
+
+|
+|===
+=== Ensure Secure Keyboard Entry Terminal.app is Enabled
+
+Secure keyboard entry _MUST_ be enabled in Terminal.app. 
+
+
+To check the state of the system, run the following command(s):
+[source,bash,options="nowrap"]
+----
+/usr/bin/osascript -l JavaScript << EOS
+$.NSUserDefaults.alloc.initWithSuiteName('com.apple.Terminal')\
+.objectForKey('SecureKeyboardEntry').js
+EOS
+
+----
+
+If the result is not *true*, this is a finding.
+
+====
+**Remediation Description**
+
+Perform the following to configure the system to meet the requirements:
+
+Create a configuration profile containing the following keys in the (com.apple.Terminal) payload type:
+
+[source,xml]
+----
+<key>SecureKeyboardEntry</key>
+<true/>
+----
+
+
+====
+
+[cols="15%h, 85%a"]
+|===
+
+|ID
+|os_terminal_secure_keyboard_enable
+
+|References
+|
+
+[cols="20%h,80%a"]
+[frame="none"]
+[grid="cols"]
+!===
+
+!800-53r5
+!
+ * N/A
+
+ifdef::show_171[]
+!800-171r2
+!
+* N/A
+
+endif::[]
+
+ifdef::show_STIG[]
+!DISA STIG(s)
+!
+* N/A
+
+endif::[]
+
+ifdef::show_CIS[]
+
+!CIS Benchmark
+!
+* 2.10 (level 1)
+!CIS Controls V8
+!
+* 4.8
+
+endif::[]
+
+!CCE
+!
+* CCE-91118-0
+
+
+ifdef::show_tags[]
+!TAGS
+!
+* cis_lvl1
+* cis_lvl2
+* cisv8
+
+endif::[]
+
+!===
+
+|
+|===
+=== Ensure Time Offset Within Limits
+
+The macOS system time  _MUST_ be monitored to not drift more than four minutes and thirty seconds.
+
+
+To check the state of the system, run the following command(s):
+[source,bash,options="nowrap"]
+----
+/usr/bin/sntp $(/usr/sbin/systemsetup -getnetworktimeserver | /usr/bin/awk '{print $4}') | /usr/bin/awk -F'.' '/\+\/\-/{if (substr($1,2) >= 270) {print "No"} else {print "Yes"}}'
+
+----
+
+If the result is not *Yes*, this is a finding.
+
+====
+**Remediation Description**
+
+Perform the following to configure the system to meet the requirements:
+
+[source,bash]
+----
+/usr/bin/sntp -Ss $(/usr/sbin/systemsetup -getnetworktimeserver | /usr/bin/awk '{print $4}')
+----
+
+====
+
+[cols="15%h, 85%a"]
+|===
+
+|ID
+|os_time_offset_limit_configure
+
+|References
+|
+
+[cols="20%h,80%a"]
+[frame="none"]
+[grid="cols"]
+!===
+
+!800-53r5
+!
+ * N/A
+
+ifdef::show_171[]
+!800-171r2
+!
+* N/A
+
+endif::[]
+
+ifdef::show_STIG[]
+!DISA STIG(s)
+!
+* N/A
+
+endif::[]
+
+ifdef::show_CIS[]
+
+!CIS Benchmark
+!
+* 2.2.2 (level 1)
+!CIS Controls V8
+!
+* 8.4
+
+endif::[]
+
+!CCE
+!
+* CCE-91119-8
+
+
+ifdef::show_tags[]
+!TAGS
+!
+* cis_lvl1
+* cis_lvl2
+* cisv8
+
+endif::[]
+
+!===
+
+|
+|===
+=== Disable Login to Other User's Active and Locked Sessions
+
+The ability to log in to another user's active or locked session _MUST_ be disabled. 
+
+macOS has a privilege that can be granted to any user that will allow that user to unlock active user's sessions. Disabling the admins and/or user's ability to log into another user's active andlocked session prevents unauthorized persons from viewing potentially sensitive and/or personal information.
+
+
+To check the state of the system, run the following command(s):
+[source,bash,options="nowrap"]
+----
+/usr/bin/security authorizationdb read system.login.screensaver 2>&1 | /usr/bin/grep -c 'use-login-window-ui'
+
+----
+
+If the result is not *1*, this is a finding.
+
+====
+**Remediation Description**
+
+Perform the following to configure the system to meet the requirements:
+
+[source,bash]
+----
+/usr/bin/security authorizationdb write system.login.screensaver "use-login-window-ui"
+----
+
+====
+
+[cols="15%h, 85%a"]
+|===
+
+|ID
+|os_unlock_active_user_session_disable
+
+|References
+|
+
+[cols="20%h,80%a"]
+[frame="none"]
+[grid="cols"]
+!===
+
+!800-53r5
+!
+ * IA-2, IA-2(5)
+
+ifdef::show_171[]
+!800-171r2
+!
+* 3.5.1
+* 3.5.2
+
+endif::[]
+
+ifdef::show_STIG[]
+!DISA STIG(s)
+!
+* N/A
+
+endif::[]
+
+ifdef::show_CIS[]
+
+!CIS Benchmark
+!
+* 5.11 (level 1)
+!CIS Controls V8
+!
+* 4.3
+
+endif::[]
+
+!CCE
+!
+* CCE-91022-4
+
+
+ifdef::show_tags[]
+!TAGS
+!
+* 800-53r5_low
+* 800-53r5_moderate
+* 800-53r5_high
+* 800-53r4_low
+* 800-53r4_moderate
+* 800-53r4_high
+* 800-171
+* cnssi-1253
+* cis_lvl1
+* cis_lvl2
+* cisv8
+
+endif::[]
+
+!===
+
+|
+|===
+=== Ensure No World Writable Files Exist in the Library Folder
+
+Folders in /System/Volumes/Data/Library _MUST_ not be world-writable.
+
+NOTE: Some vendors are known to create world-writable folders to the System Library folder. You may need to add more exclusions to this check and fix to match your environment.
+
+
+To check the state of the system, run the following command(s):
+[source,bash,options="nowrap"]
+----
+/usr/bin/find /System/Volumes/Data/Library -type d -perm -2 -ls | /usr/bin/grep -v Caches | /usr/bin/grep -v /Preferences/Audio/Data | /usr/bin/wc -l | /usr/bin/xargs
+
+----
+
+If the result is not *0*, this is a finding.
+
+====
+**Remediation Description**
+
+Perform the following to configure the system to meet the requirements:
+
+[source,bash]
+----
+IFS=$'\n'
+for libPermissions in $( /usr/bin/find /System/Volumes/Data/Library -type d -perm -2 | /usr/bin/grep -v Caches | /usr/bin/grep -v /Preferences/Audio/Data ); do
+  /bin/chmod -R o-w "$libPermissions"
+done
+----
+
+====
+
+[cols="15%h, 85%a"]
+|===
+
+|ID
+|os_world_writable_library_folder_configure
+
+|References
+|
+
+[cols="20%h,80%a"]
+[frame="none"]
+[grid="cols"]
+!===
+
+!800-53r5
+!
+ * N/A
+
+ifdef::show_171[]
+!800-171r2
+!
+* N/A
+
+endif::[]
+
+ifdef::show_STIG[]
+!DISA STIG(s)
+!
+* N/A
+
+endif::[]
+
+ifdef::show_CIS[]
+
+!CIS Benchmark
+!
+* 5.1.8 (level 2)
+!CIS Controls V8
+!
+* 3.3
+
+endif::[]
+
+!CCE
+!
+* CCE-91120-6
+
+
+ifdef::show_tags[]
+!TAGS
+!
+* cis_lvl2
+* cisv8
+
+endif::[]
+
+!===
+
+|
+|===
+=== Ensure No World Writable Files Exist in the System Folder
+
+Folders in /System/Volumes/Data/System _MUST_ not be world-writable.
+
+
+To check the state of the system, run the following command(s):
+[source,bash,options="nowrap"]
+----
+/usr/bin/find /System/Volumes/Data/System -type d -perm -2 -ls | /usr/bin/grep -v "Drop Box" | /usr/bin/wc -l | /usr/bin/xargs
+
+----
+
+If the result is not *0*, this is a finding.
+
+====
+**Remediation Description**
+
+Perform the following to configure the system to meet the requirements:
+
+[source,bash]
+----
+IFS=$'\n'
+for sysPermissions in $( /usr/bin/find /System/Volumes/Data/System -type d -perm -2 | /usr/bin/grep -v "Drop Box" ); do
+  /bin/chmod -R o-w "$sysPermissions"
+done
+----
+
+====
+
+[cols="15%h, 85%a"]
+|===
+
+|ID
+|os_world_writable_system_folder_configure
+
+|References
+|
+
+[cols="20%h,80%a"]
+[frame="none"]
+[grid="cols"]
+!===
+
+!800-53r5
+!
+ * N/A
+
+ifdef::show_171[]
+!800-171r2
+!
+* N/A
+
+endif::[]
+
+ifdef::show_STIG[]
+!DISA STIG(s)
+!
+* N/A
+
+endif::[]
+
+ifdef::show_CIS[]
+
+!CIS Benchmark
+!
+* 5.1.7 (level 1)
+!CIS Controls V8
+!
+* 3.3
+
+endif::[]
+
+!CCE
+!
+* CCE-91121-4
+
+
+ifdef::show_tags[]
+!TAGS
+!
+* cis_lvl1
+* cis_lvl2
+* cisv8
+
+endif::[]
+
+!===
+
+|
+|===
+== Password Policy
+
+This section contains the configuration and enforcement of settings pertaining to password policies in macOS.
+
+NOTE: The check/fix commands outlined in this section _MUST_ be run by a user with elevated privileges. 
+
+[IMPORTANT]
+====
+The password policy recommendations in the NIST 800-53 (Rev 5) and NIST 800-63B state that complexity rules should be organizationally defined. The values defined are based off of common complexity values. But your organization may define its own password complexity rules.
+====
+
+NOTE: The settings outlined in this section adhere to the recommendations provided in this document for systems that utilize passwords for local accounts. If systems are integrated with a directory service, local password policies should align with domain password policies to the fullest extent feasible.
+
+=== Limit Consecutive Failed Login Attempts to Five
+
+The macOS _MUST_ be configured to limit the number of failed login attempts to a maximum of five. When the maximum number of failed attempts is reached, the account _MUST_ be locked for a period of time after.
+
+This rule protects against malicious users attempting to gain access to the system via brute-force hacking methods. 
+
+
+To check the state of the system, run the following command(s):
+[source,bash,options="nowrap"]
+----
+/usr/bin/osascript -l JavaScript << EOS
+$.NSUserDefaults.alloc.initWithSuiteName('com.apple.mobiledevice.passwordpolicy')\
+.objectForKey('maxFailedAttempts').js
+EOS
+
+----
+
+If the result is not *5*, this is a finding.
+
+====
+**Remediation Description**
+
+Perform the following to configure the system to meet the requirements:
+
+Create a configuration profile containing the following keys in the (com.apple.mobiledevice.passwordpolicy) payload type:
+
+[source,xml]
+----
+<key>maxFailedAttempts</key>
+<integer>5</integer>
+----
+
+
+====
+
+[cols="15%h, 85%a"]
+|===
+
+|ID
+|pwpolicy_account_lockout_enforce_five
+
+|References
+|
+
+[cols="20%h,80%a"]
+[frame="none"]
+[grid="cols"]
+!===
+
+!800-53r5
+!
+ * AC-7
+
+ifdef::show_171[]
+!800-171r2
+!
+* 3.1.8
+
+endif::[]
+
+ifdef::show_STIG[]
+!DISA STIG(s)
+!
+* N/A
+
+endif::[]
+
+ifdef::show_CIS[]
+
+!CIS Benchmark
+!
+* 5.2.1 (level 1)
+!CIS Controls V8
+!
+* 6.2
+
+endif::[]
+
+!CCE
+!
+* CCE-91122-2
+
+
+ifdef::show_tags[]
+!TAGS
+!
+* cis_lvl1
+* cis_lvl2
+* cisv8
+
+endif::[]
+
+!===
+
+|
+|===
+=== Require Passwords Contain a Minimum of One Numeric Character
+
+The macOS _MUST_ be configured to require at least one numeric character be used when a password is created.
+
+This rule enforces password complexity by requiring users to set passwords that are less vulnerable to malicious users. 
+
+NOTE: The guidance for password based authentication in NIST 800-53 (Rev 5) and NIST 800-63B state that complexity rules should be organizationally defined. The values defined are based off of common complexity values. But your organization may define its own password complexity rules.
+
+
+To check the state of the system, run the following command(s):
+[source,bash,options="nowrap"]
+----
+/usr/bin/osascript -l JavaScript << EOS
+$.NSUserDefaults.alloc.initWithSuiteName('com.apple.mobiledevice.passwordpolicy')\
+.objectForKey('requireAlphanumeric').js
+EOS
+
+----
+
+If the result is not *true*, this is a finding.
+
+====
+**Remediation Description**
+
+Perform the following to configure the system to meet the requirements:
+
+Create a configuration profile containing the following keys in the (com.apple.mobiledevice.passwordpolicy) payload type:
+
+[source,xml]
+----
+<key>requireAlphanumeric</key>
+<true/>
+----
+
+
+====
+
+[cols="15%h, 85%a"]
+|===
+
+|ID
+|pwpolicy_alpha_numeric_enforce
+
+|References
+|
+
+[cols="20%h,80%a"]
+[frame="none"]
+[grid="cols"]
+!===
+
+!800-53r5
+!
+ * IA-5(1)
+
+ifdef::show_171[]
+!800-171r2
+!
+* 3.5.1
+* 3.5.2
+* 3.5.7
+* 3.5.8
+* 3.5.9
+* 3.5.10
+
+endif::[]
+
+ifdef::show_STIG[]
+!DISA STIG(s)
+!
+* APPL-12-003007
+
+endif::[]
+
+ifdef::show_CIS[]
+
+!CIS Benchmark
+!
+* 5.2.3 (level 2), 5.2.4 (level 2)
+!CIS Controls V8
+!
+* 5.2
+
+endif::[]
+
+!CCE
+!
+* CCE-91031-5
+
+
+ifdef::show_tags[]
+!TAGS
+!
+* 800-171
+* cnssi-1253
+* 800-53r4_low
+* 800-53r4_moderate
+* 800-53r4_high
+* 800-53r5_low
+* 800-53r5_moderate
+* 800-53r5_high
+* cis_lvl2
+* cisv8
+* stig
+
+endif::[]
+
+!===
+
+|
+|===
+=== Prohibit Password Reuse for a Minimum of Fifteen Generations
+
+The macOS _MUST_ be configured to enforce a password history of at least fifteen previous passwords when a password is created. 
+
+This rule ensures that users are  not allowed to re-use a password that was used in any of the fifteen previous password generations. 
+
+Limiting password reuse protects against malicious users attempting to gain access to the system via brute-force hacking methods.
+
+
+To check the state of the system, run the following command(s):
+[source,bash,options="nowrap"]
+----
+/usr/bin/osascript -l JavaScript << EOS
+$.NSUserDefaults.alloc.initWithSuiteName('com.apple.mobiledevice.passwordpolicy')\
+.objectForKey('pinHistory').js
+EOS
+
+----
+
+If the result is not *15*, this is a finding.
+
+====
+**Remediation Description**
+
+Perform the following to configure the system to meet the requirements:
+
+Create a configuration profile containing the following keys in the (com.apple.mobiledevice.passwordpolicy) payload type:
+
+[source,xml]
+----
+<key>pinHistory</key>
+<integer>15</integer>
+----
+
+
+====
+
+[cols="15%h, 85%a"]
+|===
+
+|ID
+|pwpolicy_history_enforce_fifteen
+
+|References
+|
+
+[cols="20%h,80%a"]
+[frame="none"]
+[grid="cols"]
+!===
+
+!800-53r5
+!
+ * IA-5(1)
+
+ifdef::show_171[]
+!800-171r2
+!
+* 3.5.7
+* 3.5.8
+* 3.5.9
+* 3.5.10
+
+endif::[]
+
+ifdef::show_STIG[]
+!DISA STIG(s)
+!
+* N/A
+
+endif::[]
+
+ifdef::show_CIS[]
+
+!CIS Benchmark
+!
+* 5.2.8 (level 1)
+!CIS Controls V8
+!
+* 5.2
+
+endif::[]
+
+!CCE
+!
+* CCE-91123-0
+
+
+ifdef::show_tags[]
+!TAGS
+!
+* cis_lvl1
+* cis_lvl2
+* cisv8
+
+endif::[]
+
+!===
+
+|
+|===
+=== Require Passwords Contain a Minimum of One Lowercase Character
+
+The macOS _MUST_ be configured to require at least one lower-case character be used when a password is created.
+
+This rule enforces password complexity by requiring users to set passwords that are less vulnerable to malicious users. 
+
+NOTE: The guidance for password based authentication in NIST 800-53 (Rev 5) and NIST 800-63B state that complexity rules should be organizationally defined. The values defined are based off of common complexity values. But your organization may define its own password complexity rules.
+
+
+To check the state of the system, run the following command(s):
+[source,bash,options="nowrap"]
+----
+/usr/bin/pwpolicy getaccountpolicies | /usr/bin/grep -v "Getting global account policies" | /usr/bin/xmllint --xpath '/plist/dict/array/dict/dict[key="minimumAlphaCharactersLowerCase"]/integer' - | /usr/bin/awk -F '[<>]' '{print $3}'
+
+----
+
+If the result is not *1*, this is a finding.
+
+====
+**Remediation Description**
+
+Perform the following to configure the system to meet the requirements:
+
+This setting may be enforced using local policy or by a directory service.
+
+To set local policy to require at least 1 lowercase letter, edit the current password policy to contain the following <dict> within the "policyCategoryPasswordContent":
+
+[source,xml]
+----
+<dict>
+<key>policyContent</key>
+<string>policyAttributePassword matches &apos;(.*[a-z].*){1,}+&apos;</string>
+<key>policyIdentifier</key>
+<string>Must have at least 1 lowercase letter</string>
+<key>policyParameters</key>
+<dict>
+<key>minimumAlphaCharactersLowerCase</key>
+<integer>1</integer>
+</dict>
+</dict>
+----
+After saving the file and exiting to the command prompt, run the following command to load the new policy file, substituting the path to the file in place of "$pwpolicy_file".
+
+[source,bash]
+----
+/usr/bin/pwpolicy setaccountpolicies $pwpolicy_file
+----
+NOTE: See the password policy supplemental on more information on how to implement password policies on macOS.
+
+====
+
+[cols="15%h, 85%a"]
+|===
+
+|ID
+|pwpolicy_lower_case_character_enforce
+
+|References
+|
+
+[cols="20%h,80%a"]
+[frame="none"]
+[grid="cols"]
+!===
+
+!800-53r5
+!
+ * IA-5(1)
+
+ifdef::show_171[]
+!800-171r2
+!
+* 3.5.1
+* 3.5.2
+* 3.5.7
+* 3.5.8
+* 3.5.9
+* 3.5.10
+
+endif::[]
+
+ifdef::show_STIG[]
+!DISA STIG(s)
+!
+* N/A
+
+endif::[]
+
+ifdef::show_CIS[]
+
+!CIS Benchmark
+!
+* 5.2.6 (level 2)
+!CIS Controls V8
+!
+* 5.2
+
+endif::[]
+
+!CCE
+!
+* CCE-91035-6
+
+
+ifdef::show_tags[]
+!TAGS
+!
+* 800-171
+* cnssi-1253
+* 800-53r4_low
+* 800-53r4_moderate
+* 800-53r4_high
+* 800-53r5_low
+* 800-53r5_moderate
+* 800-53r5_high
+* cis_lvl2
+* cisv8
+
+endif::[]
+
+!===
+
+|
+|===
+=== Require a Minimum Password Length of 15 Characters
+
+The macOS _MUST_ be configured to require a minimum of 15 characters be used when a password is created.
+
+This rule enforces password complexity by requiring users to set passwords that are less vulnerable to malicious users. 
+
+NOTE: The guidance for password based authentication in NIST 800-53 (Rev 5) and NIST 800-63B state that complexity rules should be organizationally defined. The values defined are based off of common complexity values. But your organization may define its own password complexity rules.
+
+
+To check the state of the system, run the following command(s):
+[source,bash,options="nowrap"]
+----
+/usr/bin/osascript -l JavaScript << EOS
+$.NSUserDefaults.alloc.initWithSuiteName('com.apple.mobiledevice.passwordpolicy')\
+.objectForKey('minLength').js
+EOS
+
+----
+
+If the result is not *15*, this is a finding.
+
+====
+**Remediation Description**
+
+Perform the following to configure the system to meet the requirements:
+
+Create a configuration profile containing the following keys in the (com.apple.mobiledevice.passwordpolicy) payload type:
+
+[source,xml]
+----
+<key>minLength</key>
+<integer>15</integer>
+----
+
+
+====
+
+[cols="15%h, 85%a"]
+|===
+
+|ID
+|pwpolicy_minimum_length_enforce
+
+|References
+|
+
+[cols="20%h,80%a"]
+[frame="none"]
+[grid="cols"]
+!===
+
+!800-53r5
+!
+ * IA-5(1)
+
+ifdef::show_171[]
+!800-171r2
+!
+* 3.5.1
+* 3.5.2
+* 3.5.7
+* 3.5.8
+* 3.5.9
+* 3.5.10
+
+endif::[]
+
+ifdef::show_STIG[]
+!DISA STIG(s)
+!
+* APPL-12-003010
+
+endif::[]
+
+ifdef::show_CIS[]
+
+!CIS Benchmark
+!
+* 5.2.2 (level 1)
+!CIS Controls V8
+!
+* 5.2
+
+endif::[]
+
+!CCE
+!
+* CCE-91036-4
+
+
+ifdef::show_tags[]
+!TAGS
+!
+* 800-171
+* cnssi-1253
+* 800-53r4_low
+* 800-53r4_moderate
+* 800-53r4_high
+* 800-53r5_low
+* 800-53r5_moderate
+* 800-53r5_high
+* cis_lvl1
+* cis_lvl2
+* cisv8
+* stig
+
+endif::[]
+
+!===
+
+|
+|===
+=== Require Passwords Contain a Minimum of One Special Character
+
+The macOS _MUST_ be configured to require at least one special character be used when a password is created.
+
+Special characters are those characters that are not alphanumeric. Examples include: ~ ! @ # $ % ^ *.
+
+This rule enforces password complexity by requiring users to set passwords that are less vulnerable to malicious users.
+
+NOTE: The guidance for password based authentication in NIST 800-53 (Rev 5) and NIST 800-63B state that complexity rules should be organizationally defined. The values defined are based off of common complexity values. But your organization may define its own password complexity rules.
+
+
+To check the state of the system, run the following command(s):
+[source,bash,options="nowrap"]
+----
+/usr/bin/osascript -l JavaScript << EOS
+$.NSUserDefaults.alloc.initWithSuiteName('com.apple.mobiledevice.passwordpolicy')\
+.objectForKey('minComplexChars').js
+EOS
+
+----
+
+If the result is not *1*, this is a finding.
+
+====
+**Remediation Description**
+
+Perform the following to configure the system to meet the requirements:
+
+Create a configuration profile containing the following keys in the (com.apple.mobiledevice.passwordpolicy) payload type:
+
+[source,xml]
+----
+<key>minComplexChars</key>
+<integer>1</integer>
+----
+
+
+====
+
+[cols="15%h, 85%a"]
+|===
+
+|ID
+|pwpolicy_special_character_enforce
+
+|References
+|
+
+[cols="20%h,80%a"]
+[frame="none"]
+[grid="cols"]
+!===
+
+!800-53r5
+!
+ * IA-5(1)
+
+ifdef::show_171[]
+!800-171r2
+!
+* 3.5.1
+* 3.5.2
+* 3.5.7
+* 3.5.8
+* 3.5.9
+* 3.5.10
+
+endif::[]
+
+ifdef::show_STIG[]
+!DISA STIG(s)
+!
+* APPL-12-003011
+
+endif::[]
+
+ifdef::show_CIS[]
+
+!CIS Benchmark
+!
+* 5.2.5 (level 2)
+!CIS Controls V8
+!
+* 5.2
+
+endif::[]
+
+!CCE
+!
+* CCE-91040-6
+
+
+ifdef::show_tags[]
+!TAGS
+!
+* 800-171
+* cnssi-1253
+* 800-53r4_low
+* 800-53r4_moderate
+* 800-53r4_high
+* 800-53r5_low
+* 800-53r5_moderate
+* 800-53r5_high
+* cis_lvl2
+* cisv8
+* stig
+
+endif::[]
+
+!===
+
+|
+|===
+=== Require Passwords Contain a Minimum of One Uppercase Character
+
+The macOS _MUST_ be configured to require at least one uppercase character be used when a password is created.
+
+This rule enforces password complexity by requiring users to set passwords that are less vulnerable to malicious users. 
+
+NOTE: The guidance for password based authentication in NIST 800-53 (Rev 5) and NIST 800-63B state that complexity rules should be organizationally defined. The values defined are based off of common complexity values. But your organization may define its own password complexity rules.
+
+
+To check the state of the system, run the following command(s):
+[source,bash,options="nowrap"]
+----
+/usr/bin/pwpolicy getaccountpolicies | /usr/bin/grep -v "Getting global account policies" | /usr/bin/xmllint --xpath '/plist/dict/array/dict/dict[key="minimumAlphaCharactersUpperCase"]/integer' - | /usr/bin/awk -F '[<>]' '{print $3}'
+
+----
+
+If the result is not *1*, this is a finding.
+
+====
+**Remediation Description**
+
+Perform the following to configure the system to meet the requirements:
+
+This setting may be enforced using local policy or by a directory service.
+
+To set local policy to require at least 1 lowercase letter, edit the current password policy to contain the following <dict> within the "policyCategoryPasswordContent":
+
+[source,xml]
+----
+<dict>
+<key>policyContent</key>
+<string>policyAttributePassword matches &apos;(.*[A-Z].*){1,}+&apos;</string>
+<key>policyIdentifier</key>
+<string>Must have at least 1 uppercase letter</string>
+<key>policyParameters</key>
+<dict>
+<key>minimumAlphaCharactersUpperCase</key>
+<integer>1</integer>
+</dict>
+</dict>
+----
+After saving the file and exiting to the command prompt, run the following command to load the new policy file, substituting the path to the file in place of "$pwpolicy_file".
+
+[source,bash]
+----
+/usr/bin/pwpolicy setaccountpolicies $pwpolicy_file
+----
+NOTE: See the password policy supplemental on more information on how to implement password policies on macOS.
+
+====
+
+[cols="15%h, 85%a"]
+|===
+
+|ID
+|pwpolicy_upper_case_character_enforce
+
+|References
+|
+
+[cols="20%h,80%a"]
+[frame="none"]
+[grid="cols"]
+!===
+
+!800-53r5
+!
+ * IA-5(1)
+
+ifdef::show_171[]
+!800-171r2
+!
+* 3.5.1
+* 3.5.2
+* 3.5.7
+* 3.5.8
+* 3.5.9
+* 3.5.10
+
+endif::[]
+
+ifdef::show_STIG[]
+!DISA STIG(s)
+!
+* N/A
+
+endif::[]
+
+ifdef::show_CIS[]
+
+!CIS Benchmark
+!
+* 5.2.6 (level 2)
+!CIS Controls V8
+!
+* 5.2
+
+endif::[]
+
+!CCE
+!
+* CCE-91043-0
+
+
+ifdef::show_tags[]
+!TAGS
+!
+* 800-171
+* cnssi-1253
+* 800-53r4_low
+* 800-53r4_moderate
+* 800-53r4_high
+* 800-53r5_low
+* 800-53r5_moderate
+* 800-53r5_high
+* cis_lvl2
+* cisv8
+
+endif::[]
+
+!===
+
+|
+|===
+== iCloud
+
+This section contains the configuration and enforcement of iCloud and the Apple ID service settings.
+
+NOTE: 	The check/fix commands outlined in this section _MUST_ be run by a user with with elevated privileges. 
+
+=== Disable iCloud Desktop and Document Folder Sync
+
+The macOS system's ability to automatically synchronize a user's desktop and documents folder to their iCloud Drive _MUST_ be disabled.
+
+Apple's iCloud service does not provide an organization with enough control over the storage and access of data and, therefore, automated file synchronization _MUST_ be controlled by an organization approved service. 
+
+
+To check the state of the system, run the following command(s):
+[source,bash,options="nowrap"]
+----
+/usr/bin/osascript -l JavaScript << EOS
+$.NSUserDefaults.alloc.initWithSuiteName('com.apple.applicationaccess')\
+.objectForKey('allowCloudDesktopAndDocuments').js
+EOS
+
+----
+
+If the result is not *false*, this is a finding.
+
+====
+**Remediation Description**
+
+Perform the following to configure the system to meet the requirements:
+
+Create a configuration profile containing the following keys in the (com.apple.applicationaccess) payload type:
+
+[source,xml]
+----
+<key>allowCloudDesktopAndDocuments</key>
+<false/>
+----
+
+
+====
+
+[cols="15%h, 85%a"]
+|===
+
+|ID
+|icloud_sync_disable
+
+|References
+|
+
+[cols="20%h,80%a"]
+[frame="none"]
+[grid="cols"]
+!===
+
+!800-53r5
+!
+ * AC-20, AC-20(1)
+ * CM-7, CM-7(1)
+ * SC-7(10)
+
+ifdef::show_171[]
+!800-171r2
+!
+* 3.1.20
+* 3.4.6
+
+endif::[]
+
+ifdef::show_STIG[]
+!DISA STIG(s)
+!
+* N/A
+
+endif::[]
+
+ifdef::show_CIS[]
+
+!CIS Benchmark
+!
+* 2.6.1.4 (level 2)
+!CIS Controls V8
+!
+* 4.1, 4.8, 15.3
+
+endif::[]
+
+!CCE
+!
+* CCE-90896-2
+
+
+ifdef::show_tags[]
+!TAGS
+!
+* 800-53r5_low
+* 800-53r5_moderate
+* 800-53r5_high
+* 800-53r4_low
+* 800-53r4_moderate
+* 800-53r4_high
+* 800-171
+* cnssi-1253
+* cis_lvl2
+* cisv8
+
+endif::[]
+
+!===
+
+|
+|===
+== System Preferences
+
+This section contains the configuration and enforcement of the settings within the macOS System Preferences application.
+
+NOTE: The check/fix commands outlined in this section _MUST_ be run by a user with elevated privileges. 
+
+=== Disable Airplay Receiver
+
+Airplay Receiver allows you to send content from another Apple device to be displayed on the screen as it's being played from your other device.  
+
+Support for Airplay Receiver is non-essential and _MUST_ be disabled.
+
+The information system _MUST_ be configured to provide only essential capabilities.
+
+
+To check the state of the system, run the following command(s):
+[source,bash,options="nowrap"]
+----
+/usr/bin/osascript -l JavaScript << EOS
+$.NSUserDefaults.alloc.initWithSuiteName('com.apple.applicationaccess')\
+.objectForKey('allowAirPlayIncomingRequests').js
+EOS
+
+----
+
+If the result is not *false*, this is a finding.
+
+====
+**Remediation Description**
+
+Perform the following to configure the system to meet the requirements:
+
+Create a configuration profile containing the following keys in the (com.apple.applicationaccess) payload type:
+
+[source,xml]
+----
+<key>allowAirPlayIncomingRequests</key>
+<false/>
+----
+
+
+====
+
+[cols="15%h, 85%a"]
+|===
+
+|ID
+|sysprefs_airplay_receiver_disable
+
+|References
+|
+
+[cols="20%h,80%a"]
+[frame="none"]
+[grid="cols"]
+!===
+
+!800-53r5
+!
+ * CM-7, CM-7(1)
+
+ifdef::show_171[]
+!800-171r2
+!
+* 3.4.6
+
+endif::[]
+
+ifdef::show_STIG[]
+!DISA STIG(s)
+!
+* N/A
+
+endif::[]
+
+ifdef::show_CIS[]
+
+!CIS Benchmark
+!
+* 2.4.13 (level 1)
+!CIS Controls V8
+!
+* 4.1, 4.8
+
+endif::[]
+
+!CCE
+!
+* CCE-91044-8
+
+
+ifdef::show_tags[]
+!TAGS
+!
+* 800-53r5_low
+* 800-53r5_moderate
+* 800-53r5_high
+* cis_lvl1
+* cis_lvl2
+* cisv8
+
+endif::[]
+
+!===
+
+|
+|===
+=== Disable Unattended or Automatic Logon to the System
+
+Automatic logon _MUST_ be disabled.
+
+When automatic logons are enabled, the default user account is automatically logged on at boot time without prompting the user for a password. Even if the screen is later locked, a malicious user would be able to reboot the computer and find it already logged in. Disabling automatic logons mitigates this risk.
+
+
+To check the state of the system, run the following command(s):
+[source,bash,options="nowrap"]
+----
+/usr/bin/osascript -l JavaScript << EOS
+$.NSUserDefaults.alloc.initWithSuiteName('com.apple.loginwindow')\
+.objectForKey('com.apple.login.mcx.DisableAutoLoginClient').js
+EOS
+
+----
+
+If the result is not *true*, this is a finding.
+
+====
+**Remediation Description**
+
+Perform the following to configure the system to meet the requirements:
+
+Create a configuration profile containing the following keys in the (com.apple.loginwindow) payload type:
+
+[source,xml]
+----
+<key>com.apple.login.mcx.DisableAutoLoginClient</key>
+<true/>
+----
+
+
+====
+
+[cols="15%h, 85%a"]
+|===
+
+|ID
+|sysprefs_automatic_login_disable
+
+|References
+|
+
+[cols="20%h,80%a"]
+[frame="none"]
+[grid="cols"]
+!===
+
+!800-53r5
+!
+ * IA-2
+ * IA-5(13)
+
+ifdef::show_171[]
+!800-171r2
+!
+* 3.5.1
+* 3.5.2
+
+endif::[]
+
+ifdef::show_STIG[]
+!DISA STIG(s)
+!
+* APPL-12-002066
+
+endif::[]
+
+ifdef::show_CIS[]
+
+!CIS Benchmark
+!
+* 5.7 (level 1)
+!CIS Controls V8
+!
+* 4.7
+
+endif::[]
+
+!CCE
+!
+* CCE-91046-3
+
+
+ifdef::show_tags[]
+!TAGS
+!
+* 800-53r5_low
+* 800-53r5_moderate
+* 800-53r5_high
+* 800-53r4_low
+* 800-53r4_moderate
+* 800-53r4_high
+* 800-171
+* cnssi-1253
+* cis_lvl1
+* cis_lvl2
+* cisv8
+* stig
+
+endif::[]
+
+!===
+
+|
+|===
+=== Enable Bluetooth Menu
+
+The bluetooth menu _MUST_ be enabled.
+
+
+To check the state of the system, run the following command(s):
+[source,bash,options="nowrap"]
+----
+/usr/bin/osascript -l JavaScript << EOS
+$.NSUserDefaults.alloc.initWithSuiteName('com.apple.controlcenter')\
+.objectForKey('Bluetooth').js
+EOS
+
+----
+
+If the result is not *18*, this is a finding.
+
+====
+**Remediation Description**
+
+Perform the following to configure the system to meet the requirements:
+
+Create a configuration profile containing the following keys in the (com.apple.controlcenter) payload type:
+
+[source,xml]
+----
+<key>Bluetooth</key>
+<integer>18</integer>
+----
+
+
+====
+
+[cols="15%h, 85%a"]
+|===
+
+|ID
+|sysprefs_bluetooth_menu_enable
+
+|References
+|
+
+[cols="20%h,80%a"]
+[frame="none"]
+[grid="cols"]
+!===
+
+!800-53r5
+!
+ * N/A
+
+ifdef::show_171[]
+!800-171r2
+!
+* N/A
+
+endif::[]
+
+ifdef::show_STIG[]
+!DISA STIG(s)
+!
+* N/A
+
+endif::[]
+
+ifdef::show_CIS[]
+
+!CIS Benchmark
+!
+* 2.1.2 (level 1)
+!CIS Controls V8
+!
+* 4.8, 13.9
+
+endif::[]
+
+!CCE
+!
+* CCE-91124-8
+
+
+ifdef::show_tags[]
+!TAGS
+!
+* cis_lvl1
+* cis_lvl2
+* cisv8
+
+endif::[]
+
+!===
+
+|
+|===
+=== Disable Bluetooth Sharing
+
+Bluetooth Sharing _MUST_ be disabled. 
+
+Bluetooth Sharing allows users to wirelessly transmit files between the macOS and Bluetooth-enabled devices, including personally owned cellphones and tablets. A malicious user might introduce viruses or malware onto the system or extract sensitive files via Bluetooth Sharing. When Bluetooth Sharing is disabled, this risk is mitigated. 
+
+[NOTE] 
+====
+The check and fix are for the currently logged in user. To get the currently logged in user, run the following.
+[source,bash]
+----
+CURRENT_USER=$( scutil <<< "show State:/Users/ConsoleUser" \| awk '/Name :/ && ! /loginwindow/ { print $3 }' )
+----
+====
+
+
+To check the state of the system, run the following command(s):
+[source,bash,options="nowrap"]
+----
+/usr/bin/sudo -u "$CURRENT_USER" /usr/bin/defaults -currentHost read com.apple.Bluetooth PrefKeyServicesEnabled
+
+----
+
+If the result is not *0*, this is a finding.
+
+====
+**Remediation Description**
+
+Perform the following to configure the system to meet the requirements:
+
+[source,bash]
+----
+/usr/bin/sudo -u "$CURRENT_USER" /usr/bin/defaults -currentHost write com.apple.Bluetooth PrefKeyServicesEnabled -bool false
+----
+
+====
+
+[cols="15%h, 85%a"]
+|===
+
+|ID
+|sysprefs_bluetooth_sharing_disable
+
+|References
+|
+
+[cols="20%h,80%a"]
+[frame="none"]
+[grid="cols"]
+!===
+
+!800-53r5
+!
+ * AC-18(4)
+ * AC-3
+ * CM-7, CM-7(1)
+
+ifdef::show_171[]
+!800-171r2
+!
+* 3.1.1
+* 3.1.2
+* 3.1.16
+* 3.4.7
+
+endif::[]
+
+ifdef::show_STIG[]
+!DISA STIG(s)
+!
+* N/A
+
+endif::[]
+
+ifdef::show_CIS[]
+
+!CIS Benchmark
+!
+* 2.4.7 (level 1)
+!CIS Controls V8
+!
+* 3.3, 4.1, 4.8
+
+endif::[]
+
+!CCE
+!
+* CCE-91049-7
+
+
+ifdef::show_tags[]
+!TAGS
+!
+* 800-53r5_low
+* 800-53r5_moderate
+* 800-53r5_high
+* 800-53r4_low
+* 800-53r4_moderate
+* 800-53r4_high
+* 800-171
+* cnssi-1253
+* cis_lvl1
+* cis_lvl2
+* cisv8
+
+endif::[]
+
+!===
+
+|
+|===
+=== Disable Bluetooth When No Devices are Paired
+
+Bluetooth _MUST_ be disabled when no devices are paired. 
+
+
+To check the state of the system, run the following command(s):
+[source,bash,options="nowrap"]
+----
+isPaired=$(/usr/sbin/system_profiler SPBluetoothDataType 2>/dev/null | /usr/bin/grep -c 'Connected: Yes')
+if [[ "$isPaired" = "0" ]]; then 
+    powerState=$(/usr/sbin/system_profiler SPBluetoothDataType 2>/dev/null | /usr/bin/grep -c 'State: On')
+    /bin/echo "$powerState"
+else
+    /bin/echo "0"
+fi
+
+----
+
+If the result is not *0*, this is a finding.
+
+====
+**Remediation Description**
+
+Perform the following to configure the system to meet the requirements:
+
+[source,bash]
+----
+/usr/bin/defaults write /private/var/root/Library/Preferences/com.apple.BTServer.plist defaultPoweredState off
+/usr/bin/killall -HUP bluetoothd
+----
+
+====
+
+[cols="15%h, 85%a"]
+|===
+
+|ID
+|sysprefs_bluetooth_unpaired_disable
+
+|References
+|
+
+[cols="20%h,80%a"]
+[frame="none"]
+[grid="cols"]
+!===
+
+!800-53r5
+!
+ * AC-18, AC-18(3)
+ * SC-8
+
+ifdef::show_171[]
+!800-171r2
+!
+* N/A
+
+endif::[]
+
+ifdef::show_STIG[]
+!DISA STIG(s)
+!
+* N/A
+
+endif::[]
+
+ifdef::show_CIS[]
+
+!CIS Benchmark
+!
+* 2.1.1 (level 1)
+!CIS Controls V8
+!
+* 4.8, 12.6, 13.9
+
+endif::[]
+
+!CCE
+!
+* CCE-91126-3
+
+
+ifdef::show_tags[]
+!TAGS
+!
+* cis_lvl1
+* cis_lvl2
+* cisv8
+
+endif::[]
+
+!===
+
+|
+|===
+=== Disable CD/DVD Sharing
+
+CD/DVD Sharing _MUST_ be disabled. 
+
+
+To check the state of the system, run the following command(s):
+[source,bash,options="nowrap"]
+----
+/usr/bin/pgrep -q ODSAgent; /bin/echo $?
+
+----
+
+If the result is not *1*, this is a finding.
+
+====
+**Remediation Description**
+
+Perform the following to configure the system to meet the requirements:
+
+[source,bash]
+----
+/bin/launchctl unload /System/Library/LaunchDaemons/com.apple.ODSAgent.plist
+----
+
+====
+
+[cols="15%h, 85%a"]
+|===
+
+|ID
+|sysprefs_cd_dvd_sharing_disable
+
+|References
+|
+
+[cols="20%h,80%a"]
+[frame="none"]
+[grid="cols"]
+!===
+
+!800-53r5
+!
+ * CM-7, CM-7(1)
+
+ifdef::show_171[]
+!800-171r2
+!
+* N/A
+
+endif::[]
+
+ifdef::show_STIG[]
+!DISA STIG(s)
+!
+* N/A
+
+endif::[]
+
+ifdef::show_CIS[]
+
+!CIS Benchmark
+!
+* 2.4.6 (level 1)
+!CIS Controls V8
+!
+* 4.1, 4.8
+
+endif::[]
+
+!CCE
+!
+* CCE-91127-1
+
+
+ifdef::show_tags[]
+!TAGS
+!
+* 800-53r5_low
+* 800-53r5_moderate
+* 800-53r5_high
+* 800-53r4_low
+* 800-53r4_moderate
+* 800-53r4_high
+* cnssi-1253
+* cis_lvl1
+* cis_lvl2
+* cisv8
+
+endif::[]
+
+!===
+
+|
+|===
+=== Disable Content Caching Service
+
+Content caching _MUST_ be disabled. 
+
+Content caching is a macOS service that helps reduce Internet data usage and speed up software installation on Mac computers. It is not recommended for devices furnished to employees to act as a caching server. 
+
+
+To check the state of the system, run the following command(s):
+[source,bash,options="nowrap"]
+----
+/usr/bin/osascript -l JavaScript << EOS
+$.NSUserDefaults.alloc.initWithSuiteName('com.apple.applicationaccess')\
+.objectForKey('allowContentCaching').js
+EOS
+
+----
+
+If the result is not *false*, this is a finding.
+
+====
+**Remediation Description**
+
+Perform the following to configure the system to meet the requirements:
+
+Create a configuration profile containing the following keys in the (com.apple.applicationaccess) payload type:
+
+[source,xml]
+----
+<key>allowContentCaching</key>
+<false/>
+----
+
+
+====
+
+[cols="15%h, 85%a"]
+|===
+
+|ID
+|sysprefs_content_caching_disable
+
+|References
+|
+
+[cols="20%h,80%a"]
+[frame="none"]
+[grid="cols"]
+!===
+
+!800-53r5
+!
+ * CM-7, CM-7(1)
+
+ifdef::show_171[]
+!800-171r2
+!
+* 3.4.6
+
+endif::[]
+
+ifdef::show_STIG[]
+!DISA STIG(s)
+!
+* N/A
+
+endif::[]
+
+ifdef::show_CIS[]
+
+!CIS Benchmark
+!
+* 2.4.10 (level 2)
+!CIS Controls V8
+!
+* 4.1, 4.8
+
+endif::[]
+
+!CCE
+!
+* CCE-91050-5
+
+
+ifdef::show_tags[]
+!TAGS
+!
+* 800-53r5_low
+* 800-53r5_moderate
+* 800-53r5_high
+* 800-53r4_low
+* 800-53r4_moderate
+* 800-53r4_high
+* 800-171
+* cnssi-1253
+* cis_lvl2
+* cisv8
+
+endif::[]
+
+!===
+
+|
+|===
+=== Enforce Critical Security Updates to be Installed
+
+Ensure that security updates are installed as soon as they are available from Apple. 
+
+
+To check the state of the system, run the following command(s):
+[source,bash,options="nowrap"]
+----
+/usr/bin/osascript -l JavaScript << EOS
+$.NSUserDefaults.alloc.initWithSuiteName('com.apple.SoftwareUpdate')\
+.objectForKey('CriticalUpdateInstall').js
+EOS
+
+----
+
+If the result is not *true*, this is a finding.
+
+====
+**Remediation Description**
+
+Perform the following to configure the system to meet the requirements:
+
+Create a configuration profile containing the following keys in the (com.apple.SoftwareUpdate) payload type:
+
+[source,xml]
+----
+<key>CriticalUpdateInstall</key>
+<true/>
+----
+
+
+====
+
+[cols="15%h, 85%a"]
+|===
+
+|ID
+|sysprefs_critical_update_install_enforce
+
+|References
+|
+
+[cols="20%h,80%a"]
+[frame="none"]
+[grid="cols"]
+!===
+
+!800-53r5
+!
+ * SI-2
+
+ifdef::show_171[]
+!800-171r2
+!
+* N/A
+
+endif::[]
+
+ifdef::show_STIG[]
+!DISA STIG(s)
+!
+* N/A
+
+endif::[]
+
+ifdef::show_CIS[]
+
+!CIS Benchmark
+!
+* 1.5 (level 1)
+!CIS Controls V8
+!
+* 7.3, 7.4, 7.7
+
+endif::[]
+
+!CCE
+!
+* CCE-91051-3
+
+
+ifdef::show_tags[]
+!TAGS
+!
+* 800-53r5_low
+* 800-53r5_moderate
+* 800-53r5_high
+* cis_lvl1
+* cis_lvl2
+* cisv8
+
+endif::[]
+
+!===
+
+|
+|===
+=== Disable Sending Diagnostic and Usage Data to Apple
+
+The ability to submit diagnostic data to Apple _MUST_ be disabled.
+
+The information system _MUST_ be configured to provide only essential capabilities. Disabling the submission of diagnostic and usage information will mitigate the risk of unwanted data being sent to Apple. 
+
+
+To check the state of the system, run the following command(s):
+[source,bash,options="nowrap"]
+----
+/usr/bin/osascript -l JavaScript << EOS
+function run() {
+let pref1 = $.NSUserDefaults.alloc.initWithSuiteName('com.apple.SubmitDiagInfo')\
+.objectForKey('AutoSubmit').js
+let pref2 = $.NSUserDefaults.alloc.initWithSuiteName('com.apple.applicationaccess')\
+.objectForKey('allowDiagnosticSubmission').js
+if ( pref1 == false && pref2 == false ){
+    return("true")
+} else {
+    return("false")
+}
+}
+EOS
+
+----
+
+If the result is not *true*, this is a finding.
+
+====
+**Remediation Description**
+
+Perform the following to configure the system to meet the requirements:
+
+Create a configuration profile containing the following keys in the (com.apple.SubmitDiagInfo) payload type:
+
+[source,xml]
+----
+<key>AutoSubmit</key>
+<false/>
+----
+
+Create a configuration profile containing the following keys in the (com.apple.applicationaccess) payload type:
+
+[source,xml]
+----
+<key>allowDiagnosticSubmission</key>
+<false/>
+----
+
+
+====
+
+[cols="15%h, 85%a"]
+|===
+
+|ID
+|sysprefs_diagnostics_reports_disable
+
+|References
+|
+
+[cols="20%h,80%a"]
+[frame="none"]
+[grid="cols"]
+!===
+
+!800-53r5
+!
+ * AC-20
+ * SC-7(10)
+ * SI-11
+
+ifdef::show_171[]
+!800-171r2
+!
+* 3.1.20
+
+endif::[]
+
+ifdef::show_STIG[]
+!DISA STIG(s)
+!
+* APPL-12-002021
+
+endif::[]
+
+ifdef::show_CIS[]
+
+!CIS Benchmark
+!
+* 2.5.5 (level 2)
+!CIS Controls V8
+!
+* 4.1, 4.8
+
+endif::[]
+
+!CCE
+!
+* CCE-91052-1
+
+
+ifdef::show_tags[]
+!TAGS
+!
+* 800-53r5_low
+* 800-53r4_low
+* 800-53r4_moderate
+* 800-53r4_high
+* 800-53r5_moderate
+* 800-53r5_high
+* 800-171
+* cnssi-1253
+* cis_lvl2
+* cisv8
+* stig
+
+endif::[]
+
+!===
+
+|
+|===
+=== Enforce FileVault
+
+FileVault _MUST_ be enforced.
+
+The information system implements cryptographic mechanisms to protect the confidentiality and integrity of information stored on digital media during transport outside of controlled areas.
+
+
+To check the state of the system, run the following command(s):
+[source,bash,options="nowrap"]
+----
+/usr/bin/fdesetup status | /usr/bin/grep -c "FileVault is On."
+
+----
+
+If the result is not *1*, this is a finding.
+
+====
+**Remediation Description**
+
+Perform the following to configure the system to meet the requirements:
+
+NOTE: See the FileVault supplemental to implement this rule.
+
+====
+
+[cols="15%h, 85%a"]
+|===
+
+|ID
+|sysprefs_filevault_enforce
+
+|References
+|
+
+[cols="20%h,80%a"]
+[frame="none"]
+[grid="cols"]
+!===
+
+!800-53r5
+!
+ * SC-28, SC-28(1)
+
+ifdef::show_171[]
+!800-171r2
+!
+* 3.13.16
+
+endif::[]
+
+ifdef::show_STIG[]
+!DISA STIG(s)
+!
+* APPL-12-005020
+
+endif::[]
+
+ifdef::show_CIS[]
+
+!CIS Benchmark
+!
+* 2.5.5.1 (level 1)
+!CIS Controls V8
+!
+* 3.6, 3.11
+
+endif::[]
+
+!CCE
+!
+* CCE-91053-9
+
+
+ifdef::show_tags[]
+!TAGS
+!
+* 800-53r5_moderate
+* 800-53r5_high
+* 800-53r4_moderate
+* 800-53r4_high
+* 800-171
+* cnssi-1253
+* cis_lvl1
+* cis_lvl2
+* cisv8
+* stig
+
+endif::[]
+
+!===
+
+|
+|===
+=== Enable macOS Application Firewall
+
+The macOS Application Firewall is the built-in firewall that comes with macOS, and it _MUST_ be enabled. 
+
+When the macOS Application Firewall is enabled, the flow of information within the information system and between interconnected systems will be controlled by approved authorizations.
+
+
+To check the state of the system, run the following command(s):
+[source,bash,options="nowrap"]
+----
+/usr/bin/osascript -l JavaScript << EOS
+$.NSUserDefaults.alloc.initWithSuiteName('com.apple.security.firewall')\
+.objectForKey('EnableFirewall').js
+EOS
+
+----
+
+If the result is not *true*, this is a finding.
+
+====
+**Remediation Description**
+
+Perform the following to configure the system to meet the requirements:
+
+Create a configuration profile containing the following keys in the (com.apple.security.firewall) payload type:
+
+[source,xml]
+----
+<key>EnableFirewall</key>
+<true/>
+----
+
+
+====
+
+[cols="15%h, 85%a"]
+|===
+
+|ID
+|sysprefs_firewall_enable
+
+|References
+|
+
+[cols="20%h,80%a"]
+[frame="none"]
+[grid="cols"]
+!===
+
+!800-53r5
+!
+ * AC-4
+ * CM-7, CM-7(1)
+ * SC-7, SC-7(12)
+
+ifdef::show_171[]
+!800-171r2
+!
+* 3.1.3
+* 3.1.5
+* 3.1.18
+* 3.4.6
+* 3.13.1
+* 3.13.2
+* 3.13.5
+
+endif::[]
+
+ifdef::show_STIG[]
+!DISA STIG(s)
+!
+* APPL-12-005050
+
+endif::[]
+
+ifdef::show_CIS[]
+
+!CIS Benchmark
+!
+* 2.5.2.2 (level 1)
+!CIS Controls V8
+!
+* 4.1, 4.5, 13.1
+
+endif::[]
+
+!CCE
+!
+* CCE-91055-4
+
+
+ifdef::show_tags[]
+!TAGS
+!
+* 800-53r5_low
+* 800-53r4_low
+* 800-53r4_moderate
+* 800-53r4_high
+* 800-53r5_moderate
+* 800-53r5_high
+* 800-171
+* cnssi-1253
+* cis_lvl1
+* cis_lvl2
+* cisv8
+* stig
+
+endif::[]
+
+!===
+
+|
+|===
+=== Enable Firewall Stealth Mode
+
+Firewall Stealth Mode _MUST_ be enabled. 
+
+When stealth mode is enabled, the Mac will not respond to any probing requests, and only requests from authorized applications will still be authorized.
+
+[IMPORTANT]
+====
+Enabling firewall stealth mode may prevent certain remote mechanisms used for maintenance and compliance scanning from properly functioning. Information System Security Officers (ISSOs) are advised to first fully weigh the potential risks posed to their organization before opting not to enable stealth mode.
+====
+
+
+To check the state of the system, run the following command(s):
+[source,bash,options="nowrap"]
+----
+/usr/bin/osascript -l JavaScript << EOS
+$.NSUserDefaults.alloc.initWithSuiteName('com.apple.security.firewall')\
+.objectForKey('EnableStealthMode').js
+EOS
+
+----
+
+If the result is not *true*, this is a finding.
+
+====
+**Remediation Description**
+
+Perform the following to configure the system to meet the requirements:
+
+Create a configuration profile containing the following keys in the (com.apple.security.firewall) payload type:
+
+[source,xml]
+----
+<key>EnableStealthMode</key>
+<true/>
+----
+
+
+====
+
+[cols="15%h, 85%a"]
+|===
+
+|ID
+|sysprefs_firewall_stealth_mode_enable
+
+|References
+|
+
+[cols="20%h,80%a"]
+[frame="none"]
+[grid="cols"]
+!===
+
+!800-53r5
+!
+ * CM-7, CM-7(1)
+ * SC-7, SC-7(16)
+
+ifdef::show_171[]
+!800-171r2
+!
+* 3.4.6
+* 3.13.1
+* 3.13.2
+* 3.13.5
+
+endif::[]
+
+ifdef::show_STIG[]
+!DISA STIG(s)
+!
+* APPL-12-005050
+
+endif::[]
+
+ifdef::show_CIS[]
+
+!CIS Benchmark
+!
+* 2.5.2.3 (level 1)
+!CIS Controls V8
+!
+* 4.1, 4.5, 4.8
+
+endif::[]
+
+!CCE
+!
+* CCE-91056-2
+
+
+ifdef::show_tags[]
+!TAGS
+!
+* 800-53r5_low
+* 800-53r5_moderate
+* 800-53r5_high
+* 800-53r4_low
+* 800-53r4_moderate
+* 800-53r4_high
+* 800-171
+* cnssi-1253
+* cis_lvl1
+* cis_lvl2
+* cisv8
+* stig
+* stig
+
+endif::[]
+
+!===
+
+|
+|===
+=== Disable Guest Access to Shared SMB Folders
+
+Guest access to shared Server Message Block (SMB) folders _MUST_ be disabled. 
+
+Turning off guest access prevents anonymous users from accessing files shared via SMB.
+
+
+To check the state of the system, run the following command(s):
+[source,bash,options="nowrap"]
+----
+/usr/bin/defaults read /Library/Preferences/SystemConfiguration/com.apple.smb.server AllowGuestAccess
+
+----
+
+If the result is not *0*, this is a finding.
+
+====
+**Remediation Description**
+
+Perform the following to configure the system to meet the requirements:
+
+[source,bash]
+----
+/usr/sbin/sysadminctl -smbGuestAccess off
+----
+
+====
+
+[cols="15%h, 85%a"]
+|===
+
+|ID
+|sysprefs_guest_access_smb_disable
+
+|References
+|
+
+[cols="20%h,80%a"]
+[frame="none"]
+[grid="cols"]
+!===
+
+!800-53r5
+!
+ * AC-2, AC-2(9)
+
+ifdef::show_171[]
+!800-171r2
+!
+* 3.5.1
+* 3.5.2
+
+endif::[]
+
+ifdef::show_STIG[]
+!DISA STIG(s)
+!
+* N/A
+
+endif::[]
+
+ifdef::show_CIS[]
+
+!CIS Benchmark
+!
+* 6.1.4 (level 1)
+!CIS Controls V8
+!
+* 5.2, 6.2, 6.8
+
+endif::[]
+
+!CCE
+!
+* CCE-91059-6
+
+
+ifdef::show_tags[]
+!TAGS
+!
+* 800-53r5_low
+* 800-53r5_moderate
+* 800-53r5_high
+* 800-53r4_low
+* 800-53r4_moderate
+* 800-53r4_high
+* 800-171
+* cnssi-1253
+* cis_lvl1
+* cis_lvl2
+* cisv8
+
+endif::[]
+
+!===
+
+|
+|===
+=== Disable the Guest Account
+
+Guest access _MUST_ be disabled. 
+
+Turning off guest access prevents anonymous users from accessing files.
+
+
+To check the state of the system, run the following command(s):
+[source,bash,options="nowrap"]
+----
+/usr/bin/osascript -l JavaScript << EOS
+$.NSUserDefaults.alloc.initWithSuiteName('com.apple.MCX')\
+.objectForKey('DisableGuestAccount').js
+EOS
+
+----
+
+If the result is not *true*, this is a finding.
+
+====
+**Remediation Description**
+
+Perform the following to configure the system to meet the requirements:
+
+Create a configuration profile containing the following keys in the (com.apple.MCX) payload type:
+
+[source,xml]
+----
+<key>DisableGuestAccount</key>
+<true/>
+----
+
+
+====
+
+[cols="15%h, 85%a"]
+|===
+
+|ID
+|sysprefs_guest_account_disable
+
+|References
+|
+
+[cols="20%h,80%a"]
+[frame="none"]
+[grid="cols"]
+!===
+
+!800-53r5
+!
+ * AC-2, AC-2(9)
+
+ifdef::show_171[]
+!800-171r2
+!
+* 3.5.1
+* 3.5.2
+
+endif::[]
+
+ifdef::show_STIG[]
+!DISA STIG(s)
+!
+* APPL-12-002063
+
+endif::[]
+
+ifdef::show_CIS[]
+
+!CIS Benchmark
+!
+* 6.1.3 (level 1)
+!CIS Controls V8
+!
+* 5.2, 5.3, 6.8
+
+endif::[]
+
+!CCE
+!
+* CCE-91060-4
+
+
+ifdef::show_tags[]
+!TAGS
+!
+* 800-53r5_low
+* 800-53r5_moderate
+* 800-53r5_high
+* 800-53r4_low
+* 800-53r4_moderate
+* 800-53r4_high
+* 800-171
+* cnssi-1253
+* cis_lvl1
+* cis_lvl2
+* cisv8
+* stig
+
+endif::[]
+
+!===
+
+|
+|===
+=== Secure Hot Corners
+
+Hot corners _MUST_ be secured. 
+
+The information system conceals, via the session lock, information previously visible on the display with a publicly viewable image. Although hot comers can be used to initiate a session lock or to launch useful applications, they can also be configured to disable an automatic session lock from initiating. Such a configuration introduces the risk that a user might forget to manually lock the screen before stepping away from the computer.
+
+
+To check the state of the system, run the following command(s):
+[source,bash,options="nowrap"]
+----
+bl_corner="$(/usr/bin/defaults read /Users/"$CURRENT_USER"/Library/Preferences/com.apple.dock wvous-bl-corner 2>/dev/null)"
+tl_corner="$(/usr/bin/defaults read /Users/"$CURRENT_USER"/Library/Preferences/com.apple.dock wvous-tl-corner 2>/dev/null)"
+tr_corner="$(/usr/bin/defaults read /Users/"$CURRENT_USER"/Library/Preferences/com.apple.dock wvous-tr-corner 2>/dev/null)"
+br_corner="$(/usr/bin/defaults read /Users/"$CURRENT_USER"/Library/Preferences/com.apple.dock wvous-br-corner 2>/dev/null)"
+
+if [[ "$bl_corner" != "6" ]] && [[ "$tl_corner" != "6" ]] && [[ "$tr_corner" != "6" ]] && [[ "$br_corner" != "6" ]]; then
+  echo "0"
+fi
+
+----
+
+If the result is not *0*, this is a finding.
+
+====
+**Remediation Description**
+
+Perform the following to configure the system to meet the requirements:
+
+[source,bash]
+----
+/usr/bin/sudo -u "$CURRENT_USER" /usr/bin/defaults delete /Users/"$CURRENT_USER"/Library/Preferences/com.apple.dock wvous-bl-corner 2>/dev/null
+/usr/bin/sudo -u "$CURRENT_USER" /usr/bin/defaults delete /Users/"$CURRENT_USER"/Library/Preferences/com.apple.dock wvous-tl-corner 2>/dev/null
+/usr/bin/sudo -u "$CURRENT_USER" /usr/bin/defaults delete /Users/"$CURRENT_USER"/Library/Preferences/com.apple.dock wvous-tr-corner 2>/dev/null
+/usr/bin/sudo -u "$CURRENT_USER" /usr/bin/defaults delete /Users/"$CURRENT_USER"/Library/Preferences/com.apple.dock wvous-br-corner 2>/dev/null
+----
+
+====
+
+[cols="15%h, 85%a"]
+|===
+
+|ID
+|sysprefs_hot_corners_secure
+
+|References
+|
+
+[cols="20%h,80%a"]
+[frame="none"]
+[grid="cols"]
+!===
+
+!800-53r5
+!
+ * AC-11(1)
+
+ifdef::show_171[]
+!800-171r2
+!
+* N/A
+
+endif::[]
+
+ifdef::show_STIG[]
+!DISA STIG(s)
+!
+* N/A
+
+endif::[]
+
+ifdef::show_CIS[]
+
+!CIS Benchmark
+!
+* 2.3.2 (level 2)
+!CIS Controls V8
+!
+* 4.3
+
+endif::[]
+
+!CCE
+!
+* CCE-91128-9
+
+
+ifdef::show_tags[]
+!TAGS
+!
+* cis_lvl2
+* cisv8
+
+endif::[]
+
+!===
+
+|
+|===
+=== Enforce macOS Updates are Automatically Installed
+
+Software Update _MUST_ be configured to enforce automatic installation of macOS updates is enabled.
+
+
+To check the state of the system, run the following command(s):
+[source,bash,options="nowrap"]
+----
+/usr/bin/osascript -l JavaScript << EOS
+$.NSUserDefaults.alloc.initWithSuiteName('com.apple.SoftwareUpdate')\
+.objectForKey('AutomaticallyInstallMacOSUpdates').js
+EOS
+
+----
+
+If the result is not *true*, this is a finding.
+
+====
+**Remediation Description**
+
+Perform the following to configure the system to meet the requirements:
+
+Create a configuration profile containing the following keys in the (com.apple.SoftwareUpdate) payload type:
+
+[source,xml]
+----
+<key>AutomaticallyInstallMacOSUpdates</key>
+<true/>
+----
+
+
+====
+
+[cols="15%h, 85%a"]
+|===
+
+|ID
+|sysprefs_install_macos_updates_enforce
+
+|References
+|
+
+[cols="20%h,80%a"]
+[frame="none"]
+[grid="cols"]
+!===
+
+!800-53r5
+!
+ * N/A
+
+ifdef::show_171[]
+!800-171r2
+!
+* N/A
+
+endif::[]
+
+ifdef::show_STIG[]
+!DISA STIG(s)
+!
+* N/A
+
+endif::[]
+
+ifdef::show_CIS[]
+
+!CIS Benchmark
+!
+* 1.6 (level 1)
+!CIS Controls V8
+!
+* 7.3, 7.4
+
+endif::[]
+
+!CCE
+!
+* CCE-91129-7
+
+
+ifdef::show_tags[]
+!TAGS
+!
+* cis_lvl1
+* cis_lvl2
+* cisv8
+
+endif::[]
+
+!===
+
+|
+|===
+=== Disable Internet Sharing
+
+If the system does not require Internet sharing, support for it is non-essential and _MUST_ be disabled.
+
+The information system _MUST_ be configured to provide only essential capabilities. Disabling Internet sharing helps prevent the unauthorized connection of devices, unauthorized transfer of information, and unauthorized tunneling.
+
+
+To check the state of the system, run the following command(s):
+[source,bash,options="nowrap"]
+----
+/usr/bin/osascript -l JavaScript << EOS
+$.NSUserDefaults.alloc.initWithSuiteName('com.apple.MCX')\
+.objectForKey('forceInternetSharingOff').js
+EOS
+
+----
+
+If the result is not *true*, this is a finding.
+
+====
+**Remediation Description**
+
+Perform the following to configure the system to meet the requirements:
+
+Create a configuration profile containing the following keys in the (com.apple.MCX) payload type:
+
+[source,xml]
+----
+<key>forceInternetSharingOff</key>
+<true/>
+----
+
+
+====
+
+[cols="15%h, 85%a"]
+|===
+
+|ID
+|sysprefs_internet_sharing_disable
+
+|References
+|
+
+[cols="20%h,80%a"]
+[frame="none"]
+[grid="cols"]
+!===
+
+!800-53r5
+!
+ * AC-20
+ * AC-4
+
+ifdef::show_171[]
+!800-171r2
+!
+* 3.1.3
+* 3.1.20
+
+endif::[]
+
+ifdef::show_STIG[]
+!DISA STIG(s)
+!
+* APPL-12-002007
+
+endif::[]
+
+ifdef::show_CIS[]
+
+!CIS Benchmark
+!
+* 2.4.2 (level 1)
+!CIS Controls V8
+!
+* 4.1, 4.8
+
+endif::[]
+
+!CCE
+!
+* CCE-91063-8
+
+
+ifdef::show_tags[]
+!TAGS
+!
+* 800-53r5_low
+* 800-53r4_low
+* 800-53r4_moderate
+* 800-53r4_high
+* 800-53r5_moderate
+* 800-53r5_high
+* 800-171
+* cnssi-1253
+* cis_lvl1
+* cis_lvl2
+* cisv8
+* stig
+
+endif::[]
+
+!===
+
+|
+|===
+=== Audit Location Services
+
+The organization _MUST_ audit which applications have access to location services.
+
+
+To check the state of the system, run the following command(s):
+[source,bash,options="nowrap"]
+----
+sudo /usr/libexec/PlistBuddy -c print /var/db/locationd/clients.plist | grep Dict | awk '(NR>1) { print $1 }' 
+
+----
+
+If the result is not *a list containing approved applications.*, this is a finding.
+
+====
+**Remediation Description**
+
+Perform the following to configure the system to meet the requirements:
+
+Review the list of applications and remove any unauthorized applications from System Prefrences->Security & Privacy->Privacy->Location Services.
+
+====
+
+[cols="15%h, 85%a"]
+|===
+
+|ID
+|sysprefs_location_services_audit
+
+|References
+|
+
+[cols="20%h,80%a"]
+[frame="none"]
+[grid="cols"]
+!===
+
+!800-53r5
+!
+ * N/A
+
+ifdef::show_171[]
+!800-171r2
+!- N/A
+endif::[]
+
+ifdef::show_STIG[]
+!DISA STIG(s)
+!
+* N/A
+
+endif::[]
+
+ifdef::show_CIS[]
+
+!CIS Benchmark
+!
+* 2.5.4 (level 2)
+!CIS Controls V8
+!
+* 2.3, 4.1
+
+endif::[]
+
+!CCE
+!
+* CCE-91131-3
+
+
+ifdef::show_tags[]
+!TAGS
+!
+* cis_lvl2
+* cisv8
+* cis_manual
+* manual
+
+endif::[]
+
+!===
+
+|
+|===
+=== Enable Location Services
+
+Location Services _MUST_ be enabled.   
+
+
+To check the state of the system, run the following command(s):
+[source,bash,options="nowrap"]
+----
+/usr/bin/defaults read /var/db/locationd/Library/Preferences/ByHost/com.apple.locationd.plist LocationServicesEnabled
+
+----
+
+If the result is not *1*, this is a finding.
+
+====
+**Remediation Description**
+
+Perform the following to configure the system to meet the requirements:
+
+[source,bash]
+----
+/usr/bin/defaults write /var/db/locationd/Library/Preferences/ByHost/com.apple.locationd LocationServicesEnabled -bool true; /bin/launchctl kickstart -k system/com.apple.locationd
+----
+
+====
+
+[cols="15%h, 85%a"]
+|===
+
+|ID
+|sysprefs_location_services_enable
+
+|References
+|
+
+[cols="20%h,80%a"]
+[frame="none"]
+[grid="cols"]
+!===
+
+!800-53r5
+!
+ * N/A
+
+ifdef::show_171[]
+!800-171r2
+!
+* N/A
+
+endif::[]
+
+ifdef::show_STIG[]
+!DISA STIG(s)
+!
+* N/A
+
+endif::[]
+
+ifdef::show_CIS[]
+
+!CIS Benchmark
+!
+* 2.5.3 (level 2)
+!CIS Controls V8
+!
+* 4.1, 4.8
+
+endif::[]
+
+!CCE
+!
+* CCE-91132-1
+
+
+ifdef::show_tags[]
+!TAGS
+!
+* cis_lvl2
+* cisv8
+
+endif::[]
+
+!===
+
+|
+|===
+=== Configure Login Window to Show A Custom Message
+
+The login window _MUST_ be configured to show a custom access warning message. 
+
+
+To check the state of the system, run the following command(s):
+[source,bash,options="nowrap"]
+----
+/usr/bin/osascript -l JavaScript << EOS
+$.NSUserDefaults.alloc.initWithSuiteName('com.apple.loginwindow')\
+.objectForKey('LoginwindowText').js
+EOS
+
+----
+
+If the result is not *Approved message goes here*, this is a finding.
+
+====
+**Remediation Description**
+
+Perform the following to configure the system to meet the requirements:
+
+Create a configuration profile containing the following keys in the (com.apple.loginwindow) payload type:
+
+[source,xml]
+----
+<key>LoginwindowText</key>
+<string>Approved message goes here</string>
+----
+
+
+====
+
+[cols="15%h, 85%a"]
+|===
+
+|ID
+|sysprefs_loginwindow_loginwindowtext_enable
+
+|References
+|
+
+[cols="20%h,80%a"]
+[frame="none"]
+[grid="cols"]
+!===
+
+!800-53r5
+!
+ * N/A
+
+ifdef::show_171[]
+!800-171r2
+!
+* N/A
+
+endif::[]
+
+ifdef::show_STIG[]
+!DISA STIG(s)
+!
+* N/A
+
+endif::[]
+
+ifdef::show_CIS[]
+
+!CIS Benchmark
+!
+* 6.1.1 (level 1)
+
+endif::[]
+
+!CCE
+!
+* CCE-91133-9
+
+
+ifdef::show_tags[]
+!TAGS
+!
+* cis_lvl1
+* cis_lvl2
+
+endif::[]
+
+!===
+
+|
+|===
+=== Configure Login Window to Prompt for Username and Password
+
+The login window _MUST_ be configured to prompt all users for both a username and a password. 
+
+By default, the system displays a list of known users on the login window, which can make it easier for a malicious user to gain access to someone else's account. Requiring users to type in both their username and password mitigates the risk of unauthorized users gaining access to the information system. 
+
+
+To check the state of the system, run the following command(s):
+[source,bash,options="nowrap"]
+----
+/usr/bin/osascript -l JavaScript << EOS
+$.NSUserDefaults.alloc.initWithSuiteName('com.apple.loginwindow')\
+.objectForKey('SHOWFULLNAME').js
+EOS
+
+----
+
+If the result is not *true*, this is a finding.
+
+====
+**Remediation Description**
+
+Perform the following to configure the system to meet the requirements:
+
+Create a configuration profile containing the following keys in the (com.apple.loginwindow) payload type:
+
+[source,xml]
+----
+<key>SHOWFULLNAME</key>
+<true/>
+----
+
+
+====
+
+[cols="15%h, 85%a"]
+|===
+
+|ID
+|sysprefs_loginwindow_prompt_username_password_enforce
+
+|References
+|
+
+[cols="20%h,80%a"]
+[frame="none"]
+[grid="cols"]
+!===
+
+!800-53r5
+!
+ * IA-2
+
+ifdef::show_171[]
+!800-171r2
+!
+* 3.5.1
+* 3.5.2
+
+endif::[]
+
+ifdef::show_STIG[]
+!DISA STIG(s)
+!
+* APPL-12-005052
+
+endif::[]
+
+ifdef::show_CIS[]
+
+!CIS Benchmark
+!
+* 6.1.1 (level 1)
+!CIS Controls V8
+!
+* 4.1
+
+endif::[]
+
+!CCE
+!
+* CCE-91065-3
+
+
+ifdef::show_tags[]
+!TAGS
+!
+* 800-53r5_low
+* 800-53r5_moderate
+* 800-53r5_high
+* 800-53r4_low
+* 800-53r4_moderate
+* 800-53r4_high
+* 800-171
+* cnssi-1253
+* cis_lvl1
+* cis_lvl2
+* cisv8
+* stig
+
+endif::[]
+
+!===
+
+|
+|===
+=== Disable Media Sharing
+
+Media sharing _MUST_ be disabled.
+
+When Media Sharing is enabled, the computer starts a network listening service that shares the contents of the user's music collection with other users in the same subnet. 
+
+The information system _MUST_ be configured to provide only essential capabilities. Disabling Media Sharing helps prevent the unauthorized connection of devices and the unauthorized transfer of information. Disabling Media Sharing mitigates this risk.
+
+NOTE: The Media Sharing preference panel will still allow "Home Sharing" and "Share media with guests" to be checked but the service will not be enabled.
+
+
+To check the state of the system, run the following command(s):
+[source,bash,options="nowrap"]
+----
+/usr/bin/osascript -l JavaScript << EOS
+function run() {
+  let pref1 = ObjC.unwrap($.NSUserDefaults.alloc.initWithSuiteName('com.apple.preferences.sharing.SharingPrefsExtension')\
+  .objectForKey('homeSharingUIStatus'))
+  let pref2 = ObjC.unwrap($.NSUserDefaults.alloc.initWithSuiteName('com.apple.preferences.sharing.SharingPrefsExtension')\
+  .objectForKey('legacySharingUIStatus'))
+  let pref3 = ObjC.unwrap($.NSUserDefaults.alloc.initWithSuiteName('com.apple.preferences.sharing.SharingPrefsExtension')\
+  .objectForKey('mediaSharingUIStatus'))
+  if ( pref1 == 0 && pref2 == 0 && pref3 == 0 ) {
+    return("true")
+  } else {
+    return("false")
+  }
+}
+EOS
+
+----
+
+If the result is not *true*, this is a finding.
+
+====
+**Remediation Description**
+
+Perform the following to configure the system to meet the requirements:
+
+Create a configuration profile containing the following keys in the (com.apple.preferences.sharing.SharingPrefsExtension) payload type:
+
+[source,xml]
+----
+<key>homeSharingUIStatus</key>
+<integer>0</integer>
+<key>legacySharingUIStatus</key>
+<integer>0</integer>
+<key>mediaSharingUIStatus</key>
+<integer>0</integer>
+----
+
+
+====
+
+[cols="15%h, 85%a"]
+|===
+
+|ID
+|sysprefs_media_sharing_disabled
+
+|References
+|
+
+[cols="20%h,80%a"]
+[frame="none"]
+[grid="cols"]
+!===
+
+!800-53r5
+!
+ * AC-17
+ * AC-3
+
+ifdef::show_171[]
+!800-171r2
+!
+* 3.1.1
+* 3.1.2
+
+endif::[]
+
+ifdef::show_STIG[]
+!DISA STIG(s)
+!
+* N/A
+
+endif::[]
+
+ifdef::show_CIS[]
+
+!CIS Benchmark
+!
+* 2.4.12 (level 2)
+!CIS Controls V8
+!
+* 4.1, 4.8
+
+endif::[]
+
+!CCE
+!
+* CCE-91066-1
+
+
+ifdef::show_tags[]
+!TAGS
+!
+* 800-53r5_low
+* 800-53r5_moderate
+* 800-53r5_high
+* 800-53r4_low
+* 800-53r4_moderate
+* 800-53r4_high
+* 800-171
+* cis_lvl2
+* cisv8
+
+endif::[]
+
+!===
+
+|
+|===
+=== Disable Password Hints
+
+Password hints _MUST_ be disabled.
+
+Password hints leak information about passwords that are currently in use and can lead to loss of confidentiality. 
+
+
+To check the state of the system, run the following command(s):
+[source,bash,options="nowrap"]
+----
+/usr/bin/osascript -l JavaScript << EOS
+$.NSUserDefaults.alloc.initWithSuiteName('com.apple.loginwindow')\
+.objectForKey('RetriesUntilHint').js
+EOS
+
+----
+
+If the result is not *0*, this is a finding.
+
+====
+**Remediation Description**
+
+Perform the following to configure the system to meet the requirements:
+
+Create a configuration profile containing the following keys in the (com.apple.loginwindow) payload type:
+
+[source,xml]
+----
+<key>RetriesUntilHint</key>
+<integer>0</integer>
+----
+
+
+====
+
+[cols="15%h, 85%a"]
+|===
+
+|ID
+|sysprefs_password_hints_disable
+
+|References
+|
+
+[cols="20%h,80%a"]
+[frame="none"]
+[grid="cols"]
+!===
+
+!800-53r5
+!
+ * IA-6
+
+ifdef::show_171[]
+!800-171r2
+!
+* 3.5.11
+
+endif::[]
+
+ifdef::show_STIG[]
+!DISA STIG(s)
+!
+* APPL-12-003012
+
+endif::[]
+
+ifdef::show_CIS[]
+
+!CIS Benchmark
+!
+* 6.1.2 (level 1)
+!CIS Controls V8
+!
+* 4.1
+
+endif::[]
+
+!CCE
+!
+* CCE-91067-9
+
+
+ifdef::show_tags[]
+!TAGS
+!
+* 800-53r5_low
+* 800-53r5_moderate
+* 800-53r5_high
+* 800-53r4_low
+* 800-53r4_moderate
+* 800-53r4_high
+* 800-171
+* cnssi-1253
+* cis_lvl1
+* cis_lvl2
+* cisv8
+* stig
+
+endif::[]
+
+!===
+
+|
+|===
+=== Disable Personalized Advertising
+
+Ad tracking and targeted ads _MUST_ be disabled.
+
+The information system _MUST_ be configured to provide only essential capabilities. Disabling ad tracking ensures that applications and advertisers are unable to track users' interests and deliver targeted advertisements.  
+
+
+To check the state of the system, run the following command(s):
+[source,bash,options="nowrap"]
+----
+/usr/bin/osascript -l JavaScript << EOS
+$.NSUserDefaults.alloc.initWithSuiteName('com.apple.AdLib')\
+.objectForKey('allowApplePersonalizedAdvertising').js
+EOS
+
+----
+
+If the result is not *false*, this is a finding.
+
+====
+**Remediation Description**
+
+Perform the following to configure the system to meet the requirements:
+
+Create a configuration profile containing the following keys in the (com.apple.AdLib) payload type:
+
+[source,xml]
+----
+<key>allowApplePersonalizedAdvertising</key>
+<false/>
+----
+
+
+====
+
+[cols="15%h, 85%a"]
+|===
+
+|ID
+|sysprefs_personalized_advertising_disable
+
+|References
+|
+
+[cols="20%h,80%a"]
+[frame="none"]
+[grid="cols"]
+!===
+
+!800-53r5
+!
+ * AC-20
+ * CM-7, CM-7(1)
+ * SC-7(10)
+
+ifdef::show_171[]
+!800-171r2
+!
+* 3.1.20
+* 3.4.6
+
+endif::[]
+
+ifdef::show_STIG[]
+!DISA STIG(s)
+!
+* N/A
+
+endif::[]
+
+ifdef::show_CIS[]
+
+!CIS Benchmark
+!
+* 2.5.6 (level 1)
+!CIS Controls V8
+!
+* 4.1, 4.8
+
+endif::[]
+
+!CCE
+!
+* CCE-91068-7
+
+
+ifdef::show_tags[]
+!TAGS
+!
+* 800-53r5_low
+* 800-53r5_moderate
+* 800-53r5_high
+* 800-53r4_low
+* 800-53r4_moderate
+* 800-53r4_high
+* 800-171
+* cnssi-1253
+* cis_lvl1
+* cis_lvl2
+* cisv8
+
+endif::[]
+
+!===
+
+|
+|===
+=== Disable Power Nap
+
+Power Nap _MUST_ be disabled.
+
+Power Nap allows your Mac to perform actions while a Mac is asleep. This can interfere with USB power and may cause devices to stop functioning until a reboot and must therefore be disabled on all applicable systems. 
+
+The following Macs support Power Nap:
+
+* MacBook (Early 2015 and later)
+* MacBook Air (Late 2010 and later)
+* MacBook Pro (all models with Retina display)
+* Mac mini (Late 2012 and later)
+* iMac (Late 2012 and later)
+* Mac Pro (Late 2013 and later)
+
+
+To check the state of the system, run the following command(s):
+[source,bash,options="nowrap"]
+----
+/usr/bin/pmset -g custom | /usr/bin/awk '/powernap/ { sum+=$2 } END {print sum}'
+
+----
+
+If the result is not *0*, this is a finding.
+
+====
+**Remediation Description**
+
+Perform the following to configure the system to meet the requirements:
+
+[source,bash]
+----
+/usr/bin/pmset -a powernap 0
+----
+
+====
+
+[cols="15%h, 85%a"]
+|===
+
+|ID
+|sysprefs_power_nap_disable
+
+|References
+|
+
+[cols="20%h,80%a"]
+[frame="none"]
+[grid="cols"]
+!===
+
+!800-53r5
+!
+ * CM-7, CM-7(1)
+
+ifdef::show_171[]
+!800-171r2
+!
+* 3.4.6
+
+endif::[]
+
+ifdef::show_STIG[]
+!DISA STIG(s)
+!
+* N/A
+
+endif::[]
+
+ifdef::show_CIS[]
+
+!CIS Benchmark
+!
+* 2.9 (level 1)
+!CIS Controls V8
+!
+* 4.1, 4.8
+
+endif::[]
+
+!CCE
+!
+* CCE-91069-5
+
+
+ifdef::show_tags[]
+!TAGS
+!
+* 800-53r5_low
+* 800-53r5_moderate
+* 800-53r5_high
+* 800-53r4_low
+* 800-53r4_moderate
+* 800-53r4_high
+* 800-171
+* cnssi-1253
+* cis_lvl1
+* cis_lvl2
+* cisv8
+
+endif::[]
+
+!===
+
+|
+|===
+=== Disable Printer Sharing
+
+Printer Sharing _MUST_ be disabled. 
+
+
+To check the state of the system, run the following command(s):
+[source,bash,options="nowrap"]
+----
+/usr/sbin/cupsctl | /usr/bin/grep -c "_share_printers=0"
+
+----
+
+If the result is not *1*, this is a finding.
+
+====
+**Remediation Description**
+
+Perform the following to configure the system to meet the requirements:
+
+[source,bash]
+----
+/usr/sbin/cupsctl --no-share-printers
+/usr/bin/lpstat -p | awk '{print $2}'| /usr/bin/xargs -I{} lpadmin -p {} -o printer-is-shared=false
+----
+
+====
+
+[cols="15%h, 85%a"]
+|===
+
+|ID
+|sysprefs_printer_sharing_disable
+
+|References
+|
+
+[cols="20%h,80%a"]
+[frame="none"]
+[grid="cols"]
+!===
+
+!800-53r5
+!
+ * CM-7, CM-7(1)
+
+ifdef::show_171[]
+!800-171r2
+!
+* N/A
+
+endif::[]
+
+ifdef::show_STIG[]
+!DISA STIG(s)
+!
+* N/A
+
+endif::[]
+
+ifdef::show_CIS[]
+
+!CIS Benchmark
+!
+* 2.4.4 (level 1)
+!CIS Controls V8
+!
+* 4.1, 4.8
+
+endif::[]
+
+!CCE
+!
+* CCE-91134-7
+
+
+ifdef::show_tags[]
+!TAGS
+!
+* 800-53r5_low
+* 800-53r5_moderate
+* 800-53r5_high
+* 800-53r4_low
+* 800-53r4_moderate
+* 800-53r4_high
+* cis_lvl1
+* cis_lvl2
+* cisv8
+
+endif::[]
+
+!===
+
+|
+|===
+=== Disable Remote Apple Events
+
+If the system does not require Remote Apple Events, support for Apple Remote Events is non-essential and _MUST_ be disabled.
+
+The information system _MUST_ be configured to provide only essential capabilities. Disabling Remote Apple Events helps prevent the unauthorized connection of devices, the unauthorized transfer of information, and unauthorized tunneling. 
+
+
+To check the state of the system, run the following command(s):
+[source,bash,options="nowrap"]
+----
+/bin/launchctl print-disabled system | /usr/bin/grep -c '"com.apple.AEServer" => true'
+
+----
+
+If the result is not *1*, this is a finding.
+
+====
+**Remediation Description**
+
+Perform the following to configure the system to meet the requirements:
+
+[source,bash]
+----
+/usr/sbin/systemsetup -setremoteappleevents off
+/bin/launchctl disable system/com.apple.AEServer
+----
+NOTE: Systemsetup with -setremoteappleevents flag will fail unless you grant Full Disk Access to systemsetup or it's parent process. Requires UAMDM.
+
+====
+
+[cols="15%h, 85%a"]
+|===
+
+|ID
+|sysprefs_rae_disable
+
+|References
+|
+
+[cols="20%h,80%a"]
+[frame="none"]
+[grid="cols"]
+!===
+
+!800-53r5
+!
+ * AC-17
+ * AC-3
+
+ifdef::show_171[]
+!800-171r2
+!
+* 3.1.1
+* 3.1.2
+
+endif::[]
+
+ifdef::show_STIG[]
+!DISA STIG(s)
+!
+* APPL-12-002022
+
+endif::[]
+
+ifdef::show_CIS[]
+
+!CIS Benchmark
+!
+* 2.4.1 (level 1)
+!CIS Controls V8
+!
+* 4.1, 4.8
+
+endif::[]
+
+!CCE
+!
+* CCE-91070-3
+
+
+ifdef::show_tags[]
+!TAGS
+!
+* 800-53r5_low
+* 800-53r5_moderate
+* 800-53r5_high
+* 800-53r4_low
+* 800-53r4_moderate
+* 800-53r4_high
+* 800-171
+* cnssi-1253
+* cis_lvl1
+* cis_lvl2
+* cisv8
+* stig
+
+endif::[]
+
+!===
+
+|
+|===
+=== Disable Remote Management
+
+Remote Management _MUST_ be disabled. 
+
+
+To check the state of the system, run the following command(s):
+[source,bash,options="nowrap"]
+----
+/usr/libexec/mdmclient QuerySecurityInfo | /usr/bin/grep -c "RemoteDesktopEnabled = 0"
+
+----
+
+If the result is not *1*, this is a finding.
+
+====
+**Remediation Description**
+
+Perform the following to configure the system to meet the requirements:
+
+[source,bash]
+----
+/System/Library/CoreServices/RemoteManagement/ARDAgent.app/Contents/Resources/kickstart -deactivate -stop
+----
+
+====
+
+[cols="15%h, 85%a"]
+|===
+
+|ID
+|sysprefs_remote_management_disable
+
+|References
+|
+
+[cols="20%h,80%a"]
+[frame="none"]
+[grid="cols"]
+!===
+
+!800-53r5
+!
+ * CM-7, CM-7(1)
+
+ifdef::show_171[]
+!800-171r2
+!
+* N/A
+
+endif::[]
+
+ifdef::show_STIG[]
+!DISA STIG(s)
+!
+* N/A
+
+endif::[]
+
+ifdef::show_CIS[]
+
+!CIS Benchmark
+!
+* 2.4.3 (level 1)
+!CIS Controls V8
+!
+* 4.1, 4.8
+
+endif::[]
+
+!CCE
+!
+* CCE-91135-4
+
+
+ifdef::show_tags[]
+!TAGS
+!
+* 800-53r5_low
+* 800-53r5_moderate
+* 800-53r5_high
+* 800-53r4_low
+* 800-53r4_moderate
+* 800-53r4_high
+* cnssi-1253
+* cis_lvl1
+* cis_lvl2
+* cisv8
+
+endif::[]
+
+!===
+
+|
+|===
+=== Disable Screen Sharing and Apple Remote Desktop
+
+Support for both Screen Sharing and Apple Remote Desktop (ARD) is non-essential and _MUST_ be disabled.
+
+The information system _MUST_ be configured to provide only essential capabilities. Disabling screen sharing and ARD helps prevent the unauthorized connection of devices, the unauthorized transfer of information, and unauthorized tunneling.
+
+
+To check the state of the system, run the following command(s):
+[source,bash,options="nowrap"]
+----
+/bin/launchctl print-disabled system | /usr/bin/grep -c '"com.apple.screensharing" => true'
+
+----
+
+If the result is not *1*, this is a finding.
+
+====
+**Remediation Description**
+
+Perform the following to configure the system to meet the requirements:
+
+[source,bash]
+----
+/bin/launchctl disable system/com.apple.screensharing
+----
+NOTE - This will apply to the whole system
+
+====
+
+[cols="15%h, 85%a"]
+|===
+
+|ID
+|sysprefs_screen_sharing_disable
+
+|References
+|
+
+[cols="20%h,80%a"]
+[frame="none"]
+[grid="cols"]
+!===
+
+!800-53r5
+!
+ * AC-17
+ * AC-3
+
+ifdef::show_171[]
+!800-171r2
+!
+* 3.1.1
+* 3.1.2
+
+endif::[]
+
+ifdef::show_STIG[]
+!DISA STIG(s)
+!
+* APPL-12-002050
+
+endif::[]
+
+ifdef::show_CIS[]
+
+!CIS Benchmark
+!
+* 2.4.3 (level 1)
+!CIS Controls V8
+!
+* 4.1, 4.8
+
+endif::[]
+
+!CCE
+!
+* CCE-91071-1
+
+
+ifdef::show_tags[]
+!TAGS
+!
+* 800-53r5_low
+* 800-53r5_moderate
+* 800-53r5_high
+* 800-53r4_low
+* 800-53r4_moderate
+* 800-53r4_high
+* 800-171
+* cnssi-1253
+* cis_lvl1
+* cis_lvl2
+* cisv8
+* stig
+
+endif::[]
+
+!===
+
+|
+|===
+=== Enforce Session Lock After Screen Saver is Started
+
+A screen saver _MUST_ be enabled and the system _MUST_ be configured to require a password to unlock once the screensaver has been on for a maximum of five seconds. 
+
+An unattended system with an excessive grace period is vulnerable to a malicious user. 
+
+
+To check the state of the system, run the following command(s):
+[source,bash,options="nowrap"]
+----
+/usr/bin/osascript -l JavaScript << EOS
+$.NSUserDefaults.alloc.initWithSuiteName('com.apple.screensaver')\
+.objectForKey('askForPasswordDelay').js
+EOS
+
+----
+
+If the result is not *5*, this is a finding.
+
+====
+**Remediation Description**
+
+Perform the following to configure the system to meet the requirements:
+
+Create a configuration profile containing the following keys in the (com.apple.screensaver) payload type:
+
+[source,xml]
+----
+<key>askForPasswordDelay</key>
+<integer>5</integer>
+----
+
+
+====
+
+[cols="15%h, 85%a"]
+|===
+
+|ID
+|sysprefs_screensaver_ask_for_password_delay_enforce
+
+|References
+|
+
+[cols="20%h,80%a"]
+[frame="none"]
+[grid="cols"]
+!===
+
+!800-53r5
+!
+ * AC-11
+
+ifdef::show_171[]
+!800-171r2
+!
+* 3.1.10
+
+endif::[]
+
+ifdef::show_STIG[]
+!DISA STIG(s)
+!
+* APPL-12-000003
+
+endif::[]
+
+ifdef::show_CIS[]
+
+!CIS Benchmark
+!
+* 5.8 (level 1)
+!CIS Controls V8
+!
+* 4.7
+
+endif::[]
+
+!CCE
+!
+* CCE-91072-9
+
+
+ifdef::show_tags[]
+!TAGS
+!
+* 800-53r5_moderate
+* 800-53r5_high
+* 800-53r4_moderate
+* 800-53r4_high
+* 800-171
+* cnssi-1253
+* cis_lvl1
+* cis_lvl2
+* cisv8
+* stig
+
+endif::[]
+
+!===
+
+|
+|===
+=== Enforce Screen Saver Timeout
+
+The screen saver timeout _MUST_ be set to 20 minutes or a shorter length of time. 
+
+This rule ensures that a full session lock is triggered within no more than 20 minutes of inactivity.
+
+
+To check the state of the system, run the following command(s):
+[source,bash,options="nowrap"]
+----
+/usr/bin/osascript -l JavaScript << EOS
+$.NSUserDefaults.alloc.initWithSuiteName('com.apple.screensaver')\
+.objectForKey('idleTime').js
+EOS
+
+----
+
+If the result is not *1200*, this is a finding.
+
+====
+**Remediation Description**
+
+Perform the following to configure the system to meet the requirements:
+
+Create a configuration profile containing the following keys in the (com.apple.screensaver) payload type:
+
+[source,xml]
+----
+<key>idleTime</key>
+<integer>1200</integer>
+----
+
+
+====
+
+[cols="15%h, 85%a"]
+|===
+
+|ID
+|sysprefs_screensaver_timeout_enforce
+
+|References
+|
+
+[cols="20%h,80%a"]
+[frame="none"]
+[grid="cols"]
+!===
+
+!800-53r5
+!
+ * AC-11
+ * IA-11
+
+ifdef::show_171[]
+!800-171r2
+!
+* 3.1.10
+
+endif::[]
+
+ifdef::show_STIG[]
+!DISA STIG(s)
+!
+* APPL-12-000004
+
+endif::[]
+
+ifdef::show_CIS[]
+
+!CIS Benchmark
+!
+* 2.3.1 (level 1)
+!CIS Controls V8
+!
+* 4.3
+
+endif::[]
+
+!CCE
+!
+* CCE-91074-5
+
+
+ifdef::show_tags[]
+!TAGS
+!
+* 800-53r5_moderate
+* 800-53r5_high
+* 800-53r5_low
+* 800-53r4_moderate
+* 800-53r4_high
+* 800-171
+* cnssi-1253
+* cis_lvl1
+* cis_lvl2
+* cisv8
+* stig
+
+endif::[]
+
+!===
+
+|
+|===
+=== Disable Server Message Block Sharing
+
+Support for Server Message Block (SMB) file sharing is non-essential and _MUST_ be disabled.
+
+The information system _MUST_ be configured to provide only essential capabilities.
+
+
+To check the state of the system, run the following command(s):
+[source,bash,options="nowrap"]
+----
+/bin/launchctl print-disabled system | /usr/bin/grep -c '"com.apple.smbd" => true'
+
+----
+
+If the result is not *1*, this is a finding.
+
+====
+**Remediation Description**
+
+Perform the following to configure the system to meet the requirements:
+
+[source,bash]
+----
+/bin/launchctl disable system/com.apple.smbd
+----
+The system may need to be restarted for the update to take effect.
+
+====
+
+[cols="15%h, 85%a"]
+|===
+
+|ID
+|sysprefs_smbd_disable
+
+|References
+|
+
+[cols="20%h,80%a"]
+[frame="none"]
+[grid="cols"]
+!===
+
+!800-53r5
+!
+ * AC-17
+ * AC-3
+
+ifdef::show_171[]
+!800-171r2
+!
+* 3.1.1
+* 3.1.2
+
+endif::[]
+
+ifdef::show_STIG[]
+!DISA STIG(s)
+!
+* APPL-12-002001
+
+endif::[]
+
+ifdef::show_CIS[]
+
+!CIS Benchmark
+!
+* 2.4.8 (level 1)
+!CIS Controls V8
+!
+* 4.1, 4.8
+
+endif::[]
+
+!CCE
+!
+* CCE-91076-0
+
+
+ifdef::show_tags[]
+!TAGS
+!
+* 800-53r5_low
+* 800-53r5_moderate
+* 800-53r5_high
+* 800-53r4_low
+* 800-53r4_moderate
+* 800-53r4_high
+* 800-171
+* cnssi-1253
+* cis_lvl1
+* cis_lvl2
+* cisv8
+* stig
+
+endif::[]
+
+!===
+
+|
+|===
+=== Enforce Software Update App Update Updates Automatically
+
+Software Update _MUST_ be configured to enforce automatic updates of App Updates is enabled.
+
+
+To check the state of the system, run the following command(s):
+[source,bash,options="nowrap"]
+----
+/usr/bin/osascript -l JavaScript << EOS
+$.NSUserDefaults.alloc.initWithSuiteName('com.apple.SoftwareUpdate')\
+.objectForKey('AutomaticallyInstallAppUpdates').js
+EOS
+
+----
+
+If the result is not *true*, this is a finding.
+
+====
+**Remediation Description**
+
+Perform the following to configure the system to meet the requirements:
+
+Create a configuration profile containing the following keys in the (com.apple.SoftwareUpdate) payload type:
+
+[source,xml]
+----
+<key>AutomaticallyInstallAppUpdates</key>
+<true/>
+----
+
+
+====
+
+[cols="15%h, 85%a"]
+|===
+
+|ID
+|sysprefs_software_update_app_update_enforce
+
+|References
+|
+
+[cols="20%h,80%a"]
+[frame="none"]
+[grid="cols"]
+!===
+
+!800-53r5
+!
+ * N/A
+
+ifdef::show_171[]
+!800-171r2
+!
+* N/A
+
+endif::[]
+
+ifdef::show_STIG[]
+!DISA STIG(s)
+!
+* N/A
+
+endif::[]
+
+ifdef::show_CIS[]
+
+!CIS Benchmark
+!
+* 1.4 (level 1)
+!CIS Controls V8
+!
+* 7.3, 7.4
+
+endif::[]
+
+!CCE
+!
+* CCE-91138-8
+
+
+ifdef::show_tags[]
+!TAGS
+!
+* cis_lvl1
+* cis_lvl2
+* cisv8
+
+endif::[]
+
+!===
+
+|
+|===
+=== Enforce Software Update Downloads Updates Automatically
+
+Software Update _MUST_ be configured to enforce automatic downloads of updates is enabled.
+
+
+To check the state of the system, run the following command(s):
+[source,bash,options="nowrap"]
+----
+/usr/bin/osascript -l JavaScript << EOS
+$.NSUserDefaults.alloc.initWithSuiteName('com.apple.SoftwareUpdate')\
+.objectForKey('AutomaticDownload').js
+EOS
+
+----
+
+If the result is not *true*, this is a finding.
+
+====
+**Remediation Description**
+
+Perform the following to configure the system to meet the requirements:
+
+Create a configuration profile containing the following keys in the (com.apple.SoftwareUpdate) payload type:
+
+[source,xml]
+----
+<key>AutomaticDownload</key>
+<true/>
+----
+
+
+====
+
+[cols="15%h, 85%a"]
+|===
+
+|ID
+|sysprefs_software_update_download_enforce
+
+|References
+|
+
+[cols="20%h,80%a"]
+[frame="none"]
+[grid="cols"]
+!===
+
+!800-53r5
+!
+ * N/A
+
+ifdef::show_171[]
+!800-171r2
+!
+* N/A
+
+endif::[]
+
+ifdef::show_STIG[]
+!DISA STIG(s)
+!
+* N/A
+
+endif::[]
+
+ifdef::show_CIS[]
+
+!CIS Benchmark
+!
+* 1.3 (level 1)
+!CIS Controls V8
+!
+* 7.3, 7.4
+
+endif::[]
+
+!CCE
+!
+* CCE-91139-6
+
+
+ifdef::show_tags[]
+!TAGS
+!
+* cis_lvl1
+* cis_lvl2
+* cisv8
+
+endif::[]
+
+!===
+
+|
+|===
+=== Enforce Software Update Automatically
+
+Software Update _MUST_ be configured to enforce automatic update is enabled.
+
+
+To check the state of the system, run the following command(s):
+[source,bash,options="nowrap"]
+----
+/usr/bin/osascript -l JavaScript << EOS
+$.NSUserDefaults.alloc.initWithSuiteName('com.apple.SoftwareUpdate')\
+.objectForKey('AutomaticCheckEnabled').js
+EOS
+
+----
+
+If the result is not *true*, this is a finding.
+
+====
+**Remediation Description**
+
+Perform the following to configure the system to meet the requirements:
+
+Create a configuration profile containing the following keys in the (com.apple.SoftwareUpdate) payload type:
+
+[source,xml]
+----
+<key>AutomaticCheckEnabled</key>
+<true/>
+----
+
+
+====
+
+[cols="15%h, 85%a"]
+|===
+
+|ID
+|sysprefs_software_update_enforce
+
+|References
+|
+
+[cols="20%h,80%a"]
+[frame="none"]
+[grid="cols"]
+!===
+
+!800-53r5
+!
+ * SI-2(5)
+
+ifdef::show_171[]
+!800-171r2
+!
+* N/A
+
+endif::[]
+
+ifdef::show_STIG[]
+!DISA STIG(s)
+!
+* N/A
+
+endif::[]
+
+ifdef::show_CIS[]
+
+!CIS Benchmark
+!
+* 1.2 (level 1)
+!CIS Controls V8
+!
+* 7.3, 7.4
+
+endif::[]
+
+!CCE
+!
+* CCE-91140-4
+
+
+ifdef::show_tags[]
+!TAGS
+!
+* cis_lvl1
+* cis_lvl2
+* cisv8
+
+endif::[]
+
+!===
+
+|
+|===
+=== Ensure Software Update is Updated and Current
+
+Make sure Software Update is updated and current.
+
+NOTE: Automatic fix can cause unplanned restarts and may lose work.
+
+
+To check the state of the system, run the following command(s):
+[source,bash,options="nowrap"]
+----
+softwareupdate_date_epoch=$(/bin/date -j -f "%Y-%m-%d" "$(/usr/bin/defaults read /Library/Preferences/com.apple.SoftwareUpdate.plist LastFullSuccessfulDate | /usr/bin/awk '{print $1}')" "+%s")
+thirty_days_epoch=$(/bin/date -v -30d "+%s")
+if [[ $softwareupdate_date_epoch -lt $thirty_days_epoch ]]; then
+  /bin/echo "0"
+else
+  /bin/echo "1"
+fi
+
+----
+
+If the result is not *1*, this is a finding.
+
+====
+**Remediation Description**
+
+Perform the following to configure the system to meet the requirements:
+
+[source,bash]
+----
+/usr/sbin/softwareupdate -i -a -R
+----
+NOTE - This will apply to the whole system
+
+====
+
+[cols="15%h, 85%a"]
+|===
+
+|ID
+|sysprefs_softwareupdate_current
+
+|References
+|
+
+[cols="20%h,80%a"]
+[frame="none"]
+[grid="cols"]
+!===
+
+!800-53r5
+!
+ * N/A
+
+ifdef::show_171[]
+!800-171r2
+!
+* N/A
+
+endif::[]
+
+ifdef::show_STIG[]
+!DISA STIG(s)
+!
+* N/A
+
+endif::[]
+
+ifdef::show_CIS[]
+
+!CIS Benchmark
+!
+* 1.1 (level 1)
+!CIS Controls V8
+!
+* 7.3, 7.4
+
+endif::[]
+
+!CCE
+!
+* CCE-91141-2
+
+
+ifdef::show_tags[]
+!TAGS
+!
+* cis_lvl1
+* cis_lvl2
+* cisv8
+
+endif::[]
+
+!===
+
+|
+|===
+=== Disable SSH Server for Remote Access Sessions
+
+SSH service _MUST_ be disabled for remote access.
+
+Remote access sessions _MUST_ use FIPS validated encrypted methods to protect unauthorized individuals from gaining access. 
+
+
+To check the state of the system, run the following command(s):
+[source,bash,options="nowrap"]
+----
+/bin/launchctl print-disabled system | /usr/bin/grep -c '"com.openssh.sshd" => true'
+
+----
+
+If the result is not *1*, this is a finding.
+
+====
+**Remediation Description**
+
+Perform the following to configure the system to meet the requirements:
+
+[source,bash]
+----
+/bin/launchctl disable system/com.openssh.sshd
+----
+
+====
+
+[cols="15%h, 85%a"]
+|===
+
+|ID
+|sysprefs_ssh_disable
+
+|References
+|
+
+[cols="20%h,80%a"]
+[frame="none"]
+[grid="cols"]
+!===
+
+!800-53r5
+!
+ * AC-17
+ * CM-7, CM-7(1)
+
+ifdef::show_171[]
+!800-171r2
+!
+* 3.1.1
+* 3.1.2
+* 3.4.6
+
+endif::[]
+
+ifdef::show_STIG[]
+!DISA STIG(s)
+!
+* APPL-12-000011
+
+endif::[]
+
+ifdef::show_CIS[]
+
+!CIS Benchmark
+!
+* 2.4.5 (level 1)
+!CIS Controls V8
+!
+* 4.1, 4.8
+
+endif::[]
+
+!CCE
+!
+* CCE-91077-8
+
+
+ifdef::show_tags[]
+!TAGS
+!
+* cis_lvl1
+* cis_lvl2
+* cisv8
+* stig
+
+endif::[]
+
+!===
+
+|
+|===
+=== Require Administrator Password to Modify System-Wide Preferences
+
+The system _MUST_ be configured to require an administrator password in order to modify the system-wide preferences in System Preferences. 
+
+Some Preference Panes in System Preferences contain settings that affect the entire system. Requiring a password to unlock these system-wide settings reduces the risk of a non-authorized user modifying system configurations.
+
+
+To check the state of the system, run the following command(s):
+[source,bash,options="nowrap"]
+----
+/usr/bin/security authorizationdb read system.preferences 2> /dev/null |  /usr/bin/grep -A 1 "<key>shared</key>" | /usr/bin/grep -c "<false/>"
+
+----
+
+If the result is not *1*, this is a finding.
+
+====
+**Remediation Description**
+
+Perform the following to configure the system to meet the requirements:
+
+[source,bash]
+----
+/usr/bin/security authorizationdb read system.preferences > /tmp/system.preferences.plist
+/usr/libexec/PlistBuddy -c "Set :shared false" /tmp/system.preferences.plist
+/usr/bin/security authorizationdb write system.preferences < /tmp/system.preferences.plist
+----
+
+====
+
+[cols="15%h, 85%a"]
+|===
+
+|ID
+|sysprefs_system_wide_preferences_configure
+
+|References
+|
+
+[cols="20%h,80%a"]
+[frame="none"]
+[grid="cols"]
+!===
+
+!800-53r5
+!
+ * AC-6, AC-6(1), AC-6(2)
+
+ifdef::show_171[]
+!800-171r2
+!
+* 3.1.5
+* 3.1.6
+
+endif::[]
+
+ifdef::show_STIG[]
+!DISA STIG(s)
+!
+* APPL-12-002069
+
+endif::[]
+
+ifdef::show_CIS[]
+
+!CIS Benchmark
+!
+* 5.10 (level 1)
+!CIS Controls V8
+!
+* 4.1
+
+endif::[]
+
+!CCE
+!
+* CCE-91079-4
+
+
+ifdef::show_tags[]
+!TAGS
+!
+* 800-53r5_moderate
+* 800-53r5_high
+* 800-53r4_moderate
+* 800-53r4_high
+* 800-171
+* cnssi-1253
+* cis_lvl1
+* cis_lvl2
+* cisv8
+* stig
+
+endif::[]
+
+!===
+
+|
+|===
+=== Configure Time Machine for Automatic Backups
+
+Automatic backups _MUST_ be enabled when using Time Machine. 
+
+
+To check the state of the system, run the following command(s):
+[source,bash,options="nowrap"]
+----
+/usr/bin/osascript -l JavaScript << EOS
+$.NSUserDefaults.alloc.initWithSuiteName('com.apple.TimeMachine')\
+.objectForKey('AutoBackup').js
+EOS
+
+----
+
+If the result is not *true*, this is a finding.
+
+====
+**Remediation Description**
+
+Perform the following to configure the system to meet the requirements:
+
+Create a configuration profile containing the following keys in the (com.apple.TimeMachine) payload type:
+
+[source,xml]
+----
+<key>AutoBackup</key>
+<true/>
+----
+
+
+====
+
+[cols="15%h, 85%a"]
+|===
+
+|ID
+|sysprefs_time_machine_auto_backup_enable
+
+|References
+|
+
+[cols="20%h,80%a"]
+[frame="none"]
+[grid="cols"]
+!===
+
+!800-53r5
+!
+ * N/A
+
+ifdef::show_171[]
+!800-171r2
+!
+* N/A
+
+endif::[]
+
+ifdef::show_STIG[]
+!DISA STIG(s)
+!
+* N/A
+
+endif::[]
+
+ifdef::show_CIS[]
+
+!CIS Benchmark
+!
+* 2.7.1 (level 2)
+!CIS Controls V8
+!
+* 11.2
+
+endif::[]
+
+!CCE
+!
+* CCE-91142-0
+
+
+ifdef::show_tags[]
+!TAGS
+!
+* cis_lvl2
+* cisv8
+
+endif::[]
+
+!===
+
+|
+|===
+=== Ensure Time Machine Volumes are Encrypted
+
+Time Machine volumes _MUST_ be encrypted. 
+
+
+To check the state of the system, run the following command(s):
+[source,bash,options="nowrap"]
+----
+error_count=0
+for tm in $(/usr/bin/tmutil destinationinfo 2>/dev/null| /usr/bin/awk -F': ' '/Name/{print $2}'); do
+  tmMounted=$(/usr/sbin/diskutil info "${tm}" 2>/dev/null | /usr/bin/awk '/Mounted/{print $2}')
+  tmEncrypted=$(/usr/sbin/diskutil info "${tm}" 2>/dev/null | /usr/bin/awk '/FileVault/{print $2}')
+  if [[ "$tmMounted" = "Yes" && "$tmEncrypted" = "No" ]]; then
+      ((error_count++))
+  fi
+done
+echo "$error_count"
+
+----
+
+If the result is not *0*, this is a finding.
+
+====
+**Remediation Description**
+
+Perform the following to configure the system to meet the requirements:
+
+. Go to System Preferences -> Time Machine
+. Click *Select Disk*
+. Select existing Backup Disk under *Available Disks*
+. Click *Encrypt Backups*
+. Click *Use Disk*
+
+====
+
+[cols="15%h, 85%a"]
+|===
+
+|ID
+|sysprefs_time_machine_encrypted_configure
+
+|References
+|
+
+[cols="20%h,80%a"]
+[frame="none"]
+[grid="cols"]
+!===
+
+!800-53r5
+!
+ * N/A
+
+ifdef::show_171[]
+!800-171r2
+!
+* N/A
+
+endif::[]
+
+ifdef::show_STIG[]
+!DISA STIG(s)
+!
+* N/A
+
+endif::[]
+
+ifdef::show_CIS[]
+
+!CIS Benchmark
+!
+* 2.7.2 (level 2)
+!CIS Controls V8
+!
+* 3.6, 3.11, 11.2
+
+endif::[]
+
+!CCE
+!
+* CCE-91143-8
+
+
+ifdef::show_tags[]
+!TAGS
+!
+* cis_lvl2
+* cisv8
+
+endif::[]
+
+!===
+
+|
+|===
+=== Configure macOS to Use an Authorized Time Server
+
+Approved time servers _MUST_ be the only servers configured for use.
+
+This rule ensures the uniformity of time stamps for information systems with multiple system clocks and systems connected over a network.
+
+
+To check the state of the system, run the following command(s):
+[source,bash,options="nowrap"]
+----
+/usr/bin/osascript -l JavaScript << EOS
+$.NSUserDefaults.alloc.initWithSuiteName('com.apple.MCX')\
+.objectForKey('timeServer').js
+EOS
+
+----
+
+If the result is not *time-a.nist.gov,time-b.nist.gov*, this is a finding.
+
+====
+**Remediation Description**
+
+Perform the following to configure the system to meet the requirements:
+
+Create a configuration profile containing the following keys in the (com.apple.MCX) payload type:
+
+[source,xml]
+----
+<key>timeServer</key>
+<string>time-a.nist.gov,time-b.nist.gov</string>
+----
+
+
+====
+
+[cols="15%h, 85%a"]
+|===
+
+|ID
+|sysprefs_time_server_configure
+
+|References
+|
+
+[cols="20%h,80%a"]
+[frame="none"]
+[grid="cols"]
+!===
+
+!800-53r5
+!
+ * AU-12(1)
+ * SC-45(1)
+
+ifdef::show_171[]
+!800-171r2
+!
+* 3.3.7
+
+endif::[]
+
+ifdef::show_STIG[]
+!DISA STIG(s)
+!
+* APPL-12-000014
+
+endif::[]
+
+ifdef::show_CIS[]
+
+!CIS Benchmark
+!
+* 2.2.1 (level 1)
+!CIS Controls V8
+!
+* 8.4
+
+endif::[]
+
+!CCE
+!
+* CCE-91080-2
+
+
+ifdef::show_tags[]
+!TAGS
+!
+* 800-171
+* cnssi-1253
+* 800-53r5_low
+* 800-53r5_moderate
+* 800-53r5_high
+* 800-53r4_moderate
+* 800-53r4_high
+* cis_lvl1
+* cis_lvl2
+* cisv8
+* stig
+
+endif::[]
+
+!===
+
+|
+|===
+=== Enable macOS Time Synchronization Daemon (timed)
+
+The timed service _MUST_ be enabled on all networked systems and configured to set time automatically from the approved time server.
+
+This rule ensures the uniformity of time stamps for information systems with multiple system clocks and systems connected over a network.
+
+
+To check the state of the system, run the following command(s):
+[source,bash,options="nowrap"]
+----
+/usr/bin/osascript -l JavaScript << EOS
+$.NSUserDefaults.alloc.initWithSuiteName('com.apple.timed')\
+.objectForKey('TMAutomaticTimeOnlyEnabled').js
+EOS
+
+----
+
+If the result is not *true*, this is a finding.
+
+====
+**Remediation Description**
+
+Perform the following to configure the system to meet the requirements:
+
+NOTE: The following settings are in the (com.apple.ManagedClient.preferences) payload. This payload requires the additional settings to be sub-payloads within, containing their their defined payload types.
+
+Create a configuration profile containing the following keys in the (com.apple.timed) payload type:
+
+[source,xml]
+----
+<key>TMAutomaticTimeOnlyEnabled</key>
+<true/>
+----
+
+
+====
+
+[cols="15%h, 85%a"]
+|===
+
+|ID
+|sysprefs_time_server_enforce
+
+|References
+|
+
+[cols="20%h,80%a"]
+[frame="none"]
+[grid="cols"]
+!===
+
+!800-53r5
+!
+ * AU-12(1)
+ * SC-45(1)
+
+ifdef::show_171[]
+!800-171r2
+!
+* 3.3.7
+
+endif::[]
+
+ifdef::show_STIG[]
+!DISA STIG(s)
+!
+* APPL-12-000014
+
+endif::[]
+
+ifdef::show_CIS[]
+
+!CIS Benchmark
+!
+* 2.2.1 (level 1)
+!CIS Controls V8
+!
+* 8.4
+
+endif::[]
+
+!CCE
+!
+* CCE-91081-0
+
+
+ifdef::show_tags[]
+!TAGS
+!
+* 800-171
+* cnssi-1253
+* 800-53r5_low
+* 800-53r5_moderate
+* 800-53r5_high
+* 800-53r4_moderate
+* 800-53r4_high
+* cis_lvl1
+* cis_lvl2
+* cisv8
+* stig
+
+endif::[]
+
+!===
+
+|
+|===
+=== Ensure Wake for Network Access Is Disabled
+
+Wake for network access _MUST_ be disabled.
+
+
+To check the state of the system, run the following command(s):
+[source,bash,options="nowrap"]
+----
+/usr/bin/pmset -g custom | /usr/bin/awk '/womp/{print $2}'
+
+----
+
+If the result is not *0*, this is a finding.
+
+====
+**Remediation Description**
+
+Perform the following to configure the system to meet the requirements:
+
+[source,bash]
+----
+/usr/bin/pmset -a womp 0
+----
+
+====
+
+[cols="15%h, 85%a"]
+|===
+
+|ID
+|sysprefs_wake_network_access_disable
+
+|References
+|
+
+[cols="20%h,80%a"]
+[frame="none"]
+[grid="cols"]
+!===
+
+!800-53r5
+!
+ * N/A
+
+ifdef::show_171[]
+!800-171r2
+!
+* N/A
+
+endif::[]
+
+ifdef::show_STIG[]
+!DISA STIG(s)
+!
+* N/A
+
+endif::[]
+
+ifdef::show_CIS[]
+
+!CIS Benchmark
+!
+* 2.8 (level 1)
+!CIS Controls V8
+!
+* 4.8
+
+endif::[]
+
+!CCE
+!
+* CCE-91146-1
+
+
+ifdef::show_tags[]
+!TAGS
+!
+* cis_lvl1
+* cis_lvl2
+* cisv8
+
+endif::[]
+
+!===
+
+|
+|===
+=== Enable Wifi Menu
+
+The WiFi menu _MUST_ be enabled.
+
+
+To check the state of the system, run the following command(s):
+[source,bash,options="nowrap"]
+----
+/usr/bin/osascript -l JavaScript << EOS
+$.NSUserDefaults.alloc.initWithSuiteName('com.apple.controlcenter')\
+.objectForKey('WiFi').js
+EOS
+
+----
+
+If the result is not *18*, this is a finding.
+
+====
+**Remediation Description**
+
+Perform the following to configure the system to meet the requirements:
+
+Create a configuration profile containing the following keys in the (com.apple.controlcenter) payload type:
+
+[source,xml]
+----
+<key>WiFi</key>
+<integer>18</integer>
+----
+
+
+====
+
+[cols="15%h, 85%a"]
+|===
+
+|ID
+|sysprefs_wifi_menu_enable
+
+|References
+|
+
+[cols="20%h,80%a"]
+[frame="none"]
+[grid="cols"]
+!===
+
+!800-53r5
+!
+ * N/A
+
+ifdef::show_171[]
+!800-171r2
+!
+* N/A
+
+endif::[]
+
+ifdef::show_STIG[]
+!DISA STIG(s)
+!
+* N/A
+
+endif::[]
+
+ifdef::show_CIS[]
+
+!CIS Benchmark
+!
+* 4.2 (level 1)
+!CIS Controls V8
+!
+* 4.8, 12.6
+
+endif::[]
+
+!CCE
+!
+* CCE-91149-5
+
+
+ifdef::show_tags[]
+!TAGS
+!
+* cis_lvl1
+* cis_lvl2
+* cisv8
+
+endif::[]
+
+!===
+
+|
+|===
+== Supplemental
+
+This section provides additional information to support the guidance provided by the baselines.
+
+===  CIS Manual Recommendations
+
+List of CIS recommendations that are manual check in the CIS macOS Benchmark.
+
+[cols="15%h, 85%a"]
+|===
+
+|Section
+|Install Updates, Patches and Additional Security Software
+
+|Recommendations
+|1.7 Audit Computer Name
+|===
+
+[cols="15%h, 85%a"]
+|===
+|Section
+|System Preferences
+
+|Recommendations
+|2.3.3 Audit Lock Screen and Start Screen Saver Tools +
+2.5.1.2 Ensure all user storage APFS volumes are encrypted +
+2.5.1.3 Ensure all user storage CoreStorage volumes are encrypted +
+2.5.4 Audit Location Services Access +
+2.5.7 Audit Camera Privacy and Confidentiality +
+2.6.1.1 Audit iCloud Configuration +
+2.6.1.2 Audit iCloud Keychain +
+2.6.1.3 Audit iCloud Drive +
+2.6.2 Audit App Store Password Settings +
+2.12 Audit Automatic Actions for Optical Media +
+2.13 Audit Siri Settings +
+2.14 Audit Sidecar Settings +
+2.15 Audit Touch ID and Wallet & Apple Pay Settings +
+2.16 Audit Notification System Preference Settings +
+2.17 Audit Passwords System Preference Setting +
+|===
+
+[cols="15%h, 85%a"]
+|===
+|Section
+|Logging and Auditing
+
+|Recommendations
+|3.7 Audit Software Inventory
+|===
+
+[cols="15%h, 85%a"]
+|===
+|Section
+|Network Configurations
+
+|Recommendations
+|4.3 Audit Network Specific Locations +
+4.6 Audit Wi-Fi Settings +
+|===
+
+[cols="15%h, 85%a"]
+|===
+|Section
+|System Access, Authentication and Authorization
+
+|Recommendations
+|5.2.3 Ensure Complex Password Must Contain Alphabetic Characters Is Configured +
+5.2.4 Ensure Complex Password Must Contain Numeric Character Is Configured +
+5.2.6 Ensure Complex Password Must Contain Uppercase and Lowercase Characters Is Configured +
+5.5 Ensure login keychain is locked when the computer sleeps +
+5.15 Ensure Fast User Switching Is Disabled +
+|===
+
+[cols="15%h, 85%a"]
+|===
+|Section
+|Appendix: Additional Considerations
+
+|Recommendations
+|7.1 Extensible Firmware Interface (EFI) password +
+7.2 FileVault and Local Account Password Reset using AppleID +
+|===
+
+
+=== FileVault Supplemental
+
+The supplemental guidance found in this section is applicable for the following rules:
+  * sysprefs_filevault_enforce
+
+In macOS 11 the internal Apple File System (APFS) data volume can be protected by FileVault. The system volume is always cryptographically protected (T2 and Apple Silicon) and is a read-only volume.
+
+NOTE: FileVault uses an AES-XTS data encryption algorithm to protect full volumes of internal and external storage. Macs with a secure enclave (T2 and Apple Silicon) utilize the hardware security features of the architecture.
+
+FileVault is described in detail here: link:https://support.apple.com/guide/security/volume-encryption-with-filevault-sec4c6dc1b6e/web[].
+
+FileVault can be enabled in two ways within the macOS. It can be managed using the fdesetup command or by a Configuration Profile. When enabling FileVault via either of the aforementioned methods, you will be required to enter a username and password, which must be a local Open Directory account with a valid SecureToken password.
+
+[discrete]
+==== Using the fdesetup Command
+When enabling FileVault via the command line in the Terminal application, you can run the following command.
+[source,bash]
+----
+/usr/bin/fdesetup enable
+----
+Running this command will prompt you for a username and password and then enable FileVault and return the personal recovery key. There are a number of management features available when managing FileVault via the command line that are not available when using a configuration profile. More information on these management features is available in the man page for `fdesetup`. 
+
+NOTE: Apple has deprecated `fdesetup` command line tool from recognizing user name and password for security reasons and may remove the ability in future versions of macOS. 
+
+[discrete]
+==== Using a Configuration Profile
+
+When managing FileVault with a configuration profile, you must deploy a profile with the payload type `com.apple.MCX.FileVault2`. When using the Enable key to enable FileVault with a configuration profile, you must include 1 of the following:
+
+[source,xml]
+----
+<key>Enable</key>
+<string>On</string>
+<key>Defer</key>
+<true />
+----
+[source,xml]
+----
+<key>Enable</key>
+<string>On</string>
+<key>UserEntersMissingInfo</key>
+<true/>
+----
+
+If using the Defer key it will prompt for the user name and password at logout.
+
+The `UserEntersMissingInfo` key will only work if installed through manual installation, and it will prompt for the username and password immediately. 
+
+When using a configuration profile, you can escrow the Recovery key to a Mobile Device Management (MDM) server. Documentation for that can be found on Apple's Developer site: link:https://developer.apple.com/documentation/devicemanagement/fderecoverykeyescrow[].
+
+It's recommended that you use a Personal Recovery key instead of an Institutional key as it will generate a specific key for each device. You can find more guidance on choosing a recover key here: link:https://docs.jamf.com/technical-papers/jamf-pro/administering-filevault-macos/10.7.1/Choosing_a_Recovery_Key.html[].
+
+NOTE: FileVault currently only uses password-based authentication and cannot be done using a smartcard or any other type of multi-factor authentication. 
+
+
+=== Packet Filter (pf) Supplemental
+
+The supplemental guidance found in this section is applicable for the following rules:
+
+*	os_firewall_default_deny_require
+
+macOS contains an application layer firewall (ALF) and a packet filter (PF) firewall.
+
+  * The ALF can block incoming traffic on a per-application basis and prevent applications from gaining control of network ports, but it cannot be configured to block outgoing traffic.
+  ** More information on the ALF can be found here: https://support.apple.com/en-ca/HT201642 
+
+  *  The PF firewall can manipulate virtually any packet data and is highly configurable. 
+  ** More information on the BF firewall can be found here: https://www.openbsd.org/faq/pf/index.html
+
+Below is a script that configures ALF and the PF firewall to meet the requirements defined in NIST SP 800-53 (Rev. 5). The script will make sure the application layer firewall is enabled, set logging to "detailed", set built-in signed applications to automatically receive incoming connections, and set downloaded signed applications to automatically receive incoming connections. It will then create a custom rule set and copy `com.apple.pfctl.plis` from `/System/Library/LaunchDaemons/` into the `/Library/LaunchDaemons` folder and name it `800-53.pfctl.plist`. This is done to not conflict with the system's pf ruleset.
+
+The custom pf rules are created at `/etc/pf.anchors/800_53_pf_anchors`.
+
+The ruleset will block connections on the following ports:
+
+[%header,width="100%",cols="3,7"]
+|===
+^.^|Port
+^.^|Service
+
+|548
+|Apple File Protocol (AFP)
+
+|1900
+|Bonjour
+
+|79
+|Finger
+
+|20, 21
+|File Transfer Protocol (FTP)
+
+|80
+|HTTP
+
+|icmp
+|ping
+
+|143
+|Internet Message Access Protocol (IMAP)
+
+|993
+|Internet Message Access Protocol over SSL (IMAPS)
+
+|3689
+|Music Sharing
+
+|5353
+|mDNSResponder
+
+|2049
+|Network File System (NFS)
+
+|49152
+|Optical Media Sharing
+
+|110
+|Post Office Protocol (POP3)
+
+|995
+|Post Office Protocol Secure (POP3S)
+
+|631
+|Printer Sharing
+
+|3031
+|Remote Apple Events
+
+|5900
+|Screen Sharing
+
+|137, 138, 138, 445
+|Samba (SMB)
+
+|25
+|Simple Mail Transfer Protocol (SMTP)
+
+|22
+|Secure Shell (SSH)
+
+|23
+|Telnet
+
+|69
+|Trivial File Transfer Protocol (TFTP)
+
+|540
+|Unix-to-Unix Copy (UUCP)
+
+|===
+
+For more on configuring the PF firewall check out the man pages on `pf.conf` and `pfctl`.
+
+[source,bash]
+----
+include::../../includes/enablePF-mscp.sh[]
+----
+
+
+=== Password Policy Supplemental
+
+The supplemental guidance found in this section is applicable for the following rules:
+
+  * pwpolicy_lower_case_character_enforce
+  * pwpolicy_upper_case_character_enforce
+  * pwpolicy_account_inactivity_enforce
+  * pwpolicy_minimum_lifetime_enforce
+
+Password policies should be enforced as much as possible via Configuration Profiles. However, the following policies are currently not enforceable via Configuration Profiles, and must therefore be enabled using the `pwpolicy` command:
+
+  * Enforcing at least 1 lowercase character
+  * Enforcing at least 1 uppercase character
+  * Disabling an account after 35 days of inactivity
+  * Password minimum lifetime
+
+To set the local policy to meet these requirements, save the following XML password policy to a file.
+
+[source,xml]
+----
+include::../../includes/pwpolicy.xml[]
+----
+
+Run the following command to load the new policy file, substituting the path to the file in place of "$pwpolicy_file".
+
+[source,bash]
+----
+/usr/bin/pwpolicy setaccountpolicies $pwpolicy_file
+----
+
+[NOTE]
+====
+If directory services is being utilized, password policies should come from the domain.
+====
+
+
+=== Smartcard Supplemental
+
+The supplemental guidance found in this section is applicable for the following rules:
+
+  * auth_ssh_password_authentication_disable
+  * auth_smartcard_enforce
+  * auth_smartcard_certificate_trust_enforce_moderate
+  * auth_smartcard_certificate_trust_enforce_high
+  * auth_smartcard_allow
+  * auth_pam_sudo_smartcard_enforce
+  * auth_pam_su_smartcard_enforce
+  * auth_pam_login_smartcard_enforce
+
+macOS supports smartcards, such as U.S. Personal Identity Verification (PIV) cards and U.S. Department of Defense Common Access Cards (CAC). Smartcards can be used on a macOS for the following:
+
+  * Authentication (Loginwindow, Screensaver, SSH, PKINIT, Safari, Finder, and PAM Authorization (`sudo`, `login`, and `su`) )
+  * Digital Encryption
+  * Digital Signing
+  * Remote Access (VPN:L2TP)
+  * Port-based Network Access Control (802.1X)
+  * Keychain Unlock
+
+macOS has built-in support for USB CCID class-compliant smartcard readers.
+
+[discrete]
+==== Smartcard Pairing
+The default method for using smartcards in macOS is a method called "local account pairing". Local account pairing is automatically initiated when a user inserts a smartcard into the Mac. The user is prompted to pair their smartcard with their account. If a user receives a new smartcard, the previous card must be unpaired, and the new card paired to the account. Local account pairing employs fixed key mapping with the hash of a public key on the user's smartcard with a local account.
+
+[discrete]
+==== Smartcard Attribute Mapping
+Smartcards can be used to authenticate against a directory via attribute mapping configured in `/private/etc/SmartcardLogin.plist`. This file takes precedence over local account pairing. Attribute mapping matches the configured certificate field values from the smart card to the value in a directory. This may be used with network accounts, mobile accounts, or local accounts.
+
+[discrete]
+==== Smartcard Management in macOS
+
+The following settings are available to manage smartcards (com.apple.security.smartcard):
+
+[%header,cols="2,1,7"]
+|===
+|Key
+|Type
+|Value
+
+<.^|userPairing
+^.^|bool
+|If false, users will not get the pairing dialog, although existing pairings will still work.
+
+<.^|allowSmartCard
+^.^|bool
+|If false, the SmartCard is disabled for logins, authorizations, and screensaver unlocking. It is still allowed for other functions, such as signing emails and web access. A restart is required for a change of setting to take effect.
+
+<.^|checkCertificateTrust
+^.^|int
+a|Valid values are 0-3:
+
+- 0: certificate trust check is turned off
+
+- 1: certificate trust check is turned on. Standard validity check is being performed but this does not include additional revocation checks.
+
+- 2: certificate trust check is turned on, and a soft revocation check is performed. Until the certificate is explicitly rejected by CRL/OCSP, it is considered valid. This implies that unavailable/unreachable CRL/OCSP allows this check to succeed.
+
+- 3: certificate trust check is turned on, plus a hard revocation check is performed. Unless CRL/OCSP explicitly states that "this certificate is OK", the certificate is considered invalid. This is the most secure value for this setting.
+
+<.^|oneCardPerUser
+^.^|bool
+|If true, a user can pair with only one smartcard, although existing pairings will be allowed if already set up.
+
+<.^|enforceSmartCard
+^.^|bool
+|If true, a user can only login or authenticate with a smartcard.
+
+<.^|tokenRemovalAction
+^.^|int
+|If 1, the screen saver will automatically when the smartcard is removed.
+
+<.^|allowUnmappedUsers
+^.^|int
+|If 1, allows users who are in a directory group to be exempt from smartcard-only enforcement. The group allowed for exemption is defined in /private/etc/SmartcardLogin.plist
+
+|===
+
+A custom configuration profile (`com.apple.loginwindow`) should be created to disable automatic login when FileVault is enabled. This ensures that authorized users boot their Macs, enter a password at the pre-boot screen (which decrypts the boot volume), and are then presented with a login window where they can authenticate with a smartcard.
+
+[%header,cols="2,1,7"]
+|===
+|Key
+|Type
+|Value
+
+<.^|DisableFDEAutoLogin
+^.^|bool
+|If true, both Extensible Firmware Interface (EFI) login password and loginwindow PIN are required.
+
+|===
+
+NOTE: DisableFDEAutoLogin does not have to be set on Apple Silicon based macOS systems that are smartcard enforced as smartcards are available at pre-boot.
+
+[discrete]
+==== Trusted Authorities
+The macOS allows users to specify which certificate authorities (CA) can be used for trust evaluation during smartcard authentication. Only CAs listed in the TrustedAuthorities section of the SmartcardLogin.plist will be evaluated as trusted. This setting only works if `checkCertificateTrust` is set to either 1, 2, or 3 in `com.apple.security.smartcard`.
+
+To get the SHA-256 hash in the correct format, run the following command within terminal:
+[source,bash]
+----
+/usr/bin/openssl x509 -noout -fingerprint -sha256 -inform pem -in <issuer cert> | /usr/bin/awk -F '=' '{print $2}' |  /usr/bin/sed 's/://g'
+----
+
+To configure Trusted Authorities, the `SmartcardLogin.plist` should be minimally configured as below:
+
+[source,xml]
+----
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+    <key>AttributeMapping</key>
+    <dict>
+          <key>fields</key>
+          <array>
+              <string>NT Principal Name</string>
+          </array>
+          <key>formatString</key>
+          <string>Kerberos:$1</string>
+          <key>dsAttributeString</key>
+          <string>dsAttrTypeStandard:AltSecurityIdentities</string>
+    </dict>
+    <key>TrustedAuthorities</key>
+  <array>
+      <string>SHA256_HASH_OF_CERTDOMAIN_1,SHA256_HASH_OF_CERTDOMAIN_2</string>
+  </array>
+</dict>
+</plist>
+----
+
+[discrete]
+==== Smartcard Enforcement Exemption
+
+[discrete]
+===== Group Exemption
+
+Starting in macOS 10.15, enforcement on a system can be granularly configured by adding a field to `/private/etc/SmartcardLogin.plist`. The `NotEnforcedGroup` can be added to the file to list a Directory group that will not be included in smartcard enforcement. In order to activate this feature, `enforceSmartCard` and `allowUnmappedUsers` must be applied via a configuration profile (`com.apple.security.smartcard`).
+
+To configure the `NotEnforcedGroup`, the `SmartcardLogin.plist` should be minimally configured as follows:
+[source,xml]
+----
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+    <key>AttributeMapping</key>
+    <dict>
+          <key>fields</key>
+          <array>
+              <string>NT Principal Name</string>
+          </array>
+          <key>formatString</key>
+          <string>Kerberos:$1</string>
+          <key>dsAttributeString</key>
+          <string>dsAttrTypeStandard:AltSecurityIdentities</string>
+    </dict>
+    <key>TrustedAuthorities</key>
+  <array>
+      <string>SHA256_HASH_OF_CERTDOMAIN_1,SHA256_HASH_OF_CERTDOMAIN_2</string>
+  </array>
+    <key>NotEnforcedGroup</key>
+    <string>EXEMPTGROUP</key>
+</dict>
+</plist>
+----
+
+Once a system is configured for the `NotEnforcedGroup` a user can be added to the assigned group by running the following:
+[source,bash]
+----
+/usr/sbin/dseditgroup -o edit -a <exempt_user> -t user <notenforcegroup>
+----
+
+[discrete]
+===== User Exemption
+
+Alternatively, if a single user needs to be exempt for a period of time, `kDSNativeAttrTypePrefix:SmartCardEnforcement` can be set in the user's Open Directory record. The following values can be set:
+
+* 0 - The system default is respected.
+* 1 - Smartcard enforcement is enabled.
+* 2 - Smartcard enforcement is disabled. 
+
+NOTE: In Active Directory environments, the value of the `userAccountControl` attribute is respected.
+
+Run the following command to set the exemption when booted from macOS:
+[source,bash]
+----
+/usr/bin/dscl . -append /Users/<username> SmartCardEnforcement 2
+----
+
+Run the following command to set the exemption when booted from Recovery:
+[source,bash]
+----
+/usr/bin/defaults write /Volumes/Macintosh\ HD/var/db/dslocal/nodes/Default/users/<username> SmartCardEnforcement -array-add 2
+----
+NOTE: When booted to recovery on an Apple Silicon Mac, run the following after setting the exemption.
+`/usr/sbin/diskutil apfs updatePreboot /Volumes/Macintosh\ HD`
+
+[discrete]
+===== Temporary Exemption
+
+On an Apple Silicon Mac, if a temporary exemption is needed, `security filevault skip-sc-enforcement` will disable smartcard enforcement on next boot only. 
+
+Run the following command to set the temporary exemption when booted from Recovery:
+[source,bash]
+----
+/usr/bin/security filevault skip-sc-enforcement <data volume UUID> set
+----
+
+To obtain the `data volume UUID` run the following:
+[source,bash]
+----
+/usr/sbin/diskutil apfs listGroups | /usr/bin/awk -F: '/ Data/ { getline; gsub(/ /,""); print $2}'
+----
+
+[discrete]
+==== Pluggable Authentication Module (PAM)
+
+Terminal sessions in macOS can be configured for smartcard enforcement by modifying the PAM modules for `sudo`, `su`, and `login`.
+
+[source,bash]
+----
+/etc/pam.d/sudo
+# sudo: auth account password session
+auth        sufficient    pam_smartcard.so
+auth        required      pam_opendirectory.so
+auth        required      pam_deny.so
+account     required      pam_permit.so
+password    required      pam_deny.so
+session     required      pam_permit.so
+----
+
+[source,bash]
+----
+/etc/pam.d/su
+# su: auth account password session
+auth        sufficient    pam_smartcard.so
+auth        required      pam_rootok.so
+auth        required      pam_group.so no_warn group=admin,wheel ruser root_only fail_safe
+account     required      pam_permit.so
+account     required      pam_opendirectory.so no_check_shell
+password    required      pam_opendirectory.so
+session     required      pam_launchd.so
+----
+
+[source,bash]
+----
+/etc/pam.d/login
+# login: auth account password session
+auth        sufficient    pam_smartcard.so
+auth        optional      pam_krb5.so use_kcminit
+auth        optional      pam_ntlm.so try_first_pass
+auth        optional      pam_mount.so try_first_pass
+auth        required      pam_opendirectory.so try_first_pass
+auth        required      pam_deny.so
+account     required      pam_nologin.so
+account     required      pam_opendirectory.so
+password    required      pam_opendirectory.so
+session     required      pam_launchd.so
+session     required      pam_uwtmp.so
+session     optional      pam_mount.so
+----
+
+
